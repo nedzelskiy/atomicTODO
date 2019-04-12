@@ -1,0 +1,34 @@
+{
+  "name": "atomicTODO",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:nedzelskiy/atomicTODO.git",
+  "author": "Pavel Nedzelskiy <pavlo.nedzelskyi@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "sh sh/dev/dev.sh",
+    "dev:client:build": "sh sh/dev/client.build.sh",
+    "dev:server:build": "sh sh/dev/server.build.sh",
+    "dev:server:run": "sh sh/dev/server.run.sh"
+  },
+  "dependencies": {
+    "@types/mime-types": "^2.1.0",
+    "@types/node": "^11.13.4",
+    "@types/react": "^16.8.13",
+    "@types/react-dom": "^16.8.4",
+    "@types/react-redux": "^7.0.6",
+    "concurrently": "^4.1.0",
+    "mime-types": "^2.1.22",
+    "nodemon": "^1.18.11",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.1",
+    "serialize": "^0.1.3",
+    "ts-loader": "^5.3.3",
+    "typescript": "^3.4.3",
+    "webpack": "^4.29.6"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.0"
+  }
+}

@@ -12,7 +12,7 @@ server
         if (!req.url) {
             return res.end();
         }
-        return req.url.indexOf('static/') > -1
+        return req.url.indexOf('/static/') > -1 || req.url === '/favicon.ico'
             ? staticHandler(req, res)
             : applicationHandler(req, res);
     })

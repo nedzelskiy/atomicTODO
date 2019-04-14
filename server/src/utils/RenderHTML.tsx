@@ -1,5 +1,5 @@
 import * as React from 'react';
-import App from '../../../client/components/App';
+import App from '../../../client/components/App/App';
 import { renderToStaticMarkup } from 'react-dom/server';
 import Html from '../../../client/components/Html';
 

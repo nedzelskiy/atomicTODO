@@ -26,6 +26,12 @@ module.exports = {
                 },
                 exclude: /node_modules/
             },
+            {
+                test: /\.scss?$/,
+                use: {
+                  loader: 'ignore-loader',
+                }
+            },
         ],
     },
 };

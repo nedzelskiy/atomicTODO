@@ -1,0 +1,22 @@
+$background: #06cc1a;
+$color: white;
+
+@if $theme == dark {
+  $background: white;
+  $color: black;
+}
+
+.button {
+  cursor: pointer;
+  border: none;
+  box-shadow: none;
+  min-width: 100px;
+  border-radius: 0.3rem;
+  text-align: center;
+  padding: 0.56rem;
+
+  &.create-todo {
+    background-color: $background;
+    color: $color;
+  }
+}

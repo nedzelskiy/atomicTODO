@@ -1,4 +1,6 @@
-$background: #06cc1a;
+@import '../../App/app.palete';
+
+$background: $light-green;
 $color: white;
 
 @if $theme == dark {

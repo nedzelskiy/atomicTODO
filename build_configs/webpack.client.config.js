@@ -1,17 +1,14 @@
 const path = require('path');
-const webpack = require('webpack');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const ThemeCreatorPlugin = require('../loaders/theme-creator/index').plugin;
 
 module.exports = {
     entry: {
-      client: [
-        path.normalize(`${process.env.PWD}/client/client.tsx`)
-      ],
+        client: [
+            path.normalize(`${process.env.PWD}/client/client.tsx`)
+        ],
     },
     output: {
-      path: path.normalize(`${process.env.PWD}/build/client/`),
-      filename: '[name].js',
-      publicPath: 'http://localhost:8080/static/',
+        path: path.normalize(`${process.env.PWD}/build/client/`),
     },
     watchOptions: {
         aggregateTimeout: 20,
@@ -31,38 +28,36 @@ module.exports = {
                 },
                 exclude: /node_modules/
             },
-          {
-            test: /\.scss$/,
-            use: [
-              {
-                loader: MiniCssExtractPlugin.loader,
-              },
-              'css-loader',
-              {
-                loader: "sass-loader",
-                options: {
-                  data: '$theme: dark;',
-                }
-              },
-            ],
-          },
+            {
+                test: /\.scss$/,
+                use: [
+                    {
+                        loader: require.resolve('../loaders/theme-creator'),
+                        options: {
+                            themes: [
+                                {
+                                    filename: 'client.white.css',
+                                    variables: {
+                                        theme: 'white',
+                                    },
+                                },
+                                {
+                                    filename: 'client.dark.css',
+                                    variables: {
+                                        theme: 'dark',
+                                    },
+                                },
+                            ],
+                        },
+                    },
+                ],
+            },
         ],
     },
-  devServer: {
-    inline: true,
-    historyApiFallback: true,
-    hot: true,
-    quiet: false,
-    contentBase: path.normalize(`${process.env.PWD}/build/client/`),
-    publicPath: 'http://localhost:8080/static/',
-  },
-  optimization: {
-    namedModules: true,
-  },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new MiniCssExtractPlugin({
-      filename: '[name].css',
-    }),
-  ],
+    optimization: {
+        namedModules: true,
+    },
+    plugins: [
+        new ThemeCreatorPlugin(),
+    ],
 };

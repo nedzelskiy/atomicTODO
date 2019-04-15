@@ -7,12 +7,12 @@ hydrate(
     document.getElementById('root'),
 );
 
-declare let module: { hot: any };
-if (module.hot) {
-    module.hot.accept('./components/App/App', () => {
-        hydrate(
-            <App />,
-            document.getElementById('app')
-        );
-    });
-}
+// declare let module: { hot: any };
+// if (module.hot) {
+//     module.hot.accept('./components/App/App', () => {
+//         hydrate(
+//             <App />,
+//             document.getElementById('app')
+//         );
+//     });
+// }

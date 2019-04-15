@@ -1,5 +1,6 @@
 'use strict';
 
+const upath = require('upath');
 const fse = require('fs-extra');
 const sass = require('node-sass');
 const loaderName = 'theme-creator';
@@ -43,18 +44,18 @@ const themeCreatorLoader = function() {
     }
     themes.forEach((theme) => {
         const { filename, variables = {} } = theme;
+        const sassFilePath = loaderUtils.getRemainingRequest(this);
         const result = sass.renderSync({
             data: createCompilerData(
-                loaderUtils.getRemainingRequest(this),
+                upath.normalize(sassFilePath),
                 variables,
             ),
+            outputStyle: this._compiler.options.mode === 'production' ? 'compressed' : 'nested',
         });
         if (!readyFiles[filename]) {
-            readyFiles[filename] = [];
+            readyFiles[filename] = {};
         }
-        readyFiles[filename].push(
-            postcss([autoprefixer]).process(result.css.toString()).css
-        );
+        readyFiles[filename][sassFilePath] = postcss([autoprefixer]).process(result.css.toString()).css;
     });
     return '';
 };
@@ -64,7 +65,7 @@ themeCreatorLoader.plugin = class ThemeCreatorPlugin {
         compiler.hooks.done.tap(loaderName, (stats) => {
             const buildFolder = stats.compilation.outputOptions.path;
             for (let filename in readyFiles) {
-                fse.outputFileSync(`${buildFolder}${filename}`, readyFiles[filename].join(''));
+                fse.outputFileSync(`${buildFolder}${filename}`, Object.values(readyFiles[filename]).join(''));
             }
         });
     }

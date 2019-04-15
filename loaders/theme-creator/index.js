@@ -13,7 +13,7 @@ const createError = (message) => {
 };
 
 const getSassVariable = (name, value) => {
-    return "$" + name + ": " + value + ";";
+    return `$${name}: ${value};`;
 };
 
 const getSassVariables = (variablesObj) => {
@@ -23,7 +23,7 @@ const getSassVariables = (variablesObj) => {
 };
 
 const getSassImport = (path) => {
-    return "@import '" + path + "';";
+    return `@import "${path}";`;
 };
 
 const createCompilerData = (sassEntry, sassVariables) => {

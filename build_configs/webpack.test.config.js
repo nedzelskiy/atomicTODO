@@ -1,5 +1,5 @@
 const path = require('path');
-const ThemeCreatorPlugin = require('./ThemeCreatorPlugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 module.exports = {
     entry: {
@@ -16,6 +16,9 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
     },
+    resolveLoader: {
+        modules: ['node_modules', 'loaders'],
+    },
     module: {
         rules: [
             {
@@ -30,7 +33,18 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: 'ignore-loader',
+                use: [
+                    {
+                        loader: MiniCssExtractPlugin.loader,
+                    },
+                    'css-loader',
+                    {
+                        loader: "sass-loader",
+                        options: {
+                            data: '$theme: white;',
+                        }
+                    },
+                ],
             },
         ],
     },
@@ -38,21 +52,8 @@ module.exports = {
         namedModules: true,
     },
     plugins: [
-        new ThemeCreatorPlugin({
-            themes: [
-                {
-                    filename: 'client.white.css',
-                    variables: {
-                        theme: 'white',
-                    },
-                },
-                {
-                    filename: 'client.dark.css',
-                    variables: {
-                        theme: 'dark',
-                    },
-                },
-            ],
+        new MiniCssExtractPlugin({
+            filename: '[name].white.css',
         }),
     ],
 };

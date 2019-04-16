@@ -30,10 +30,11 @@ const createCompilerData = (sassEntry, sassVariables) => {
     return getSassVariables(sassVariables) + getSassImport(sassEntry);
 };
 
-const readyFiles = {};
+let readyFiles = {};
 
 const themeCreatorLoader = function() {
-    this.cacheable && this.cacheable();
+    // console.log('```````` start loader')
+    // this.cacheable && this.cacheable();
     const options = loaderUtils.getOptions(this);
     const { themes = [] } = options;
     if (themes.length < 1) {
@@ -43,6 +44,7 @@ const themeCreatorLoader = function() {
         throw createError('Missing filename attribute in theme object!');
     }
     themes.forEach((theme) => {
+        // console.log('readyFiles', readyFiles);
         const { filename, variables = {} } = theme;
         const sassFilePath = loaderUtils.getRemainingRequest(this);
         const result = sass.renderSync({
@@ -57,17 +59,66 @@ const themeCreatorLoader = function() {
         }
         readyFiles[filename][sassFilePath] = postcss([autoprefixer]).process(result.css.toString()).css;
     });
-    return '';
+    // console.log('```````` end loader');
+    return `${Math.random()}`;
 };
+
+function censor(censor) {
+    var i = 0;
+
+    return function(key, value) {
+        if(i !== 0 && typeof(censor) === 'object' && typeof(value) == 'object' && censor == value)
+            return '[Circular]';
+
+        if(i >= 29) // seems to be a harded maximum of 30 serialized objects?
+            return '[Unknown]';
+
+        ++i; // so we know we aren't using the original object anymore
+
+        return value;
+    }
+}
 
 themeCreatorLoader.plugin = class ThemeCreatorPlugin {
     apply(compiler) {
         compiler.hooks.done.tap(loaderName, (stats) => {
-            const buildFolder = stats.compilation.outputOptions.path;
-            for (let filename in readyFiles) {
-                fse.outputFileSync(`${buildFolder}${filename}`, Object.values(readyFiles[filename]).join(''));
-            }
+            Object.keys(stats.compilation.cache).filter((resourceName, index) => {
+                if (resourceName.indexOf('.scss') > -1) {
+                    delete stats.compilation.cache[resourceName];
+                    return true;
+                }
+                return false;
+            }).forEach(sassFileRemainingRequest => {
+                const sassFilePath = sassFileRemainingRequest.split('!').pop();
+                console.log(sassFilePath);
+            });
         });
+        // compiler.hooks.afterCompile.tap(loaderName, (compiler) => {
+        //     // compilation.hooks.finishModules.tap('loaderName', modules => {
+        //     console.log('1')
+        //     try{
+        //             require('fs').writeFileSync(`test.json`,
+        //                 require('circular-json').stringify(compiler, null, 4));
+        //
+        //         } catch (e) {
+        //             console.log('error', e)
+        //         }
+        //     console.log('2')
+            // })
+
+
+            // stats.compilation.cache[Object.keys(stats.compilation.cache)[0]].dependencies.forEach(cacheDependency => {
+            //     cacheDependency.module
+            // });
+
+            // Object.keys(stats.compilation.cache).filter(resourceName => {
+            //     return resourceName.indexOf('.scss') > -1;
+            // }).forEach(sassFileRemainingRequest => {
+            //     const sassFilePath = sassFileRemainingRequest.split('!').pop();
+            //     console.log(sassFilePath);
+            // });
+
+        // });
     }
 };
 

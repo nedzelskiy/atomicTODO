@@ -6,7 +6,7 @@ export default (): JSX.Element => (
         <input />
         <Button
             className="create-todo"
-            text="+ New Task"
+            text="test"
         />
     </div>
 )

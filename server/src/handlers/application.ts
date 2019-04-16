@@ -9,5 +9,7 @@ export default (req: IncomingMessage, res: ServerResponse): void => {
     res.statusCode = 200;
     const render: RenderHtml = new RenderHtml();
     const html: string = render.getStringHTML();
+    // const fs = require('fs');
+    // const html = fs.readFileSync('html.html', 'UTF-8');
     res.end(html);
 }

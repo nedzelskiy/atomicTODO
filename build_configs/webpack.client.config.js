@@ -34,20 +34,17 @@ module.exports = {
             },
         ],
     },
-    optimization: {
-        namedModules: true,
-    },
     plugins: [
         new ThemeCreatorPlugin({
             themes: [
                 {
-                    filename: 'client.white.css',
+                    themeName: 'client.white.css',
                     variables: {
                         theme: 'white',
                     },
                 },
                 {
-                    filename: 'client.dark.css',
+                    themeName: 'client.dark.css',
                     variables: {
                         theme: 'dark',
                     },

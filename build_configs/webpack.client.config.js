@@ -1,5 +1,5 @@
 const path = require('path');
-const ThemeCreatorPlugin = require('./ThemeCreatorPlugin');
+const ThemeCreatorPlugin = require('../loaders/theme-creator/ThemeCreatorPlugin');
 
 module.exports = {
     entry: {
@@ -16,7 +16,10 @@ module.exports = {
     resolve: {
         extensions: ['.ts', '.tsx', '.js', '.json'],
     },
-    module: {
+    resolveLoader: {
+        modules: ['node_modules', 'loaders'],
+    },
+  module: {
         rules: [
             {
                 test: /\.tsx?$/,
@@ -30,7 +33,7 @@ module.exports = {
             },
             {
                 test: /\.scss$/,
-                use: 'ignore-loader',
+                use: 'theme-creator',
             },
         ],
     },

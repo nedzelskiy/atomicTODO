@@ -1,1 +1,1 @@
-stylelint "./site/**/*.scss" --syntax scss
+stylelint "./**/*.scss" --syntax scss

@@ -15,7 +15,7 @@ export default (req: IncomingMessage, res: ServerResponse): void => {
     return res.end(html);
   }
 
-  const render: RenderHtml = new RenderHtml();
+  const render: RenderHtml = new RenderHtml(req);
   const html: string = render.getStringHTML();
   res.end(html);
 };

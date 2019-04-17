@@ -59,11 +59,11 @@ class ThemesStylesCreatorPlugin {
   getCachedStyles() {
     if (
       ThemesStylesCreatorPlugin.cachedStylesKeys.length > 0
-      && ThemesStylesCreatorPlugin.cachedStylesKeys.length[0]
+      && ThemesStylesCreatorPlugin.cachedStylesKeys[0]
     ) {
       return ThemesStylesCreatorPlugin.cachedStylesKeys;
     }
-    ThemesStylesCreatorPlugin.consoleMessage('warn', 'cachedKey wasn\'t got from prepared set!');
+    ThemesStylesCreatorPlugin.consoleMessage('warn', `cachedKey "${ThemesStylesCreatorPlugin.cachedStylesKeys[0]}" wasn't got from prepared set!`);
     return this.getCachedStylesKeysFromStats();
   }
 

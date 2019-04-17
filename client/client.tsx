@@ -3,15 +3,6 @@ import { hydrate } from 'react-dom';
 import App from './components/App/App';
 
 hydrate(
-    <App />,
-    document.getElementById('root'),
+  <App/>,
+  document.getElementById('root'),
 );
-// declare let module: { hot: any };
-// if (module.hot) {
-//     module.hot.accept('./components/App/App', () => {
-//         hydrate(
-//             <App />,
-//             document.getElementById('app')
-//         );
-//     });
-// }

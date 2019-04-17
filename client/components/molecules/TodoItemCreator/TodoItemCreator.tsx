@@ -9,4 +9,4 @@ export default (): JSX.Element => (
             text="+ Add New"
         />
     </div>
-)
+);

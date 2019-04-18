@@ -10,6 +10,7 @@ module.exports = {
   output: {
     path: path.normalize(`${process.env.PWD}/build/client/`),
   },
+  devtool: 'source-map',
   watchOptions: {
     aggregateTimeout: 20,
   },

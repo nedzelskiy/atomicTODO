@@ -1,6 +1,6 @@
-import { I18n } from '../../../common/interfaces';
+import { TranslationsForLocale } from '../../../common/interfaces';
 
-export default <I18n>{
+export default <TranslationsForLocale>{
   common: {
     'New task': 'Новая задача',
   },

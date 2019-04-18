@@ -1,19 +1,20 @@
 import { cloneDeep } from 'lodash';
 import * as constants from './app.redux.constants';
 import initialState, { State } from './app.redux.initial-state';
-import { I18n, Action as CommonAction } from '../../../common/interfaces';
+import { TranslationsForLocale, Action as CommonAction } from '../../../common/interfaces';
+import { classInstance as i18n } from '../../utils/I18n';
 
 export interface AddTranslationPayload {
   locale: string;
-  translations: I18n;
+  translationsForLocale: TranslationsForLocale;
 }
 
 export default (state: State = initialState, action: CommonAction): State => {
   const newState: State = cloneDeep(state);
   switch (action.type) {
     case constants.APP__ADD_TRANSLATIONS: {
-      const { locale, translations } = <AddTranslationPayload>action.payload;
-      newState.i18n[locale] = translations;
+      const { locale, translationsForLocale } = <AddTranslationPayload>action.payload;
+      i18n.setTranslationsForLocale(locale, translationsForLocale);
       break;
     }
 

@@ -1,4 +1,6 @@
 import * as React from 'react';
+import * as serialize from 'serialize-javascript';
+import { TranslationsForLocale } from '../../common/interfaces';
 
 export interface Props {
   meta: {
@@ -6,6 +8,8 @@ export interface Props {
   };
   language: string;
   children: React.ReactNode;
+  state: any;
+  translationsForLocale: TranslationsForLocale;
 }
 
 export default (props: Props): JSX.Element => (
@@ -17,9 +21,18 @@ export default (props: Props): JSX.Element => (
     <link rel="stylesheet" type="text/css" href="/static/client.white.css"/>
     <title>{props.meta.title}</title>
   </head>
-  <body>
-  <div id="root">{props.children}</div>
-  <script id="js-app" type="text/javascript" src="/static/client.js"/>
-  </body>
+    <body>
+      <script
+        id="state"
+        dangerouslySetInnerHTML={{ __html: `window.state=${serialize(props.state)};` }}
+      />
+      <script
+        id="translations-for-locale"
+        dangerouslySetInnerHTML=
+          {{ __html: `window['${props.language}']=${serialize(props.translationsForLocale)};` }}
+      />
+      <div id="root">{props.children}</div>
+      <script id="js-app" type="text/javascript" src="/static/client.js"/>
+    </body>
   </html>
 );

@@ -1,3 +1,5 @@
+import { IncomingMessage } from 'http';
+
 export interface Action {
   type: string;
   payload: any;
@@ -13,4 +15,8 @@ export interface Translations {
 
 export interface TranslationsForLocale {
   [domain: string]: PureStringJson;
+}
+
+export interface NormalizedIncomingMessage extends IncomingMessage {
+  url: string;
 }

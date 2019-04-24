@@ -1,4 +1,3 @@
-import { Store } from 'redux';
 import * as React from 'react';
 import * as get from 'get-value';
 import { Translations, TranslationsForLocale } from '../../common/interfaces';
@@ -9,52 +8,37 @@ export const TranslationContext = React.createContext(initialTranslationsValue);
 /* tslint:enable:variable-name */
 
 export interface I18nTranslate {
-  (id: string, domain?: string, locale?: string): string;
-}
-
-interface I18nClass {
-  translate: I18nTranslate;
-  setTranslationsForLocale: Function;
+  (id: string, domain?: string): string;
 }
 
 export interface I18nTranslatePropsHelper {
   t: I18nTranslate;
 }
 
-export let classInstance: I18nClass;
-
-class I18n implements I18nClass {
-  private readonly store: Store;
+class I18n {
   private readonly translations: Translations = initialTranslationsValue;
 
-  constructor(store: Store, locale?: string, translationsForLocale?: TranslationsForLocale) {
-    classInstance = this;
-    this.store = store;
+  constructor(locale: string, translationsForLocale: TranslationsForLocale) {
     this.setTranslationsForLocale(locale, translationsForLocale);
   }
 
-  setTranslationsForLocale(
-      locale?: string,
-      translationsForLocale: TranslationsForLocale = {},
-  ): void {
+  setTranslationsForLocale(locale: string, translationsForLocale: TranslationsForLocale): void {
     if (locale) {
       this.translations[locale] = translationsForLocale;
     }
   }
 
-  translate(id: string, domain?: string, locale?: string): string {
+  translate(locale: string, id: string, domain?: string): string {
     return get(
         this.translations,
-        `${locale || this.getCurrentLocale()}.${domain || 'common'}.${id}`,
+        `${locale}.${domain || 'common'}.${id}`,
     ) || id;
-  }
-// TODO
-  getCurrentLocale(): string {
-    return 'ru'; // this.store.getState().App.router.lang;
   }
 }
 
-const translateHelper = (): I18nTranslate => classInstance.translate.bind(classInstance);
+const translateHelper = (i18n: I18n, props: any): I18nTranslate => {
+  return i18n.translate.bind(i18n, props.match.params.language);
+};
 
 /* tslint:disable:variable-name */
 export const withTranslations =
@@ -62,7 +46,7 @@ export const withTranslations =
       (props: any): JSX.Element =>
         (
             <TranslationContext.Consumer>
-                {() => <Component {...props} t={translateHelper()} />}
+                {(i18n: I18n) => <Component {...props} t={translateHelper(i18n, props)} />}
             </TranslationContext.Consumer>
         );
 /* tslint:enable:variable-name */

@@ -4,20 +4,18 @@ export interface Props {
   meta: {
     title: string,
   };
-  children?: any; // React.ReactNode,
-  state: {
-    App: any,
-  };
+  language: string;
+  children: React.ReactNode;
 }
 
-export default (props: any): JSX.Element => (
-  <html>
+export default (props: Props): JSX.Element => (
+  <html lang={props.language}>
   <head>
     <meta charSet="utf-8"/>
     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href="/static/client.white.css"/>
-    {/*<title>{ props.meta.title }</title>*/}
+    <title>{props.meta.title}</title>
   </head>
   <body>
   <div id="root">{props.children}</div>

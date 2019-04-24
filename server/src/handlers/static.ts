@@ -1,16 +1,14 @@
 import { readFileSync } from 'fs';
+import { ServerResponse } from 'http';
 import { contentType } from 'mime-types';
-import { IncomingMessage, ServerResponse } from 'http';
+import { NormalizedIncomingMessage } from '../../../common/interfaces';
 
-export default (req: IncomingMessage, res: ServerResponse): void => {
-  if (!req.url) {
-    return res.end();
-  }
+export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   try {
     const resourceName: string | undefined = req.url.split('/').pop();
     const file = readFileSync(`build/client/${resourceName}`);
     if (resourceName) {
-      const ct = contentType(<string>resourceName.split('.').pop());
+      const ct: string | false = contentType(<string>resourceName.split('.').pop());
       if (ct) {
         res.setHeader('Content-Type', ct);
       }

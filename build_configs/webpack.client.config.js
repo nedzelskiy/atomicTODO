@@ -1,4 +1,5 @@
 const path = require('path');
+const chalk = require('chalk');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 module.exports = {
@@ -55,5 +56,12 @@ module.exports = {
         },
       ],
     }),
+    {
+      apply(compiler) {
+        compiler.hooks.done.tap('LifecycleHooker', () => {
+          setTimeout(() => console.log(chalk.cyan('====> client bundle is compiled!')), 0);
+        });
+      },
+    },
   ],
 };

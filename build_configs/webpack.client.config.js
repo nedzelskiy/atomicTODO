@@ -1,6 +1,41 @@
+/* eslint-disable global-require */
 const path = require('path');
 const chalk = require('chalk');
+const LiveReloadPlugin = require('webpack-livereload-plugin');
+const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
+
+const preparedPlugins = [
+  new ThemesStylesCreatorPlugin({
+    themes: [
+      {
+        themeName: 'client.white.css',
+        variables: {
+          theme: 'white',
+        },
+      },
+      {
+        themeName: 'client.dark.css',
+        variables: {
+          theme: 'dark',
+        },
+      },
+    ],
+  }),
+  {
+    apply(compiler) {
+      compiler.hooks.done.tap('LifecycleHooker', () => {
+        setTimeout(() => console.log(chalk.cyan('====> client bundle is compiled!')), 0);
+      });
+    },
+  },
+];
+
+if (devMode) {
+  preparedPlugins.push(new LiveReloadPlugin({
+    appendScriptTag: true,
+  }));
+}
 
 module.exports = {
   entry: {
@@ -39,29 +74,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new ThemesStylesCreatorPlugin({
-      themes: [
-        {
-          themeName: 'client.white.css',
-          variables: {
-            theme: 'white',
-          },
-        },
-        {
-          themeName: 'client.dark.css',
-          variables: {
-            theme: 'dark',
-          },
-        },
-      ],
-    }),
-    {
-      apply(compiler) {
-        compiler.hooks.done.tap('LifecycleHooker', () => {
-          setTimeout(() => console.log(chalk.cyan('====> client bundle is compiled!')), 0);
-        });
-      },
-    },
-  ],
+  plugins: preparedPlugins,
 };

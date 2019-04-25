@@ -47,6 +47,7 @@
     "loader-utils": "^1.2.3",
     "lodash": "^4.17.11",
     "mime-types": "^2.1.22",
+    "minimist": "^1.2.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.11",
     "postcss": "^7.0.14",
@@ -64,8 +65,10 @@
     "tslint-config-airbnb": "^5.11.1",
     "tslint-react": "^4.0.0",
     "typescript": "^3.4.3",
+    "uniqid": "^5.0.3",
     "upath": "^1.1.2",
-    "webpack": "^4.29.6"
+    "webpack": "^4.29.6",
+    "webpack-livereload-plugin": "^2.2.0"
   },
   "devDependencies": {
     "webpack-cli": "^3.3.0"

@@ -1,0 +1,13 @@
+@import "../../App/app.styles.settings";
+
+.create-todo-item {
+  border: 1px solid red;
+
+  input {
+    box-shadow: none;
+    text-shadow: none;
+    height: 2rem;
+    margin-right: 0.9rem;
+    border-radius: $border-radius;
+  }
+}

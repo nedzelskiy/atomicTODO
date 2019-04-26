@@ -1,0 +1,7 @@
+{
+  "common": {
+    "New task": "Uusi tehtävä",
+    "This is an atomic TODO app": "Tämä on atomi-TODO-sovellus",
+    "delete": "poistaa"
+  }
+}

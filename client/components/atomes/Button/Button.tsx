@@ -2,24 +2,21 @@ import * as React from 'react';
 import './button.styles.scss';
 
 interface Props {
-  html?: string;
-  text?: string;
+  text: string;
   className?: string;
   attributes?: any[];
 }
 
-const button: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
+const Button: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
   <button
     {...props.attributes}
     className={`button ${props.className}`}
   >{props.text}</button>
 );
 
-button.defaultProps = {
+Button.defaultProps = {
   className: '',
   attributes: [],
-  text: '',
-  html: '',
 };
 
-export default button;
+export default Button;

@@ -1,21 +1,35 @@
 import * as React from 'react';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, RouteComponentProps } from 'react-router';
 import Header from '../atomes/Header/Header';
+import I18n from '../../../common/helpers/I18n';
 import appRoutes, { ReactRoute } from './app.routes';
 import './app.styles.scss';
 
-class App extends React.Component<any> {
-  static renderRouteComponent(route: ReactRoute, props: any) {
-    /* tslint:disable:variable-name */
+interface Props {
+  i18n: I18n;
+}
+
+class App extends React.Component<Props> {
+  static renderRouteComponent(route: ReactRoute, props: RouteComponentProps, appProps: Props) {
     const Component: React.FunctionComponent<any> | React.ComponentClass<any, any> =
       route.getComponent();
-    /* tslint:enable:variable-name */
-    return [
-      <Header key="header"/>,
-      <main key="main">
-        <Component {...props} />
-      </main>,
-    ];
+    const { i18n } = appProps;
+    i18n.setRouterParams(props.match.params);
+    return (
+      <I18n.context.Provider value={i18n}>
+        <div className="wrapper">
+          <Header/>
+          <main>
+            <Component/>
+          </main>
+        </div>
+      </I18n.context.Provider>
+    );
+  }
+
+  constructor(props: Props) {
+    super(props);
+    this.renderRoute = this.renderRoute.bind(this);
   }
 
   renderRoute(route: ReactRoute) {
@@ -23,7 +37,7 @@ class App extends React.Component<any> {
       {...route}
       key={route.pageName}
       render={(props) => {
-        return App.renderRouteComponent(route, props);
+        return App.renderRouteComponent(route, props, this.props);
       }}
     />;
   }
@@ -31,9 +45,7 @@ class App extends React.Component<any> {
   render() {
     return [
       <Switch key="switch">
-        {appRoutes.map((route) => {
-          return this.renderRoute(route);
-        })}
+        {appRoutes.map(this.renderRoute)}
         <Route
           path="/"
           key="lang-missed"

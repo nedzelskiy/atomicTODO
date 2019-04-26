@@ -9,6 +9,7 @@
   },
   "rules": {
     "indent": [true, "spaces", 2],
-    "import-name": false
+    "import-name": false,
+    "variable-name": false
   }
 }

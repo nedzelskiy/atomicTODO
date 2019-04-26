@@ -1,6 +1,6 @@
 import * as get from 'get-value';
 import { Context, createContext } from 'react';
-import { Translations, TranslationsForLocale } from '../interfaces';
+import { Translations, TranslationsForLocale, PureStringJson } from '../interfaces';
 
 export interface I18nTranslator {
   (locale: string, id: string, domain?: string): string;
@@ -14,11 +14,20 @@ class I18n implements I18nClass {
   static context: Context<{}> = createContext({});
 
   private readonly translations: Translations = {};
+  private routerParams: PureStringJson = {};
 
   constructor(locale: string | null = null, translationsForLocale: TranslationsForLocale = {}) {
     if (locale) {
       this.setTranslationsForLocale(locale, translationsForLocale);
     }
+  }
+
+  setRouterParams(routerParams: PureStringJson): void {
+    this.routerParams = routerParams;
+  }
+
+  getRouterParam(paramName: string) {
+    return this.routerParams[paramName];
   }
 
   setTranslationsForLocale(locale: string, translationsForLocale: TranslationsForLocale): void {

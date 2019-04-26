@@ -7,19 +7,23 @@ export interface Props extends I18nTranslatePropsHelper {
   isDone: boolean;
 }
 
-export const todoItem: React.FunctionComponent<Props> =
-  (props: Props): JSX.Element => (
-    <div className={`todo-item ${props.isDone ? 'done' : ''}`}>
-      {props.todoName}
-      <Button
-        className="todo-trigger-done"
-        text="U+2713"
-      />
-      <Button
-        className="todo-delete"
-        text={props.t('delete')}
-      />
-    </div>
-  );
+class TodoItem extends React.Component<Props, {}>{
+  render() {
+    const { isDone, todoName, t } = this.props;
+    return (
+      <div className={`todo-item ${isDone ? 'done' : ''}`}>
+        {todoName}
+        <Button
+          className="todo-trigger-done"
+          text="&#10004;"
+        />
+        <Button
+          className="todo-delete"
+          text={t('delete')}
+        />
+      </div>
+    );
+  }
+}
 
-export default withTranslations(todoItem);
+export default withTranslations(TodoItem);

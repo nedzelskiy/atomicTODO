@@ -50,11 +50,7 @@ export default class RenderHtml {
       >
       <Provider store={this.store}>
         <StaticRouter location={this.req.url} context={this.context}>
-          <I18n.context.Provider
-            value={new I18n(locale, translationsForLocale)}
-          >
-            <App/>
-          </I18n.context.Provider>
+          <App i18n={new I18n(locale, translationsForLocale)}/>
         </StaticRouter>
       </Provider>
       </Html>,

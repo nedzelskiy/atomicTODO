@@ -1,4 +1,4 @@
-/* eslint-disable global-require */
+/* eslint-disable global-require, no-console */
 const path = require('path');
 const chalk = require('chalk');
 const LiveReloadPlugin = require('webpack-livereload-plugin');

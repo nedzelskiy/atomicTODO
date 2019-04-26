@@ -1,10 +1,12 @@
 import * as React from 'react';
 import NavLink from '../../services/NavLink/NavLink';
-import './header.styless.scss';
+import './header.styles.scss';
 
-export default (): JSX.Element => (
+const Header = (): JSX.Element => (
   <header className="header">
     <NavLink to="/ru">/ru</NavLink>
     <NavLink to="/en">/en</NavLink>
   </header>
 );
+
+export default Header;

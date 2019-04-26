@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { withRouter } from 'react-router';
 import I18n from '../../common/helpers/I18n';
 
 interface I18nTranslator {
@@ -10,22 +9,19 @@ export interface I18nTranslatePropsHelper {
   t: I18nTranslator;
 }
 
-const translateHelper = (i18n: I18n, props: any): I18nTranslator => {
-  return i18n.translate.bind(i18n, props.match.params.language);
+const translateHelper = (i18n: I18n): I18nTranslator => {
+  return i18n.translate.bind(i18n, i18n.getRouterParam('language'));
 };
 
-/* tslint:disable:variable-name */
-const withTranslations: any =
-  (Component: any): React.FunctionComponent<any> => {
-    return (props: any): JSX.Element =>
+const withTranslations =
+  (Component: React.FunctionComponent<any> | React.ComponentClass<any, any>) => {
+    const WithTranslations = (props: any): JSX.Element =>
       (
         <I18n.context.Consumer>
-          {(i18n: I18n) => <Component {...props} t={translateHelper(i18n, props)}/>}
+          {(i18n: I18n) => <Component {...props} t={translateHelper(i18n)}/>}
         </I18n.context.Consumer>
       );
+    return WithTranslations;
   };
-/* tslint:enable:variable-name */
 
-export default (component: any): any => {
-  return withRouter(withTranslations(component));
-};
+export default withTranslations;

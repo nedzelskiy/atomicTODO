@@ -2,7 +2,9 @@
 const PLUGIN_NAME = 'ThemesStylesCreatorPlugin';
 
 const upath = require('upath');
+const chalk = require('chalk');
 const fse = require('fs-extra');
+const uniqid = require('uniqid');
 const sass = require('node-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
@@ -17,7 +19,7 @@ class ThemesStylesCreatorPlugin {
   }
 
   static consoleMessage(level, message) {
-    console.log(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`);
+    console.log(chalk.yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
   }
 
   static getSassVariables(variablesObj) {
@@ -53,7 +55,12 @@ class ThemesStylesCreatorPlugin {
       this.deletedCachedStylesWithKeys(cachedStylesKeys);
       this.prepareThemesFilesWithCompiledStylesFiles(sassFilesPaths);
       this.createAndDropThemesFiles(this.stats.compilation.outputOptions.path);
+      this.updateCompilationHash();
     });
+  }
+
+  updateCompilationHash() {
+    this.stats.compilation.hash = uniqid();
   }
 
   getCachedStyles() {

@@ -1,4 +1,5 @@
 const path = require('path');
+const chalk = require('chalk');
 
 module.exports = {
   target: 'node',
@@ -35,4 +36,13 @@ module.exports = {
       },
     ],
   },
+  plugins: [
+    {
+      apply(compiler) {
+        compiler.hooks.done.tap('LifecycleHooker', () => {
+          setTimeout(() => console.log(chalk.magenta('====> server bundle is compiled!')), 0);
+        });
+      },
+    },
+  ],
 };

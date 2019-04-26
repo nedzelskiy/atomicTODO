@@ -3,8 +3,8 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { Environment } from './Environment';
-import I18n from '../../../common/helpers/I18n';
+import Environment from './Environment';
+import I18n, { I18nTranslator } from '../../../common/helpers/I18n';
 import Html from '../../../client/components/Html';
 import App from '../../../client/components/App/App';
 import { TranslationsHelper } from './TranslationsHelper';
@@ -38,14 +38,14 @@ export default class RenderHtml {
     const locale: string = this.getLocale();
     const translationsForLocale: TranslationsForLocale =
       this.translationsHelper.getTranslationsForLocale(locale);
-    console.log(locale, translationsForLocale);
+    const t: I18nTranslator = this.translationsHelper.getTranslator();
     return renderToStaticMarkup(
       <Html
         translationsForLocale={translationsForLocale}
         state={this.store.getState()}
         language={locale}
         meta={{
-          title: 'This is a TODO app',
+          title: t(locale, 'This is an atomic TODO app'),
         }}
       >
       <Provider store={this.store}>

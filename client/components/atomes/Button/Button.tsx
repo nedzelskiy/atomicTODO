@@ -2,7 +2,8 @@ import * as React from 'react';
 import './button.styles.scss';
 
 interface Props {
-  text: string;
+  html?: string;
+  text?: string;
   className?: string;
   attributes?: any[];
 }
@@ -17,6 +18,8 @@ const button: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
 button.defaultProps = {
   className: '',
   attributes: [],
+  text: '',
+  html: '',
 };
 
 export default button;

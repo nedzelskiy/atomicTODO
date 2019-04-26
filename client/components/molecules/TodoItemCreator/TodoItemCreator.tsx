@@ -1,14 +1,17 @@
 import * as React from 'react';
-import Button from '../../atomes/button/Button';
+import { withRouter } from 'react-router';
+import Button from '../../atomes/Button/Button';
 import withTranslations, { I18nTranslatePropsHelper } from '../../../hocs/withTranslations';
 
+interface Props extends I18nTranslatePropsHelper {}
+
 export const todoItemCreator: React.FunctionComponent<I18nTranslatePropsHelper> =
-  ({ t }: I18nTranslatePropsHelper): JSX.Element => (
+  (props: Props): JSX.Element => (
     <div className="create-todo-item">
         <input />
         <Button
             className = "create-todo"
-            text={`+ ${t('New task')}`}
+            text={`+ ${props.t('New task')}`}
         />
     </div>
 );

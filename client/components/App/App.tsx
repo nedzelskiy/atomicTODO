@@ -1,13 +1,14 @@
 import * as React from 'react';
 import { Route, Switch } from 'react-router';
-import Header from '../organismes/Header/Header';
-import routes, { ReactRoute } from './routes';
+import Header from '../atomes/Header/Header';
+import appRoutes, { ReactRoute } from './app.routes';
 import './app.styles.scss';
 
 class App extends React.Component<any> {
   static renderRouteComponent(route: ReactRoute, props: any) {
     /* tslint:disable:variable-name */
-    const Component: React.FunctionComponent<any> = route.getComponent();
+    const Component: React.FunctionComponent<any> | React.ComponentClass<any, any> =
+      route.getComponent();
     /* tslint:enable:variable-name */
     return [
       <Header key="header"/>,
@@ -29,8 +30,8 @@ class App extends React.Component<any> {
 
   render() {
     return [
-      <Switch>
-        {routes.map((route) => {
+      <Switch key="switch">
+        {appRoutes.map((route) => {
           return this.renderRoute(route);
         })}
         <Route

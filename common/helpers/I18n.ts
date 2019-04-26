@@ -2,19 +2,35 @@ import * as get from 'get-value';
 import { Context, createContext } from 'react';
 import { Translations, TranslationsForLocale } from '../interfaces';
 
-class I18n {
+export interface I18nTranslator {
+  (locale: string, id: string, domain?: string): string;
+}
+
+interface I18nClass {
+  translate: I18nTranslator;
+}
+
+class I18n implements I18nClass {
   static context: Context<{}> = createContext({});
 
   private readonly translations: Translations = {};
 
-  constructor(locale: string, translationsForLocale: TranslationsForLocale) {
-    this.setTranslationsForLocale(locale, translationsForLocale);
+  constructor(locale: string | null = null, translationsForLocale: TranslationsForLocale = {}) {
+    if (locale) {
+      this.setTranslationsForLocale(locale, translationsForLocale);
+    }
   }
 
   setTranslationsForLocale(locale: string, translationsForLocale: TranslationsForLocale): void {
-    if (locale) {
-      this.translations[locale] = translationsForLocale;
-    }
+    this.translations[locale] = translationsForLocale;
+  }
+
+  isExistTranslationsForLocale(locale: string): boolean {
+    return !!this.translations[locale];
+  }
+
+  getTranslationsForLocale(locale: string): TranslationsForLocale | undefined {
+    return this.translations[locale];
   }
 
   translate(locale: string, id: string, domain?: string): string {

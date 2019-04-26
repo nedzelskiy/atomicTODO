@@ -1,4 +1,4 @@
-export class Environment {
+export default class Environment {
   static defaultLanguage: string = 'en';
 
   static getAllowedLanguages(): Set<string> {

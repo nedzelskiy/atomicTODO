@@ -34,7 +34,7 @@ export default class RenderHtml {
     return this.context;
   }
 
-  getStringHTML(): string {
+  getResponseString(): string {
     const locale: string = this.getLocale();
     const translationsForLocale: TranslationsForLocale =
       this.translationsHelper.getTranslationsForLocale(locale);

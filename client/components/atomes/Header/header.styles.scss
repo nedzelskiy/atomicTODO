@@ -1,14 +1,16 @@
 .header {
-  padding: 20px;
+  padding: 1.2rem 0;
+  text-align: center;
 
   .nav-link {
-    padding: 5px;
+    padding: 0.3rem;
     background-color: #5b5b5b;
-    margin-left: 10px;
+    margin-right: 10px;
     color: white;
     border-radius: 10px;
     display: inline-block;
-    width: 50px;
+    width: 3rem;
     text-align: center;
+    text-decoration: none;
   }
 }

@@ -12,7 +12,6 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   }
 
   const render: RenderHtml = new RenderHtml(req, configureStore(), translationsHelper);
-  const html: string = render.getStringHTML();
-  return res.end(html);
-
+  const responseString: string = render.getResponseString();
+  return res.end(responseString);
 };

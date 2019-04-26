@@ -1,13 +1,23 @@
+@import "../../App/app.styles.palete";
 @import "../../App/app.styles.settings";
 
 .create-todo-item {
-  border: 1px solid red;
+  padding: 1rem;
+  border-radius: $border-radius;
+  background-color: $background-item-color;
+  display: flex;
 
   input {
-    box-shadow: none;
-    text-shadow: none;
-    height: 2rem;
+    height: 2.2rem;
     margin-right: 0.9rem;
+    border: 1px solid #f9ffed;
     border-radius: $border-radius;
+    text-align: center;
+    padding: 0 0.5rem;
+    width: 100%;
+  }
+
+  .create-todo {
+    min-width: 10rem;
   }
 }

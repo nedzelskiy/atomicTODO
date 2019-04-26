@@ -1,5 +1,3 @@
-import ls from '../../utils/LocalStorage';
-
 export interface State {
   todos: Todo[];
 }
@@ -11,7 +9,7 @@ export interface Todo {
 }
 
 const initialState: State = {
-  todos: ls.getStoredTodos(),
+  todos: [],
 };
 
 export default initialState;

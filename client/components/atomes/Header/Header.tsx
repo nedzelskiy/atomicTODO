@@ -4,6 +4,7 @@ import './header.styles.scss';
 
 const Header = (): JSX.Element => (
   <header className="header">
+    <NavLink to="/">/</NavLink>
     <NavLink to="/ru">/ru</NavLink>
     <NavLink to="/en">/en</NavLink>
   </header>

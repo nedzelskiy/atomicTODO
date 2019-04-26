@@ -17,12 +17,7 @@ class App extends React.Component<Props> {
     i18n.setRouterParams(props.match.params);
     return (
       <I18n.context.Provider value={i18n}>
-        <div className="wrapper">
-          <Header/>
-          <main>
-            <Component/>
-          </main>
-        </div>
+        <Component/>
       </I18n.context.Provider>
     );
   }

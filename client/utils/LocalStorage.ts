@@ -1,4 +1,4 @@
-import { Todo } from '../components/App/app.redux.initial-state';
+import { Todo } from '../components/organismes/TodoList/todolist.redux.initial-state';
 
 interface LocalStorageClass {
   getStoredTodos(): Todo[];

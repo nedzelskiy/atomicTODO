@@ -14,20 +14,11 @@ class I18n implements I18nClass {
   static context: Context<{}> = createContext({});
 
   private readonly translations: Translations = {};
-  private routerParams: PureStringJson = {};
 
   constructor(locale: string | null = null, translationsForLocale: TranslationsForLocale = {}) {
     if (locale) {
       this.setTranslationsForLocale(locale, translationsForLocale);
     }
-  }
-
-  setRouterParams(routerParams: PureStringJson): void {
-    this.routerParams = routerParams;
-  }
-
-  getRouterParam(paramName: string) {
-    return this.routerParams[paramName];
   }
 
   setTranslationsForLocale(locale: string, translationsForLocale: TranslationsForLocale): void {

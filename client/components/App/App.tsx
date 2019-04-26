@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { Route, Switch, RouteComponentProps } from 'react-router';
-import Header from '../atomes/Header/Header';
 import I18n from '../../../common/helpers/I18n';
 import appRoutes, { ReactRoute } from './app.routes';
 import './app.styles.scss';
@@ -14,9 +13,11 @@ class App extends React.Component<Props> {
     const Component: React.FunctionComponent<any> | React.ComponentClass<any, any> =
       route.getComponent();
     const { i18n } = appProps;
-    i18n.setRouterParams(props.match.params);
     return (
-      <I18n.context.Provider value={i18n}>
+      <I18n.context.Provider value={{
+        i18n,
+        lang: (props.match.params as any).language,
+      }}>
         <Component/>
       </I18n.context.Provider>
     );

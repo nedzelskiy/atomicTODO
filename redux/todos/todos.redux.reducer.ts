@@ -1,24 +1,24 @@
 import { cloneDeep } from 'lodash';
-import * as constants from './todolist.redux.constants';
-import initialState, { State, Todo } from './todolist.redux.initial-state';
-import { Action as CommonAction } from '../../../../common/interfaces';
+import * as constants from './todos.redux.constants';
+import initialState, { State, Todo } from './todos.redux.initial-state';
+import { Action as CommonAction } from '../redux.interfaces';
 
 export default (state: State = initialState, action: CommonAction): State => {
   const newState: State = cloneDeep(state);
   switch (action.type) {
-    case constants.TODO_LIST__ADD_TODOS: {
+    case constants.ADD_TODOS: {
       const { todos } = <AddTodosPayload>action.payload;
       newState.todos = todos;
       break;
     }
 
-    case constants.TODO_LIST__ADD_TODO: {
+    case constants.ADD_TODO: {
       const { todo } = <AddTodoPayload>action.payload;
       newState.todos.push(todo);
       break;
     }
 
-    case constants.TODO_LIST__DELETE_TODO: {
+    case constants.DELETE_TODO: {
       const { id } = <DeleteTodoPayload>action.payload;
       const newTodos: Todo[] = [];
       newState.todos.forEach((todo) => {
@@ -30,7 +30,7 @@ export default (state: State = initialState, action: CommonAction): State => {
       break;
     }
 
-    case constants.TODO_LIST__TRIGGER_DONE_TODO: {
+    case constants.TRIGGER_DONE_TODO: {
       const { id } = <TriggerDoneTodoPayload>action.payload;
       newState.todos.find((todo, index) => {
         if (todo.id === id) {

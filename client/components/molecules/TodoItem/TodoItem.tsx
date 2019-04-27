@@ -1,41 +1,21 @@
 import * as React from 'react';
-import Button from '../../atomes/Button/Button';
-import withTranslations, { I18nTranslatePropsHelper } from '../../../hocs/withTranslations';
+import DeleteTodoBtn from '../../../containers/buttons/DeleteTodoBtn/DeleteTodoBtn';
+import TriggerTodoStatusBtn
+  from '../../../containers/buttons/TriggerTodoStatusBtn/TriggerTodoStatusBtn';
 import './todoitem.styles.scss';
 
-export interface Props extends I18nTranslatePropsHelper {
+export interface Props {
   id: number;
   isDone: boolean;
   todoName: string;
-  onDelete: (id: number) => void;
-  onTriggerDone: (id: number) => void;
 }
 
-class TodoItem extends React.Component<Props, {}>{
-  render() {
-    const { isDone, todoName, t, onTriggerDone, onDelete , id } = this.props;
-    const onTriggerDoneBinded: React.MouseEventHandler<HTMLElement> = () => {
-      onTriggerDone.call(onTriggerDone, id);
-    };
-    const onDeleteBinded: React.MouseEventHandler<HTMLElement> = () => {
-      onDelete.call(onDelete, id);
-    };
-    return (
-      <div className={`todo-item ${isDone ? 'done' : ''}`}>
-        <span className="todo-name">{todoName}</span>
-        <Button
-          className="todo-trigger-done"
-          text="&#10004;"
-          onClick={onTriggerDoneBinded}
-        />
-        <Button
-          className="todo-delete"
-          text={t('delete')}
-          onClick={onDeleteBinded}
-        />
-      </div>
-    );
-  }
-}
+const TodoItem: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
+  <div className={`todo-item ${props.isDone ? 'done' : ''}`}>
+    <span className="todo-name">{props.todoName}</span>
+    <TriggerTodoStatusBtn id={props.id} />
+    <DeleteTodoBtn id={props.id} />
+  </div>
+);
 
-export default withTranslations(TodoItem);
+export default TodoItem;

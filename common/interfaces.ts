@@ -1,10 +1,5 @@
 import { IncomingMessage } from 'http';
 
-export interface Action {
-  type: string;
-  payload: any;
-}
-
 export interface PureStringJson {
   [propName: string]: string;
 }

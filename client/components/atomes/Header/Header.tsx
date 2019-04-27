@@ -7,6 +7,7 @@ const Header = (): JSX.Element => (
     <NavLink to="/">/</NavLink>
     <NavLink to="/ru">/ru</NavLink>
     <NavLink to="/en">/en</NavLink>
+    <NavLink to="/unknown">/en</NavLink>
   </header>
 );
 

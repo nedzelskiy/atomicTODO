@@ -9,7 +9,7 @@ interface Props {
 const TodoList: React.FunctionComponent<Props> = ({ todos }: Props): JSX.Element => (
   <div className="todo-list">
     { todos.map((todo) => {
-      return <TodoItem {...todo} />;
+      return <TodoItem {...todo} key={todo.id} />;
     }) }
   </div>
 );

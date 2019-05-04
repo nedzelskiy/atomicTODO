@@ -24,10 +24,6 @@ export default (props: Props): JSX.Element => (
   </head>
     <body>
       <script
-        id="state"
-        dangerouslySetInnerHTML={{ __html: `window.state=${serialize(props.state)};` }}
-      />
-      <script
         id="translations-for-locale"
         dangerouslySetInnerHTML=
           {{ __html: `window['${props.language}']=${serialize(props.translationsForLocale)};` }}

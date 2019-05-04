@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { ServerResponse } from 'http';
 import { contentType } from 'mime-types';
-import { NormalizedIncomingMessage } from '../../../common/interfaces';
+import { NormalizedIncomingMessage } from '../server';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   try {

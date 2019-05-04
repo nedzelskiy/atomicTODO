@@ -18,9 +18,9 @@ class TodoListWithControls extends React.Component<Props, {}> {
 }
 
 export default connect(
-  ({ todos }: TodosReducersState) => {
+  ({ todosReducer }: TodosReducersState) => {
     return {
-      todos: todos.todos,
+      todos: todosReducer.todos,
     };
   },
   null,

@@ -1,15 +1,15 @@
 import { combineReducers, ReducersMapObject } from 'redux';
-import todos from './todos/redux/todos.redux.reducer';
+import todosReducer from './todos/redux/todos.redux.reducer';
 import { State as TodosState } from './todos/redux/todos.redux.initial-state';
 
 export interface TodosReducersState {
-  todos: TodosState;
+  todosReducer: TodosState;
 }
 
 export type StateOfReducers = TodosReducersState;
 
 const reducers: ReducersMapObject<StateOfReducers> = {
-  todos,
+  todosReducer,
 };
 
 export default combineReducers(reducers);

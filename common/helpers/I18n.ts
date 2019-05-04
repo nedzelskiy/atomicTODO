@@ -11,7 +11,7 @@ interface I18nClass {
 }
 
 class I18n implements I18nClass {
-  static context: Context<{}> = createContext({});
+  static readonly context: Context<{}> = createContext({});
 
   private readonly translations: Translations = {};
 

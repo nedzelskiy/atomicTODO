@@ -1,6 +1,6 @@
 import { FunctionComponent, ComponentClass } from 'react';
 import { RouteProps } from 'react-router';
-import MainPage from '../pages/MainPage/MainPage';
+import MainPage from '../pages/HomePage/HomePage';
 
 export interface ReactRoute extends RouteProps {
   pageName: string;

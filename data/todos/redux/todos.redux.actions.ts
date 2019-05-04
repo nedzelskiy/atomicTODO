@@ -1,6 +1,6 @@
+import * as events from './todos.redux.events';
 import { Todo } from './todos.redux.initial-state';
-import * as constants from './todos.redux.constants';
-import { Action as CommonAction } from '../../redux.interfaces';
+import { CommonAction } from '../../redux.interfaces';
 
 export interface AddTodos {
   (todos: Todo[]): CommonAction & {
@@ -12,7 +12,7 @@ export interface AddTodos {
 
 export const addTodos: AddTodos = (todos: Todo[]) => {
   return {
-    type: constants.ADD_TODOS,
+    type: events.ADD_TODOS,
     payload: {
       todos,
     },
@@ -29,7 +29,7 @@ export interface AddTodo {
 
 export const addTodo: AddTodo = (todo: Todo) => {
   return {
-    type: constants.ADD_TODO,
+    type: events.ADD_TODO,
     payload: {
       todo,
     },
@@ -46,7 +46,7 @@ export interface DeleteTodo {
 
 export const deleteTodo: DeleteTodo = (id: number) => {
   return {
-    type: constants.DELETE_TODO,
+    type: events.DELETE_TODO,
     payload: {
       id,
     },
@@ -63,7 +63,7 @@ export interface TriggerDoneTodo {
 
 export const triggerDoneTodo: TriggerDoneTodo = (id: number) => {
   return {
-    type: constants.TRIGGER_DONE_TODO,
+    type: events.TRIGGER_DONE_TODO,
     payload: {
       id,
     },

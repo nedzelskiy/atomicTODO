@@ -8,10 +8,10 @@ import { BrowserRouter } from 'react-router-dom';
 import I18n from '../common/helpers/I18n';
 import { TranslationsForLocale } from '../common/interfaces';
 
-const store: Store = configureStore((window as any).state);
 const lang: string = document.documentElement.lang;
 const translationsForLocale: TranslationsForLocale = (window as any)[lang];
 const i18n: I18n = new I18n(lang, translationsForLocale);
+const store: Store = configureStore((window as any).state, { i18n });
 (window as any).i18n = i18n;
 
 deleteUnnecessaryDomNodes();
@@ -27,10 +27,6 @@ hydrate(
 );
 
 function deleteUnnecessaryDomNodes() {
-  const stateNode: HTMLElement | null = document.getElementById('state');
-  if (stateNode) {
-    document.body.removeChild(stateNode);
-  }
   const translationsNode: HTMLElement | null = document.getElementById('translations-for-locale');
   if (translationsNode) {
     document.body.removeChild(translationsNode);

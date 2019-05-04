@@ -1,8 +1,8 @@
 import { ServerResponse } from 'http';
 import RenderHtml from '../utils/RenderHtml';
+import { NormalizedIncomingMessage } from '../server';
 import configureStore from '../../../client/configureStore';
 import translationsHelper from '../utils/TranslationsHelper';
-import { NormalizedIncomingMessage } from '../../../common/interfaces';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 200;

@@ -1,7 +1,6 @@
 import staticHandler from './handlers/static';
 import applicationHandler from './handlers/application';
 import missedLanguageHandler from './handlers/missedLanguage';
-import { NormalizedIncomingMessage } from '../../common/interfaces';
 import { Server, createServer, ServerResponse, IncomingMessage } from 'http';
 
 const SERVER_PORT: number = 8080;
@@ -22,3 +21,7 @@ server
       : applicationHandler(<NormalizedIncomingMessage>req, res);
   })
   .listen(SERVER_PORT, () => console.log(`==> SERVER STARTED on ${SERVER_URL}`));
+
+export interface NormalizedIncomingMessage extends IncomingMessage {
+  url: string;
+}

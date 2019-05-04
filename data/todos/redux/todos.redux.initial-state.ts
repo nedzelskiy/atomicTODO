@@ -13,3 +13,11 @@ const initialState: State = {
 };
 
 export default initialState;
+
+export const createNewTodo = (todoName: string): Todo => {
+  return {
+    id: (new Date()).getTime(),
+    name: todoName,
+    isDone: false,
+  };
+};

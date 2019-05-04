@@ -6,7 +6,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import Environment from './Environment';
 import I18n, { I18nTranslator } from '../../../common/helpers/I18n';
 import Html from '../../../client/components/Html';
-import App from '../../../client/components/App/App';
+import App from '../../../client/containers/App/App';
 import { TranslationsHelper } from './TranslationsHelper';
 import { NormalizedIncomingMessage, TranslationsForLocale } from '../../../common/interfaces';
 

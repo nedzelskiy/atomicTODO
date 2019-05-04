@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
-import { deleteTodo, DeleteTodo } from '../../../../redux/todos/todos.redux.actions';
+import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import withTranslations, { I18nTranslatePropsHelper } from '../../hocs/withTranslations';
 
 interface Props extends I18nTranslatePropsHelper{

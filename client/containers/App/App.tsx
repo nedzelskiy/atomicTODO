@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Route, Switch, RouteComponentProps } from 'react-router';
 import I18n from '../../../common/helpers/I18n';
-import appRoutes, { ReactRoute } from './app.routes';
+import appRoutes, { ReactRoute, HomeRouteParams } from './app.routes';
 import './app.styles.scss';
 
 interface Props {
@@ -9,23 +9,24 @@ interface Props {
 }
 
 class App extends React.Component<Props> {
-  static renderRouteComponent(route: ReactRoute, props: RouteComponentProps, appProps: Props) {
+  constructor(props: Props) {
+    super(props);
+    this.renderRoute = this.renderRoute.bind(this);
+    this.renderRouteComponent = this.renderRouteComponent.bind(this);
+  }
+
+  renderRouteComponent(route: ReactRoute, props: RouteComponentProps) {
     const Component: React.FunctionComponent<any> | React.ComponentClass<any, any> =
       route.getComponent();
-    const { i18n } = appProps;
+    const { params } = props.match;
     return (
       <I18n.context.Provider value={{
-        i18n,
-        lang: (props.match.params as any).language,
+        i18n: this.props.i18n,
+        lang: (params as HomeRouteParams).language,
       }}>
         <Component/>
       </I18n.context.Provider>
     );
-  }
-
-  constructor(props: Props) {
-    super(props);
-    this.renderRoute = this.renderRoute.bind(this);
   }
 
   renderRoute(route: ReactRoute) {
@@ -33,7 +34,7 @@ class App extends React.Component<Props> {
       {...route}
       key={route.pageName}
       render={(props) => {
-        return App.renderRouteComponent(route, props, this.props);
+        return this.renderRouteComponent(route, props);
       }}
     />;
   }

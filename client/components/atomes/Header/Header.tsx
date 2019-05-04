@@ -1,13 +1,13 @@
 import * as React from 'react';
-import NavLink from '../../services/NavLink/NavLink';
+import { Link } from 'react-router-dom';
 import './header.styles.scss';
 
 const Header = (): JSX.Element => (
   <header className="header">
-    <NavLink to="/">/</NavLink>
-    <NavLink to="/ru">/ru</NavLink>
-    <NavLink to="/en">/en</NavLink>
-    <NavLink to="/unknown">/en</NavLink>
+    <Link to="/">/</Link>
+    <Link to="/ru">/ru</Link>
+    <Link to="/en">/en</Link>
+    <Link to="/unknown">/en</Link>
   </header>
 );
 

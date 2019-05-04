@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash';
 import * as constants from './todos.redux.constants';
+import { Action as CommonAction } from '../../redux.interfaces';
 import initialState, { State, Todo } from './todos.redux.initial-state';
-import { Action as CommonAction } from '../redux.interfaces';
 
 export default (state: State = initialState, action: CommonAction): State => {
   const newState: State = cloneDeep(state);

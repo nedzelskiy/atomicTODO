@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
-import { Todo } from '../../../../redux/todos/todos.redux.initial-state';
-import { addTodo, AddTodo } from '../../../../redux/todos/todos.redux.actions';
+import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
+import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import withTranslations, { I18nTranslatePropsHelper } from '../../hocs/withTranslations';
 
 interface Props extends I18nTranslatePropsHelper{
@@ -18,11 +18,7 @@ class AddTodoBtn extends React.Component<Props, {}> {
 
   handleOnClick() {
     if (this.props.inputRef.current && this.props.inputRef.current.value) {
-      const todo: Todo = {
-        id: (new Date()).getTime(),
-        isDone: false,
-        name: this.props.inputRef.current.value,
-      };
+      const todo = createNewTodo(this.props.inputRef.current.value);
       this.props.addTodo(todo);
       this.props.inputRef.current.value = '';
       this.props.inputRef.current.blur();

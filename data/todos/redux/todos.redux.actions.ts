@@ -1,8 +1,16 @@
-import { Todo } from './todolist.redux.initial-state';
+import { Todo } from './todos.redux.initial-state';
 import * as constants from './todos.redux.constants';
-import { Action as CommonAction } from '../redux.interfaces';
+import { Action as CommonAction } from '../../redux.interfaces';
 
-export const addTodos = (todos: Todo[]) => {
+export interface AddTodos {
+  (todos: Todo[]): CommonAction & {
+    payload: {
+      todos: Todo[];
+    };
+  };
+}
+
+export const addTodos: AddTodos = (todos: Todo[]) => {
   return {
     type: constants.ADD_TODOS,
     payload: {

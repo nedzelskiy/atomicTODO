@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as serialize from 'serialize-javascript';
+import { StateOfReducers } from '../../data/redux.reducers';
 import { TranslationsForLocale } from '../../common/interfaces';
 
 export interface Props {
@@ -7,8 +8,8 @@ export interface Props {
     title: string,
   };
   language: string;
+  state: StateOfReducers;
   children: React.ReactNode;
-  state: any;
   translationsForLocale: TranslationsForLocale;
 }
 

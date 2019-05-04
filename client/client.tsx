@@ -1,7 +1,7 @@
 import { Store } from 'redux';
 import * as React from 'react';
 import { hydrate } from 'react-dom';
-import App from './components/App/App';
+import App from './containers/App/App';
 import { Provider } from 'react-redux';
 import configureStore from './configureStore';
 import { BrowserRouter } from 'react-router-dom';

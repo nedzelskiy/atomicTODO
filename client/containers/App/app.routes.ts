@@ -17,3 +17,7 @@ const appRoutes: ReactRoute[] = [
 ];
 
 export default appRoutes;
+
+export interface HomeRouteParams {
+  language: string;
+}

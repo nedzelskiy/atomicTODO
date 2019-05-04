@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
-import { triggerDoneTodo, TriggerDoneTodo } from '../../../../redux/todos/todos.redux.actions';
+import { triggerDoneTodo, TriggerDoneTodo } from '../../../../data/todos/redux/todos.redux.actions';
 
 interface Props {
   id: number;

@@ -1,10 +1,10 @@
-import { Todo } from '../components/organismes/TodoList/todolist.redux.initial-state';
+import { Todo } from '../redux/todos.redux.initial-state';
 
 interface LocalStorageClass {
   getStoredTodos(): Todo[];
 }
 
-class LocalStorage implements LocalStorageClass{
+class TodosLocalStorage implements LocalStorageClass{
   getStoredTodos() {
     return [
       {
@@ -21,4 +21,4 @@ class LocalStorage implements LocalStorageClass{
   }
 }
 
-export default new LocalStorage();
+export default new TodosLocalStorage();

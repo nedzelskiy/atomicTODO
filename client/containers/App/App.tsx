@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { Route, Switch, RouteComponentProps } from 'react-router';
-import I18n from '../../../common/helpers/I18n';
+import { i18nContext } from '../hocs/WithTranslations';
 import appRoutes, { ReactRoute, HomeRouteParams } from './app.routes';
 import './app.styles.scss';
+import ReactTranslator
+  from '../../../data/translations/BrowsersTranslator/bindings/ReactTranslator';
 
 interface Props {
-  i18n: I18n;
+  translator: ReactTranslator;
 }
 
 class App extends React.Component<Props> {
@@ -20,12 +22,12 @@ class App extends React.Component<Props> {
       route.getComponent();
     const { params } = props.match;
     return (
-      <I18n.context.Provider value={{
-        i18n: this.props.i18n,
-        lang: (params as HomeRouteParams).language,
+      <i18nContext.Provider value={{
+        translator: this.props.translator,
+        locale: (params as HomeRouteParams).locale,
       }}>
         <Component/>
-      </I18n.context.Provider>
+      </i18nContext.Provider>
     );
   }
 

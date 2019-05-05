@@ -1,7 +1,8 @@
 import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 import { StateOfReducers } from '../../data/redux.reducers';
-import { TranslationsForLocale } from '../../common/interfaces';
+import { BrowserTranslationsForLocale }
+  from '../../data/translations/BrowsersTranslator/BrowsersTranslator';
 
 export interface Props {
   meta: {
@@ -10,7 +11,7 @@ export interface Props {
   language: string;
   state: StateOfReducers;
   children: React.ReactNode;
-  translationsForLocale: TranslationsForLocale;
+  translationsForLocale: BrowserTranslationsForLocale;
 }
 
 export default (props: Props): JSX.Element => (

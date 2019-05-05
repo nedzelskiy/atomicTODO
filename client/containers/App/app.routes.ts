@@ -10,7 +10,7 @@ export interface ReactRoute extends RouteProps {
 const appRoutes: ReactRoute[] = [
   {
     exact: true,
-    path: '/:language',
+    path: '/:locale',
     pageName: 'home',
     getComponent: () => MainPage,
   },
@@ -19,5 +19,5 @@ const appRoutes: ReactRoute[] = [
 export default appRoutes;
 
 export interface HomeRouteParams {
-  language: string;
+  locale: string;
 }

@@ -1,8 +1,6 @@
 import { ServerResponse } from 'http';
-import RenderHtml from '../utils/RenderHtml';
 import { NormalizedIncomingMessage } from '../server';
-import configureStore from '../../../client/configureStore';
-import translationsHelper from '../utils/TranslationsHelper';
+import { createReactResponse } from '../utils/ResponseBody/bindings/reactResponse';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 200;
@@ -11,7 +9,7 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
 
   }
 
-  const render: RenderHtml = new RenderHtml(req, configureStore(), translationsHelper);
-  const responseString: string = render.getResponseString();
+  const reactResponse = createReactResponse(req);
+  const responseString: string = reactResponse.render();
   return res.end(responseString);
 };

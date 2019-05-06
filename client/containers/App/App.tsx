@@ -3,11 +3,11 @@ import { Route, Switch, RouteComponentProps } from 'react-router';
 import { i18nContext } from '../hocs/WithTranslations';
 import appRoutes, { ReactRoute, HomeRouteParams } from './app.routes';
 import './app.styles.scss';
-import ReactTranslator
-  from '../../../data/translations/BrowsersTranslator/bindings/ReactTranslator';
+import BrowsersTranslator
+  from '../../../data/translations/BrowsersTranslator/BrowsersTranslator';
 
 interface Props {
-  translator: ReactTranslator;
+  translator: BrowsersTranslator;
 }
 
 class App extends React.Component<Props> {
@@ -21,9 +21,10 @@ class App extends React.Component<Props> {
     const Component: React.FunctionComponent<any> | React.ComponentClass<any, any> =
       route.getComponent();
     const { params } = props.match;
+    const { translator } = this.props;
     return (
       <i18nContext.Provider value={{
-        translator: this.props.translator,
+        translator,
         locale: (params as HomeRouteParams).locale,
       }}>
         <Component/>

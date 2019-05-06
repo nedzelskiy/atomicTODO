@@ -10,7 +10,11 @@ class TodosLocalStorage implements Storage {
 
   getTodos() {
     try {
-      return JSON.parse(<any>localStorage.getItem(TodosLocalStorage.storageKey));
+      const todos = JSON.parse(<any>localStorage.getItem(TodosLocalStorage.storageKey));
+      if (!todos) {
+        throw new Error('no todos stored in local storage!');
+      }
+      return todos;
     } catch (e) {
       return [];
     }

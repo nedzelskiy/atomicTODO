@@ -19,9 +19,20 @@ $color: white;
   text-align: center;
   padding: 0.6rem;
   line-height: 1;
+  position: relative;
 
   &.create-todo {
     background-color: $background;
     color: $color;
+  }
+
+  &:active {
+    top: 0.1rem;
+  }
+
+  &:active,
+  &:focus,
+  &:visited {
+    outline: none;
   }
 }

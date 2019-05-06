@@ -7,8 +7,6 @@ import configureStore from './configureStore';
 import { BrowserRouter } from 'react-router-dom';
 import  BrowsersTranslator, { BrowserTranslationsForLocale }
   from '../data/translations/BrowsersTranslator/BrowsersTranslator';
-import  ReactTranslator
-  from '../data/translations/BrowsersTranslator/bindings/ReactTranslator';
 
 const locale: string = document.documentElement.lang;
 const translationsForLocale: BrowserTranslationsForLocale = (window as any)[locale];
@@ -20,7 +18,7 @@ const store: Store = configureStore({}, { translator });
 hydrate(
   <Provider store={store}>
     <BrowserRouter>
-      <App translator={new ReactTranslator(translator)} />
+      <App translator={translator} />
     </BrowserRouter>
   </Provider>,
   document.getElementById('root'),

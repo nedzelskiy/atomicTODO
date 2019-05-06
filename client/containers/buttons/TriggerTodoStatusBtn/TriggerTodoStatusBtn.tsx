@@ -24,7 +24,7 @@ class TriggerTodoStatusBtn extends React.Component<Props, {}> {
         className="todo-trigger-done"
         onClick={this.handleOnClick}
       >
-        &#10004;
+        ☑
       </Button>
     );
   }

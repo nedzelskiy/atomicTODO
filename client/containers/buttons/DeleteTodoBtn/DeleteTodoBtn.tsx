@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
 import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux.actions';
-import withTranslations, { TranslateHelperProp } from '../../hocs/withTranslations';
+import withTranslations, { TranslateHelperProp } from '../../hocs/WithTranslations';
 
 interface Props extends TranslateHelperProp {
   id: number;

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import TodoItem from '../../molecules/TodoItem/TodoItem';
 import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
+import './todolist.styles.scss';
 
 interface Props {
   todos: Todo[];

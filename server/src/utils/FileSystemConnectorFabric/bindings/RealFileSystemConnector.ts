@@ -8,6 +8,10 @@ class RealFileSystemConnector implements FileSystemConnector {
       readFileSync(normalize(`${path}.json`), 'utf-8'),
     );
   }
+
+  readFile(path: string): string | Error {
+    return readFileSync(path, 'utf-8');
+  }
 }
 
 export default RealFileSystemConnector;

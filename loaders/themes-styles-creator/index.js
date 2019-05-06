@@ -1,7 +1,7 @@
 const loaderUtils = require('loader-utils');
-const ThemeCreatorPlugin = require('./ThemesStylesCreatorPlugin');
+const { cachedStylesKeysKeeper } = require('./CachedStylesKeysKeeper');
 
 module.exports = function themeCreatorLoader() {
-  ThemeCreatorPlugin.cachedStylesKeys.push(`m${loaderUtils.getCurrentRequest(this)}`);
+  cachedStylesKeysKeeper.addKey(`m${loaderUtils.getCurrentRequest(this)}`);
   return '';
 };

@@ -14,7 +14,7 @@ export default (state: State = initialState, action: CommonAction): State => {
 
     case events.ADD_TODO: {
       const { todo } = <AddTodoPayload>action.payload;
-      newState.todos.push(todo);
+      newState.todos.unshift(todo);
       break;
     }
 

@@ -1,15 +1,24 @@
 import { ServerResponse } from 'http';
 import { NormalizedIncomingMessage } from '../server';
-import { createReactResponse } from '../utils/ResponseBody/bindings/reactResponse';
+import { getResponseBodyCreator }
+  from '../utils/ResponseBodyCreator/bindings/responseBodyCreatorWithHelpers';
+import ResponseBodyCreator from '../utils/ResponseBodyCreator/ResponseBodyCreator';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 200;
 
-  if (req.url.indexOf('/get-translations/') > -1 && req.method === 'GET') {
+  const responseBodyCreator: ResponseBodyCreator = getResponseBodyCreator(req);
+  const responseBody: string = <string>responseBodyCreator.create();
+  const context = responseBodyCreator.getContext();
 
+  if (!context.url) {
+    res.setHeader('Content-Type', 'text/html');
+    return res.end(responseBody);
   }
 
-  const reactResponse = createReactResponse(req);
-  const responseString: string = reactResponse.render();
-  return res.end(responseString);
+  res.writeHead(302, {
+    Location: context.url,
+  });
+  res.statusCode = 302;
+  return res.end();
 };

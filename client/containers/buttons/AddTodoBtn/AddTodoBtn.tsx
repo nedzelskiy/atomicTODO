@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import withTranslations, { TranslateHelperProp } from '../../hocs/withTranslations';
+import withTranslations, { TranslateHelperProp } from '../../hocs/WithTranslations';
 
 interface Props extends TranslateHelperProp {
   inputRef: React.RefObject<HTMLInputElement>;
@@ -16,12 +16,31 @@ class AddTodoBtn extends React.Component<Props, {}> {
     this.handleOnClick = this.handleOnClick.bind(this);
   }
 
+  componentDidMount() {
+    const { current } = this.props.inputRef;
+    if (current) {
+      current.addEventListener('keypress', ({ key }) => {
+        if (current.value && key === 'Enter') {
+          this.addTodo(current);
+        }
+      });
+    }
+  }
+
+  addTodo(input: HTMLInputElement) {
+    if (!input.value.trim()) {
+      return;
+    }
+    const todo = createNewTodo(input.value);
+    this.props.addTodo(todo);
+    input.value = '';
+    input.blur();
+  }
+
   handleOnClick() {
-    if (this.props.inputRef.current && this.props.inputRef.current.value) {
-      const todo = createNewTodo(this.props.inputRef.current.value);
-      this.props.addTodo(todo);
-      this.props.inputRef.current.value = '';
-      this.props.inputRef.current.blur();
+    const { current } = this.props.inputRef;
+    if (current && current.value) {
+      this.addTodo(current);
     }
   }
 

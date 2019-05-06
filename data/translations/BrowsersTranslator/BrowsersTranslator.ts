@@ -27,6 +27,7 @@ class BrowsersTranslator implements LocalizedTranslationsFormat {
     if (locale) {
       this.setTranslations(locale, translationsForLocale);
     }
+    this.translate = this.translate.bind(this);
   }
 
   setTranslations(locale: string, translationsForLocale: TranslationsForLocale): void {

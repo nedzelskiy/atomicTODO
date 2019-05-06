@@ -8,14 +8,14 @@ export interface Props {
   meta: {
     title: string,
   };
-  language: string;
+  locale: string;
   state: StateOfReducers;
   children: React.ReactNode;
   translationsForLocale: BrowserTranslationsForLocale;
 }
 
 export default (props: Props): JSX.Element => (
-  <html lang={props.language}>
+  <html lang={props.locale}>
   <head>
     <meta charSet="utf-8"/>
     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
@@ -27,7 +27,7 @@ export default (props: Props): JSX.Element => (
       <script
         id="translations-for-locale"
         dangerouslySetInnerHTML=
-          {{ __html: `window['${props.language}']=${serialize(props.translationsForLocale)};` }}
+          {{ __html: `window['${props.locale}']=${serialize(props.translationsForLocale)};` }}
       />
       <div id="root">{props.children}</div>
       <script id="js-app" type="text/javascript" src="/static/client.js"/>

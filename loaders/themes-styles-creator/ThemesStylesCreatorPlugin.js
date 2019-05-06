@@ -8,6 +8,7 @@ const uniqid = require('uniqid');
 const sass = require('node-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
+const { cachedStylesKeysKeeper } = require('./CachedStylesKeysKeeper');
 
 class ThemesStylesCreatorPlugin {
   static getSassVariable(name, value) {
@@ -64,13 +65,17 @@ class ThemesStylesCreatorPlugin {
   }
 
   getCachedStyles() {
+    const storedCachedKeys = cachedStylesKeysKeeper.getKeys();
     if (
-      ThemesStylesCreatorPlugin.cachedStylesKeys.length > 0
-      && ThemesStylesCreatorPlugin.cachedStylesKeys[0]
+      storedCachedKeys.length > 0
+      && storedCachedKeys[0]
     ) {
-      return ThemesStylesCreatorPlugin.cachedStylesKeys;
+      return storedCachedKeys;
     }
-    ThemesStylesCreatorPlugin.consoleMessage('warn', `cachedKey "${ThemesStylesCreatorPlugin.cachedStylesKeys[0]}" wasn't got from prepared set!`);
+    ThemesStylesCreatorPlugin.consoleMessage(
+      'warn',
+      `cachedKey "${storedCachedKeys[0]}" wasn't got from prepared set!`,
+    );
     return this.getCachedStylesKeysFromStats();
   }
 
@@ -109,7 +114,7 @@ class ThemesStylesCreatorPlugin {
     cachedStylesKeys.forEach((cachedStylesKey) => {
       delete this.stats.compilation.cache[cachedStylesKey];
     });
-    ThemesStylesCreatorPlugin.cachedStylesKeys = [];
+    cachedStylesKeysKeeper.clearKeys();
   }
 
   createAndDropThemesFiles(buildFolder) {
@@ -119,7 +124,5 @@ class ThemesStylesCreatorPlugin {
     });
   }
 }
-
-ThemesStylesCreatorPlugin.cachedStylesKeys = [];
 
 module.exports = ThemesStylesCreatorPlugin;

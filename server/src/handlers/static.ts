@@ -1,12 +1,16 @@
-import { readFileSync } from 'fs';
 import { ServerResponse } from 'http';
 import { contentType } from 'mime-types';
 import { NormalizedIncomingMessage } from '../server';
+import { FileSystemConnector } from '../utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
 
-export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
+export default (
+  req: NormalizedIncomingMessage,
+  res: ServerResponse,
+  fsc: FileSystemConnector,
+): void => {
   try {
     const resourceName: string | undefined = req.url.split('/').pop();
-    const file = readFileSync(`build/client/${resourceName}`);
+    const file = fsc.readFile(`build/client/${resourceName}`);
     if (resourceName) {
       const ct: string | false = contentType(<string>resourceName.split('.').pop());
       if (ct) {

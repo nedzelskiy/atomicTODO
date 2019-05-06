@@ -7,7 +7,7 @@ const Header = (): JSX.Element => (
     <Link to="/">/</Link>
     <Link to="/ru">/ru</Link>
     <Link to="/en">/en</Link>
-    <Link to="/unknown">/en</Link>
+    <Link to="/unknown">/unknown</Link>
   </header>
 );
 

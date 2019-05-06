@@ -8,7 +8,7 @@ const uniqid = require('uniqid');
 const sass = require('node-sass');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
-const { cachedStylesKeysKeeper } = require('./CachedStylesKeysKeeper');
+const cachedStylesKeysKeeper = require('./CachedStylesKeysKeeper');
 
 class ThemesStylesCreatorPlugin {
   static getSassVariable(name, value) {

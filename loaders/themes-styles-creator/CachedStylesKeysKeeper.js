@@ -16,6 +16,4 @@ class CachedStylesKeysKeeper {
   }
 }
 
-export default CachedStylesKeysKeeper;
-
-export const cachedStylesKeysKeeper = new CachedStylesKeysKeeper();
+module.exports = new CachedStylesKeysKeeper();

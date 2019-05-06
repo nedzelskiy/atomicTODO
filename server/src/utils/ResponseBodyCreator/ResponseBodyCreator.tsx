@@ -21,7 +21,7 @@ export default class ResponseBodyCreator {
   private readonly browserTranslator: BrowsersTranslator;
   private readonly serverTranslator: ServerTranslationsFormat;
   private readonly reactRender: ReactRender;
-  private readonly context: StaticRouterContext;
+  private readonly context: StaticRouterContext = {};
   private locale: string;
   private translationsForLocale: BrowserTranslationsForLocale;
 
@@ -39,6 +39,7 @@ export default class ResponseBodyCreator {
     this.browserTranslator = browserTranslator;
     this.setLocale();
     this.setTranslationsForLocale();
+    this.getContext = this.getContext.bind(this);
   }
 
   setLocale(): void {

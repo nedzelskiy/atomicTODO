@@ -10,7 +10,6 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   const responseBodyCreator: ResponseBodyCreator = getResponseBodyCreator(req);
   const responseBody: string = <string>responseBodyCreator.create();
   const context = responseBodyCreator.getContext();
-
   if (!context.url) {
     res.setHeader('Content-Type', 'text/html');
     return res.end(responseBody);

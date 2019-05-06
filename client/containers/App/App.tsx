@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, Switch, RouteComponentProps } from 'react-router';
-import { i18nContext } from '../hocs/WithTranslations';
+import { i18nContext } from '../hocs/withTranslations';
 import appRoutes, { ReactRoute, HomeRouteParams } from './app.routes';
 import './app.styles.scss';
 import BrowsersTranslator

@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import withTranslations, { TranslateHelperProp } from '../../hocs/WithTranslations';
+import withTranslations, { TranslateHelperProps } from '../../hocs/withTranslations';
 
-interface Props extends TranslateHelperProp {
+interface Props extends TranslateHelperProps {
   inputRef: React.RefObject<HTMLInputElement>;
   addTodo: AddTodo;
 }

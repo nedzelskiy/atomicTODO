@@ -6,8 +6,9 @@ export type TranslateHelper = (id: string, domain?: string) => string;
 
 export const i18nContext: React.Context<{}> = React.createContext({});
 
-export interface TranslateHelperProp {
+export interface TranslateHelperProps {
   t: TranslateHelper;
+  translator: BrowsersTranslator;
 }
 
 const createTranslateHelper =
@@ -19,8 +20,13 @@ export default (Component: React.FunctionComponent<any> | React.ComponentClass<a
   const WithTranslations = (props: any): JSX.Element =>
     (
       <i18nContext.Consumer>
-        {({ translator, locale }: {translator: BrowsersTranslator; locale: string }) =>
-          <Component {...props} t={createTranslateHelper(translator, locale)}/>}
+        {({ translator, locale }: { translator: BrowsersTranslator; locale: string }) =>
+          <Component
+            {...props}
+            t={createTranslateHelper(translator, locale)}
+            translator={translator}
+          />
+        }
       </i18nContext.Consumer>
     );
   return WithTranslations;

@@ -11,7 +11,7 @@ import { ServerTranslationsFormat }
   from '../../../../data/translations/ServerTranslator/ServerTranslator';
 import BrowsersTranslator, { BrowserTranslationsForLocale }
   from '../../../../data/translations/BrowsersTranslator/BrowsersTranslator';
-import { TranslateHelper } from '../../../../client/containers/hocs/WithTranslations';
+import { TranslateHelper } from '../../../../client/containers/hocs/withTranslations';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 

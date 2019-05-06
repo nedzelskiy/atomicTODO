@@ -45,10 +45,11 @@ class BrowsersTranslator implements LocalizedTranslationsFormat {
   }
 
   translate(locale: string, id: string, domain: string = BrowsersTranslator.defaultDomain): string {
-    return get(
-      this.translations,
-      `${locale}.${domain}.${id}`,
-    ) || id;
+    const translatedString = get(this.translations, `${locale}.${domain}.${id}`);
+    if (translatedString) {
+      return translatedString;
+    }
+    return id;
   }
 }
 

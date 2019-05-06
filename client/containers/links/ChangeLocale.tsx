@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import withTranslations, { TranslateHelperProps } from '../hocs/withTranslations';
 
 interface Props extends TranslateHelperProps {
-  to: string;
+  locale: string;
 }
 
 class ChangeLocale extends React.Component<Props, {}> {
@@ -13,7 +13,7 @@ class ChangeLocale extends React.Component<Props, {}> {
   }
 
   onClick() {
-    this.props.translator;
+    
   }
 
   render() {

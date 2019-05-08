@@ -1,5 +1,5 @@
 import { RouteProps, Redirect } from 'react-router-dom';
-import { FunctionComponent, ComponentClass, createElement, ReactElement} from 'react';
+import { FunctionComponent, ComponentClass, createElement, ReactElement } from 'react';
 import MainPage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import Environment from '../../../server/utils/Environment/Environment';

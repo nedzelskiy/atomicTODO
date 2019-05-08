@@ -5,7 +5,7 @@ const chalk = require('chalk');
 module.exports = {
   target: 'node',
   entry: {
-    server: path.normalize(`${process.env.PWD}/server/src/server.ts`),
+    server: path.normalize(`${process.env.PWD}/server/server.ts`),
   },
   output: {
     path: path.normalize(`${process.env.PWD}/build/server/`),
@@ -16,7 +16,7 @@ module.exports = {
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
   },
-  devtool: 'source-map',
+  devtool: 'inline-source-map',
   module: {
     rules: [
       {

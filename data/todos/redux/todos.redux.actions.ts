@@ -1,16 +1,19 @@
-import * as events from './todos.redux.events';
+import events from './todos.redux.events';
 import { Todo } from './todos.redux.initial-state';
 import { CommonAction } from '../../redux.interfaces';
 
-export interface AddTodos {
-  (todos: Todo[]): CommonAction & {
-    payload: {
-      todos: Todo[];
-    };
+interface AddTodosAction {
+  type: events.ADD_TODOS;
+  payload: {
+    todos: Todo[];
   };
 }
 
-export const addTodos: AddTodos = (todos: Todo[]) => {
+export interface AddTodos {
+  (todos: Todo[]): CommonAction & AddTodosAction;
+}
+
+export const addTodos: AddTodos = (todos: Todo[]): AddTodosAction => {
   return {
     type: events.ADD_TODOS,
     payload: {

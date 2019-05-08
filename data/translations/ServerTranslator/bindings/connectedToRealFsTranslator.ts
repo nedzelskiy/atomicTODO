@@ -1,5 +1,5 @@
 import FileSystemConnectorFabric
-  from '../../../../server/src/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
+  from '../../../../server/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
 import ServerTranslator from '../ServerTranslator';
 
 export default new ServerTranslator(

@@ -3,14 +3,14 @@ import { readFileSync } from 'fs';
 import { FileSystemConnector } from '../FileSystemConnectorFabric';
 
 class RealFileSystemConnector implements FileSystemConnector {
-  readJSON(path: string): Object | Error {
+  readJSON(path: string): any | never {
     return JSON.parse(
       readFileSync(normalize(`${path}.json`), 'utf-8'),
     );
   }
 
-  readFile(path: string): string | Error {
-    return readFileSync(path, 'utf-8');
+  readFile(path: string): string {
+    return readFileSync(normalize(path), 'utf-8');
   }
 }
 

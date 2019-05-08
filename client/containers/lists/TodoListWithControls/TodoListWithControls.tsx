@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import { TodosReducersState } from '../../../../data/redux.reducers';
+import { TodosReducerState } from '../../../../data/redux.reducers';
 import TodoListWithControls
   from '../../../components/organismes/TodoListWithControls/TodoListWithControls';
 
@@ -18,7 +18,7 @@ class TodoListWithControlsContainer extends React.Component<Props, {}> {
 }
 
 export default connect(
-  ({ todosReducer }: TodosReducersState) => {
+  ({ todosReducer }: TodosReducerState) => {
     return {
       todos: todosReducer.todos,
     };

@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as serialize from 'serialize-javascript';
 import { StateOfReducers } from '../../data/redux.reducers';
 import { BrowserTranslationsForLocale }
-  from '../../data/translations/BrowsersTranslator/BrowsersTranslator';
+  from '../../data/translations/BrowserTranslator/BrowserTranslator';
 
 export interface Props {
   meta: {
@@ -11,7 +11,7 @@ export interface Props {
   locale: string;
   state: StateOfReducers;
   children: React.ReactNode;
-  translationsForLocale: BrowserTranslationsForLocale;
+  translationsForLocale: BrowserTranslationsForLocale | null;
 }
 
 export default (props: Props): JSX.Element => (
@@ -24,10 +24,14 @@ export default (props: Props): JSX.Element => (
     <title>{props.meta.title}</title>
   </head>
     <body>
-      <script
+      {props.translationsForLocale && <script
         id="translations-for-locale"
         dangerouslySetInnerHTML=
           {{ __html: `window['${props.locale}']=${serialize(props.translationsForLocale)};` }}
+      />}
+      <script
+        id="state"
+        dangerouslySetInnerHTML={{ __html: `window.state=${serialize(props.state)};` }}
       />
       <div id="root">{props.children}</div>
       <script id="js-app" type="text/javascript" src="/static/client.js"/>

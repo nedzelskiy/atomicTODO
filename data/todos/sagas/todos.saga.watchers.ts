@@ -1,5 +1,5 @@
-import * as reduxEvents from './todos.redux.events';
-import * as sagaEvents from './todos.saga.events';
+import reduxEvents from '../redux/todos.redux.events';
+import sagaEvents from './todos.saga.events';
 import { takeEvery, select, call, put } from 'redux-saga/effects';
 import todosStorage from '../TodosStorage/TodosLocalStorage';
 

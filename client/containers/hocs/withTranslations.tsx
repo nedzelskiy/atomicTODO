@@ -1,6 +1,5 @@
 import * as React from 'react';
-import BrowsersTranslator
-  from '../../../data/translations/BrowsersTranslator/BrowsersTranslator';
+import BrowserTranslator from '../../../data/translations/BrowserTranslator/BrowserTranslator';
 
 export type TranslateHelper = (id: string, domain?: string) => string;
 
@@ -8,11 +7,10 @@ export const i18nContext: React.Context<{}> = React.createContext({});
 
 export interface TranslateHelperProps {
   t: TranslateHelper;
-  translator: BrowsersTranslator;
 }
 
 const createTranslateHelper =
-  (translator: BrowsersTranslator, locale: string): TranslateHelper => {
+  (translator: BrowserTranslator, locale: string): TranslateHelper => {
     return translator.translate.bind(this, locale);
   };
 
@@ -20,11 +18,10 @@ export default (Component: React.FunctionComponent<any> | React.ComponentClass<a
   const WithTranslations = (props: any): JSX.Element =>
     (
       <i18nContext.Consumer>
-        {({ translator, locale }: { translator: BrowsersTranslator; locale: string }) =>
+        {({ translator, locale }: { translator: BrowserTranslator; locale: string }) =>
           <Component
             {...props}
             t={createTranslateHelper(translator, locale)}
-            translator={translator}
           />
         }
       </i18nContext.Consumer>

@@ -4,13 +4,13 @@ export interface BrowserTranslations {
   [locale: string]: TranslationsForLocale;
 }
 
-interface TranslationsForLocale {
+type TranslationsForLocale = {
   [domain: string]: {
     [propName: string]: string;
   };
-}
+};
 
-export interface BrowserTranslationsForLocale extends TranslationsForLocale {}
+export type BrowserTranslationsForLocale = TranslationsForLocale;
 
 interface LocalizedTranslationsFormat {
   isExistTranslations(locale: string): boolean;
@@ -19,15 +19,33 @@ interface LocalizedTranslationsFormat {
   setTranslations(locale: string, translationsForLocale: TranslationsForLocale): void;
 }
 
-class BrowsersTranslator implements LocalizedTranslationsFormat {
-  static readonly defaultDomain = 'common';
+class BrowserTranslator implements LocalizedTranslationsFormat {
+  private static readonly defaultDomain = 'common';
+  private static writeWatcher: Function = () => {};
+
   private readonly translations: BrowserTranslations = {};
 
-  constructor(locale: string | null = null, translationsForLocale: TranslationsForLocale = {}) {
-    if (locale) {
-      this.setTranslations(locale, translationsForLocale);
-    }
+  private readonly createTranslationsProxy() {
+    this.translations = new Proxy({}, {
+      get(target: any, prop) {
+        return target[prop];
+      },
+      set(target, prop, value) {
+        target[prop] = value;
+        BrowserTranslator.writeWatcher(target, prop, value);
+        return true;
+      },
+    });
+  }
+
+  static subscribeToUpdateTranslations(handler: Function) {
+    this.writeWatcher = handler;
+  }
+
+  constructor() {
+    this.createTranslationsProxy();
     this.translate = this.translate.bind(this);
+    this.setTranslations = this.setTranslations.bind(this);
   }
 
   setTranslations(locale: string, translationsForLocale: TranslationsForLocale): void {
@@ -44,7 +62,7 @@ class BrowsersTranslator implements LocalizedTranslationsFormat {
       : {};
   }
 
-  translate(locale: string, id: string, domain: string = BrowsersTranslator.defaultDomain): string {
+  translate(locale: string, id: string, domain: string = BrowserTranslator.defaultDomain): string {
     return get(
       this.translations,
       `${locale}.${domain}.${id}`,
@@ -52,4 +70,4 @@ class BrowsersTranslator implements LocalizedTranslationsFormat {
   }
 }
 
-export default BrowsersTranslator;
+export default BrowserTranslator;

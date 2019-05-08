@@ -17,6 +17,10 @@ class FileSystemConnectorFabric {
 export default FileSystemConnectorFabric;
 
 export interface FileSystemConnector {
-  readJSON(path: string): Object | Error;
-  readFile(path: string): string | Error;
+  readJSON(path: string): any | never;
+  readFile(path: string): string | Buffer;
+}
+
+export interface WithFileSystemConnector {
+  getFileSystemConnector(): FileSystemConnector;
 }

@@ -1,32 +1,36 @@
-import loggerFacade from '../../../server/src/utils/Logger/LoggerFacade';
-import { FileSystemConnector }
-  from '../../../server/src/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
-import { BrowserTranslationsForLocale } from '../BrowsersTranslator/BrowsersTranslator';
+import loggerFacade from '../../../server/utils/Logger/LoggerFacade';
+import { FileSystemConnector, WithFileSystemConnector }
+  from '../../../server/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
 
-export interface ServerTranslationsFormat {
-  getBrowserTranslationsForLocale(locale: string): BrowserTranslationsForLocale | {};
+interface ServerTranslationsFormat {}
+
+export interface WithTranslationFiles {
+  readTranslationsFile<T>(locale: string): T | null;
 }
 
-export class ServerTranslator implements ServerTranslationsFormat {
+export interface ServerTranslationsForLocale {}
+
+export class ServerTranslator
+  implements ServerTranslationsFormat, WithFileSystemConnector, WithTranslationFiles
+{
   private readonly fsc: FileSystemConnector;
 
   constructor(fileSystemConnector: FileSystemConnector) {
     this.fsc = fileSystemConnector;
   }
 
-  getBrowserTranslations(path: string): BrowserTranslationsForLocale | {} {
-    try {
-      return this.fsc.readJSON(path);
-    } catch (e) {
-      loggerFacade.log(e);
-      return {};
-    }
+  getFileSystemConnector(): FileSystemConnector {
+    return this.fsc;
   }
 
-  getBrowserTranslationsForLocale(locale: string) {
-    return this.getBrowserTranslations(
-      `${process.env.PWD}/data/translations/browserTranslations/${locale}`,
-    );
+  readTranslationsFile(locale: string): null {
+    try {
+      // return this.fsc.readJSON(path);
+      return null;
+    } catch (e) {
+      loggerFacade.log(e);
+      return null;
+    }
   }
 }
 

@@ -1,7 +1,7 @@
 import staticHandler from './handlers/static';
 import applicationHandler from './handlers/application';
 import translationsHandler from './handlers/translations';
-import missedLanguageHandler from './handlers/missedLanguage';
+import missedLocaleHandler from './handlers/missedLocale';
 import { Server, createServer, ServerResponse, IncomingMessage } from 'http';
 import RealFileSystemConnector
   from './utils/FileSystemConnectorFabric/bindings/RealFileSystemConnector';
@@ -18,7 +18,7 @@ server
     }
 
     if (req.url === '/') {
-      return missedLanguageHandler(<NormalizedIncomingMessage>req, res);
+      return missedLocaleHandler(<NormalizedIncomingMessage>req, res);
     }
 
     if (req.url.indexOf('/translations/') > -1 && req.method === 'GET') {
@@ -35,4 +35,9 @@ server
 
 export interface NormalizedIncomingMessage extends IncomingMessage {
   url: string;
+}
+
+export interface ResponseData {
+  success: boolean;
+  data: any;
 }

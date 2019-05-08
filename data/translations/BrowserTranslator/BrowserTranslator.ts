@@ -62,11 +62,12 @@ class BrowserTranslator implements LocalizedTranslationsFormat {
       : {};
   }
 
-  translate(locale: string, id: string, domain: string = BrowserTranslator.defaultDomain): string {
-    return get(
-      this.translations,
-      `${locale}.${domain}.${id}`,
-    ) || id;
+  translate(locale: string, id: string, domain: string = BrowsersTranslator.defaultDomain): string {
+    const translatedString = get(this.translations, `${locale}.${domain}.${id}`);
+    if (translatedString) {
+      return translatedString;
+    }
+    return id;
   }
 }
 

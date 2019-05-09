@@ -1,7 +1,9 @@
 {
   "common": {
     "New task": "新任務",
-    "This is an atomic TODO app": "這是一個原子TODO應用程序",
     "delete": "刪除"
+  },
+  "meta": {
+    "This is an atomic TODO app": "這是一個原子去做應用程序"
   }
 }

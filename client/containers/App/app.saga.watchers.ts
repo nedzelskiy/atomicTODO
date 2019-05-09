@@ -35,7 +35,7 @@ function* changeLocaleForCurrentPage(locale: string, translations: ClientTransla
   const route: ReactRoute = appRoutes[pageName];
   const translator: ClientTranslator = yield new ClientTranslator(translations);
   const t: TranslateHelper = yield translator.getTranslator();
-  (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title);
+  (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title, 'meta');
 }
 
 function* changeLocale(action: CommonAction & ChangeLocaleAction) {

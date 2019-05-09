@@ -1,7 +1,9 @@
 {
   "common": {
     "New task": "Новая задача",
-    "This is an atomic TODO app": "Todo приложение на атомарном дизайне",
     "delete": "удалить"
+  },
+  "meta": {
+    "This is an atomic TODO app": "Todo приложение на атомарном дизайне"
   }
 }

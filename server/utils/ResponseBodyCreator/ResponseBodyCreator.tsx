@@ -45,7 +45,7 @@ export default class ResponseBodyCreator {
     return reactRender(
       <Html
         meta={{
-          title: t(this.route.meta.title),
+          title: t(this.route.meta.title, 'meta'),
         }}
         locale={this.locale}
         state={store.getState()}

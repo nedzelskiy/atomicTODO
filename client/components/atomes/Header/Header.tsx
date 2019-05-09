@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import ChangeLocaleBtn from '../../../containers/buttons/ChangeLocaleBtn/ChangeLocaleBtn';
 import './header.styles.scss';
 
 const Header = (): JSX.Element => (
   <header className="header">
     <Link to="/">/</Link>
-    <Link to="/ru">/ru</Link>
-    <Link to="/en">/en</Link>
-    <Link to="/zh">/zh</Link>
-    <Link to="/fi-FI">/fi-FI</Link>
+    <ChangeLocaleBtn locale="ru" />
+    <ChangeLocaleBtn locale="en" />
+    <ChangeLocaleBtn locale="zh" />
+    <ChangeLocaleBtn locale="fi-FI" />
     <Link to="/unknown">/unknown</Link>
   </header>
 );

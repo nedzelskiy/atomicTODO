@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { HomeRouteParams, ReactRoute } from '../App/app.routes';
+import { AppRoutes, HomeRouteParams, ReactRoute } from '../App/app.routes';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 interface Props {
-  routes: ReactRoute[];
+  routes: AppRoutes;
   render: (routerProps: RouterProps, route: ReactRoute) => React.ReactNode;
 }
 
@@ -31,7 +31,9 @@ class Router extends React.Component<Props, {}> {
     return (
       <BrowserRouter>
         <Switch>
-          {this.props.routes.map(this.renderRoute)}
+          {Object.keys(this.props.routes).map((k) => {
+            return this.renderRoute(this.props.routes[k]);
+          })}
         </Switch>
       </BrowserRouter>
     );

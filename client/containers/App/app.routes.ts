@@ -4,10 +4,16 @@ import MainPage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import Environment from '../../../server/utils/Environment/Environment';
 
+export interface RouteMeta {
+  title: string;
+}
+
 export interface ReactRoute extends RouteProps {
   path: string;
   pageName: string;
-  getComponent(): FunctionComponent<any> | ComponentClass<any, any>| ReactElement;
+  meta: RouteMeta;
+
+  getComponent(): FunctionComponent<any> | ComponentClass<any, any> | ReactElement;
 }
 
 export interface RouterMatch {
@@ -19,17 +25,27 @@ export interface ReactRouteWithMatchedParams extends ReactRoute {
   match: RouterMatch;
 }
 
-const appRoutes: ReactRoute[] = [
-  {
+export interface AppRoutes {
+  [pageName: string]: ReactRoute;
+}
+
+const appRoutes: AppRoutes = {
+  home: {
     exact: true,
     path: '/:locale',
     pageName: 'home',
     getComponent: () => MainPage,
+    meta: {
+      title: 'This is an atomic TODO app',
+    },
   },
-  {
+  'missed-locale': {
     exact: true,
     path: '/',
     pageName: 'missed-locale',
+    meta: {
+      title: '',
+    },
     getComponent: () => createElement(
       'div',
       {
@@ -38,12 +54,15 @@ const appRoutes: ReactRoute[] = [
       Redirect,
     ),
   },
-  {
+  'not-found': {
     path: '*',
     pageName: 'not-found',
     getComponent: () => NotFoundPage,
+    meta: {
+      title: '',
+    },
   },
-];
+};
 
 export default appRoutes;
 

@@ -45,7 +45,7 @@ export default class ResponseBodyCreator {
     return reactRender(
       <Html
         meta={{
-          title: t('This is an atomic TODO app'),
+          title: t(this.route.meta.title),
         }}
         locale={this.locale}
         state={store.getState()}
@@ -55,7 +55,12 @@ export default class ResponseBodyCreator {
         <Provider store={store}>
           <StaticRouter location={this.route.url} context={this.context}>
             <App
-              routerParams={this.route.match.params}
+              history={{}}
+              locale={this.locale}
+              route={{
+                pageName: this.route.pageName,
+                params: this.route.match.params,
+              }}
               translations={translationsForLocale}
             >
               <Component />

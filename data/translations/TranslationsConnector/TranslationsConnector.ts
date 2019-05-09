@@ -7,8 +7,11 @@ import ClientTranslationsDto, { ClientTranslationsForLocale }
 
 export interface ClientServerTranslationsFormats {
   getClientTranslationsDto(): ClientTranslationsDto;
+
   getServerTranslationsDto(): ServerTranslationsDto;
+
   getServerTranslationsForLocale(locale: string): ServerTranslationsForLocale | {};
+
   getClientTranslationsForLocale(locale: string): ClientTranslationsForLocale | {};
 }
 

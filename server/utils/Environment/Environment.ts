@@ -1,11 +1,11 @@
 import { matchPath } from 'react-router-dom';
 import { compile } from 'path-to-regexp';
 import { NormalizedIncomingMessage } from '../../server';
-import { HomeRouteParams, ReactRoute, ReactRouteWithMatchedParams, RouterMatch }
+import { AppRoutes, HomeRouteParams, ReactRoute, ReactRouteWithMatchedParams, RouterMatch }
   from '../../../client/containers/App/app.routes';
 
 export default class Environment {
-  private readonly routes: ReactRoute[];
+  private readonly routes: AppRoutes;
 
   static defaultLocale: string = 'en';
   static defaultTheme: string = 'white';
@@ -34,7 +34,7 @@ export default class Environment {
 
   createUrlByPageName(pageName: string, routeParams: any): string | null {
     try {
-      const route: ReactRoute | undefined = this.getRouteByPageName(pageName);
+      const route: ReactRoute | undefined = this.routes[pageName];
       if (!route) {
         return null;
       }
@@ -45,19 +45,14 @@ export default class Environment {
     }
   }
 
-  getRouteByPageName(pageName: string): ReactRoute | undefined {
-    return this.routes.find((r) => {
-      return r.pageName === pageName;
-    });
-  }
-
   getMatchedRouteWithParams(url: string): ReactRouteWithMatchedParams {
     let route: ReactRoute = this.routes[0];
     let match: RouterMatch = {
       params: {},
     };
 
-    const result: boolean = this.routes.some((r) => {
+    const result: boolean = Object.keys(this.routes).some((pageName) => {
+      const r = this.routes[pageName];
       const m = matchPath(url, r);
       if (!m || !m.params) {
         return false;
@@ -73,7 +68,7 @@ export default class Environment {
     });
 
     if (!result) {
-      route = <ReactRoute>this.getRouteByPageName('not-found');
+      route = this.routes['not-found'];
     }
 
     return {
@@ -83,7 +78,8 @@ export default class Environment {
     };
   }
 
-  constructor(routes: ReactRoute[]) {
+  constructor(routes: AppRoutes) {
     this.routes = routes;
+    this.createUrlByPageName = this.createUrlByPageName.bind(this);
   }
 }

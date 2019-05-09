@@ -6,14 +6,14 @@ import App from './containers/App/App';
 import configureStore from './configureStore';
 import Router, { RouterProps } from './containers/Router/Router';
 import appRoutes, { ReactRoute } from './containers/App/app.routes';
-import  ClientTranslationsDto, { ClientTranslationsForLocale }
+import ClientTranslationsDto, { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
-const translationsStore = new ClientTranslationsDto();
-translationsStore.setTranslations(locale, clientTranslationsForLocale);
-const store: Store = configureStore((window as any).state, { translationsStore });
+const translationsStorage = new ClientTranslationsDto();
+translationsStorage.setTranslations(locale, clientTranslationsForLocale);
+const store: Store = configureStore((window as any).state, { translationsStorage });
 
 hydrate(
   <Provider store={store}>
@@ -22,13 +22,19 @@ hydrate(
       render={(routerProps: RouterProps, route: ReactRoute) => {
         const Component: any = route.getComponent();
         const translations: ClientTranslationsForLocale =
-          translationsStore.getTranslations(routerProps.match.params.locale);
+          translationsStorage.getTranslations(routerProps.match.params.locale);
+
         return (
           <App
             translations={translations}
-            routerParams={routerProps.match.params}
+            locale={routerProps.match.params.locale}
+            history={routerProps.history}
+            route={{
+              pageName: route.pageName,
+              params: routerProps.match.params,
+            }}
           >
-            <Component />
+            <Component/>
           </App>
         );
       }}

@@ -8,13 +8,13 @@ import { ClientTranslationsForLocale }
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 404;
   const locale: string = <string>req.url.split('/').pop();
-  const translations: ClientTranslationsForLocale | null =
+  const translations: ClientTranslationsForLocale | {} =
     withFilesFromRealFs.getClientTranslationsForLocale(locale);
   let response: ResponseData = {
     success: false,
     data: null,
   };
-  if (translations) {
+  if (translations && Object.keys(translations).length > 0) {
     res.statusCode = 200;
     response = {
       success: true,

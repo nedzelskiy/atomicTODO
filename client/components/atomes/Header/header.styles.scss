@@ -1,16 +1,25 @@
 .header {
   padding: 1.2rem 0;
   text-align: center;
+  position: fixed;
+  width: 100%;
+  max-width: 40rem;
+  background-color: white;
+  top: 0;
+  z-index: 1;
 
-  a {
-    padding: 0.4rem 0.6rem;
+  a,
+  .change-locale {
+    padding: 0.6rem;
     background-color: #5b5b5b;
-    margin-right: 10px;
+    margin-right: 0.5rem;
     color: white;
-    border-radius: 10px;
+    border-radius: 0.5rem;
     display: inline-block;
     min-width: 3rem;
     text-align: center;
     text-decoration: none;
+    max-height: none;
+    line-height: 1;
   }
 }

@@ -2,6 +2,7 @@ import * as React from 'react';
 import TodoList from '../../molecules/TodoList/TodoList';
 import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import TodoItemCreator from '../../molecules/TodoItemCreator/TodoItemCreator';
+import './todolist-with-controls.styles.scss';
 
 interface Props {
   todos: Todo[];

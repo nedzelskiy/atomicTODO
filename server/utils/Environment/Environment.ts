@@ -8,6 +8,7 @@ export default class Environment {
   private readonly routes: ReactRoute[];
 
   static defaultLocale: string = 'en';
+  static defaultTheme: string = 'white';
 
   static getAllowedLocales(): Set<string> {
     return new Set()

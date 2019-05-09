@@ -1,18 +1,32 @@
 import loggerFacade from '../../../server/utils/Logger/LoggerFacade';
 import { FileSystemConnector, WithFileSystemConnector }
   from '../../../server/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
-
-interface ServerTranslationsFormat {}
+import { LocalizedTranslationsFormat } from '../trnaslations.interfaces';
 
 export interface WithTranslationFiles {
-  readTranslationsFile<T>(locale: string): T | null;
+  readTranslationsFile(locale: string): any;
 }
 
 export interface ServerTranslationsForLocale {}
 
-export class ServerTranslator
-  implements ServerTranslationsFormat, WithFileSystemConnector, WithTranslationFiles
+export class ServerTranslationsDto
+  implements
+    WithFileSystemConnector,
+    WithTranslationFiles,
+    LocalizedTranslationsFormat
 {
+  setTranslations(locale: string, translationsForLocale: any): void {
+    throw new Error('Method not implemented.');
+  }
+
+  getTranslations(locale: string) {
+    throw new Error('Method not implemented.');
+  }
+
+  isExistTranslations(locale: string): boolean {
+    throw new Error('Method not implemented.');
+  }
+
   private readonly fsc: FileSystemConnector;
 
   constructor(fileSystemConnector: FileSystemConnector) {
@@ -34,4 +48,4 @@ export class ServerTranslator
   }
 }
 
-export default ServerTranslator;
+export default ServerTranslationsDto;

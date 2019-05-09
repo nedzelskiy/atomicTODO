@@ -5,12 +5,14 @@ import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import Html from '../../../client/components/Html';
 import App from '../../../client/containers/App/App';
-import TranslatorsConnector
-  from '../../../data/translations/TranslatorsConnector/TranslatorsConnector';
-import BrowserTranslator, { BrowserTranslationsForLocale }
-  from '../../../data/translations/BrowserTranslator/BrowserTranslator';
-import { TranslateHelper } from '../../../client/containers/hocs/withTranslations';
+import TranslationsConnector
+  from '../../../data/translations/TranslationsConnector/TranslationsConnector';
+import { ClientTranslationsForLocale }
+  from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
+import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/App/app.routes';
+import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
+import Environment from '../Environment/Environment';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 
@@ -18,12 +20,12 @@ export default class ResponseBodyCreator {
   private readonly locale: string;
   private readonly route: ReactRouteWithMatchedParams;
   private readonly context: StaticRouterContext = {};
-  private readonly translatorsConnector: TranslatorsConnector;
+  private readonly translatorsConnector: TranslationsConnector;
 
   constructor(
     locale: string,
     route: ReactRouteWithMatchedParams,
-    translatorsConnector: TranslatorsConnector,
+    translatorsConnector: TranslationsConnector,
   ) {
     this.route = route;
     this.locale = locale;
@@ -35,13 +37,10 @@ export default class ResponseBodyCreator {
     reactRender: ReactRender,
     store: Store,
   ): string | NodeJS.ReadableStream {
-    const translationsForLocale: BrowserTranslationsForLocale | null =
-      this.translatorsConnector.getBrowserTranslationsForLocale(this.locale);
-    const browserTranslator: BrowserTranslator = this.translatorsConnector.getBrowserTranslator();
-    if (translationsForLocale) {
-      browserTranslator.setTranslations(this.locale, translationsForLocale);
-    }
-    const t: TranslateHelper = this.translatorsConnector.getBrowserTranslateHelper(this.locale);
+    const translationsForLocale: ClientTranslationsForLocale =
+      this.translatorsConnector.getClientTranslationsForLocale(this.locale);
+    const t: TranslateHelper = new ClientTranslator(translationsForLocale).getTranslator();
+    const Component: any = this.route.getComponent();
 
     return reactRender(
       <Html
@@ -50,15 +49,17 @@ export default class ResponseBodyCreator {
         }}
         locale={this.locale}
         state={store.getState()}
+        theme={Environment.defaultTheme}
         translationsForLocale={translationsForLocale}
       >
         <Provider store={store}>
           <StaticRouter location={this.route.url} context={this.context}>
             <App
               routerParams={this.route.match.params}
-              component={this.route.getComponent()}
-              translator={browserTranslator}
-            />
+              translations={translationsForLocale}
+            >
+              <Component />
+            </App>
           </StaticRouter>
         </Provider>
       </Html>,

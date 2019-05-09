@@ -1,7 +1,7 @@
 import FileSystemConnectorFabric
   from '../../../../server/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
-import ServerTranslator from '../ServerTranslator';
+import ServerTranslationsDto from '../ServerTranslationsDto';
 
-export default new ServerTranslator(
+export default new ServerTranslationsDto(
   FileSystemConnectorFabric.getConnector(require('fs')),
 );

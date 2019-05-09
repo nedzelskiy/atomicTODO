@@ -1,27 +1,23 @@
 import * as React from 'react';
-import BrowserTranslator from '../../../data/translations/BrowserTranslator/BrowserTranslator';
+import { ClientTranslationsForLocale }
+  from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
+import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
+import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 
-export type TranslateHelper = (id: string, domain?: string) => string;
-
-export const i18nContext: React.Context<{}> = React.createContext({});
+export const i18nContext: React.Context<ClientTranslationsForLocale> = React.createContext({});
 
 export interface TranslateHelperProps {
   t: TranslateHelper;
 }
 
-const createTranslateHelper =
-  (translator: BrowserTranslator, locale: string): TranslateHelper => {
-    return translator.translate.bind(this, locale);
-  };
-
 export default (Component: React.FunctionComponent<any> | React.ComponentClass<any, any>) => {
   const WithTranslations = (props: any): JSX.Element =>
     (
       <i18nContext.Consumer>
-        {({ translator, locale }: { translator: BrowserTranslator; locale: string }) =>
+        {(translations: ClientTranslationsForLocale) =>
           <Component
             {...props}
-            t={createTranslateHelper(translator, locale)}
+            t={new ClientTranslator(translations).getTranslator()}
           />
         }
       </i18nContext.Consumer>

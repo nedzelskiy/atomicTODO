@@ -30,6 +30,7 @@
     "@types/react-dom": "^16.8.4",
     "@types/react-redux": "^7.0.6",
     "@types/react-router-dom": "^4.3.2",
+    "@types/redux": "^3.6.0",
     "@types/redux-saga": "^0.10.5",
     "@types/serialize-javascript": "^1.5.0",
     "@types/webpack": "^4.4.27",

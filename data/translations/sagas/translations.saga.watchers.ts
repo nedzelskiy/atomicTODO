@@ -3,7 +3,7 @@ import sagasEvents from './translations.saga.events';
 import { ResponseData } from '../../../server/server';
 import { takeEvery, getContext, call } from 'redux-saga/effects';
 import { GetTranslationsAction } from './translations.saga.actions';
-import BrowserTranslator from '../BrowserTranslator/BrowserTranslator';
+import BrowserTranslator from '../ClientTranslationsDto/ClientTranslationsDto';
 import { getTranslations as getTranslationsRequest } from './translations.saga.http';
 
 function* getTranslations(action: CommonAction & GetTranslationsAction) {

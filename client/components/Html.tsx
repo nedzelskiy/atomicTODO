@@ -22,7 +22,7 @@ export default (props: Props): JSX.Element => (
     <meta httpEquiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link rel="stylesheet" type="text/css" href={`/static/client.${props.theme}.css`} />
-    <title>{props.meta.title}</title>
+    <title id="title">{props.meta.title}</title>
   </head>
     <body>
       {props.translationsForLocale && <script

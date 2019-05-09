@@ -10,6 +10,9 @@ import { getTranslations as getTranslationsRequest }
   from '../../../data/translations/http';
 import ClientTranslationsDto, { ClientTranslationsForLocale }
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
+import { default as appRoutes, ReactRoute } from './app.routes';
+import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
+import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 
 function* getTranslations(locale: string) {
   try {
@@ -20,7 +23,7 @@ function* getTranslations(locale: string) {
   }
 }
 
-function* changeLocaleForCurrentPage(locale: string) {
+function* changeLocaleForCurrentPage(locale: string, translations: ClientTranslationsForLocale) {
   const state: AppReducerState = yield select(s => s);
   const { pageName, params } = state.appReducer.route;
   const history: History = <History>state.appReducer.history;
@@ -29,6 +32,10 @@ function* changeLocaleForCurrentPage(locale: string) {
     locale,
   });
   yield call(history.push , url);
+  const route: ReactRoute = appRoutes[pageName];
+  const translator: ClientTranslator = yield new ClientTranslator(translations);
+  const t: TranslateHelper = yield translator.getTranslator();
+  (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title);
 }
 
 function* changeLocale(action: CommonAction & ChangeLocaleAction) {
@@ -39,7 +46,7 @@ function* changeLocale(action: CommonAction & ChangeLocaleAction) {
     const translations: ClientTranslationsForLocale = yield* getTranslations(locale);
     yield call(translationsStorage.setTranslations, locale, translations);
   }
-  yield* changeLocaleForCurrentPage(locale);
+  yield* changeLocaleForCurrentPage(locale, translationsStorage.getTranslations(locale));
 }
 
 function* watchChangeLocale() {

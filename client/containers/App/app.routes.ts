@@ -3,17 +3,20 @@ import { FunctionComponent, ComponentClass, createElement, ReactElement } from '
 import MainPage from '../pages/HomePage/HomePage';
 import NotFoundPage from '../pages/NotFoundPage/NotFoundPage';
 import Environment from '../../../server/utils/Environment/Environment';
+import HomeWithThemePanel from '../pages/HomeWithThemePanel/HomeWithThemePanel';
 
 export interface RouteMeta {
   title: string;
 }
 
 export interface ReactRoute extends RouteProps {
-  path: string;
+  path: string | string[];
   pageName: string;
   meta: RouteMeta;
 
-  getComponent(): FunctionComponent<any> | ComponentClass<any, any> | ReactElement;
+  getComponent():
+    FunctionComponent<any> |
+    ComponentClass<any, any> | ReactElement<any, string | React.JSXElementConstructor<any>>;
 }
 
 export interface RouterMatch {
@@ -32,7 +35,7 @@ export interface AppRoutes {
 const appRoutes: AppRoutes = {
   home: {
     exact: true,
-    path: '/:locale',
+    path: ['/:locale', '/:locale/theme'],
     pageName: 'home',
     getComponent: () => MainPage,
     meta: {
@@ -54,6 +57,15 @@ const appRoutes: AppRoutes = {
       Redirect,
     ),
   },
+  // 'theme-panel': {
+  //   exact: true,
+  //   path: '/:locale/theme',
+  //   pageName: 'theme-panel',
+  //   getComponent: () => HomeWithThemePanel,
+  //   meta: {
+  //     title: '',
+  //   },
+  // },
   'not-found': {
     path: '*',
     pageName: 'not-found',

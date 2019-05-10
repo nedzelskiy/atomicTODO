@@ -8,9 +8,12 @@ interface Props {
   todos: Todo[];
 }
 
+let i =0;
+
 const TodoListWithControls: React.FunctionComponent<Props> = ({ todos }: Props) => (
   <div className="todo-list-with-controls">
     <TodoItemCreator />
+    <div>TodoListWithControls {i++}</div>
     <TodoList todos={todos} />
   </div>
 );

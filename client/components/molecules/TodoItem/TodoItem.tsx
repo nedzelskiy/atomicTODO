@@ -7,9 +7,11 @@ import './todoitem.styles.scss';
 
 export interface Props extends Todo {}
 
+let i = 0;
+
 const TodoItem: React.FunctionComponent<Props> = ({ isDone, name, id }: Props): JSX.Element => (
   <div className={`todo-item ${isDone ? 'done' : ''}`}>
-    <span className="todo-name">{name}</span>
+    <span className="todo-name">{name} {i++}</span>
     <TriggerTodoStatusBtn id={id} />
     <DeleteTodoBtn id={id} />
   </div>

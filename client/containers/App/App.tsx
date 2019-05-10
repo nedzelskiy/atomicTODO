@@ -6,6 +6,8 @@ import { ClientTranslationsForLocale }
 import { storePageParams, StorePageParams } from './app.redux.actions';
 import { CurrentRoute } from './app.redux.initial-state';
 import './app.styles.scss';
+import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
+import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 
 interface Props {
   storePageParams: StorePageParams;
@@ -36,12 +38,15 @@ class App extends React.Component<Props> {
   }
 
   storePageParams() {
-    this.props.storePageParams(this.props.route, this.props.history);
+    this.props.storePageParams(this.props.route, this.props.locale, this.props.history);
   }
 
   render() {
+    console.log('rerender App');
+    const translateHelper: TranslateHelper =
+      new ClientTranslator(this.props.translations).getTranslator();
     return (
-      <i18nContext.Provider value={this.props.translations}>
+      <i18nContext.Provider value={translateHelper}>
         {this.props.children}
       </i18nContext.Provider>
     );

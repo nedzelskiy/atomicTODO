@@ -6,22 +6,26 @@ interface StorePageParamsAction {
   type: events.APP__STORE_PAGE_PARAMS;
   payload: {
     route: CurrentRoute;
+    locale: string,
     history: History | {};
   };
 }
 
 export interface StorePageParams {
-  (route: CurrentRoute, history: History | {}): CommonAction & StorePageParamsAction;
+  (route: CurrentRoute, locale: string, history: History | {}):
+    CommonAction & StorePageParamsAction;
 }
 
 export const storePageParams: StorePageParams = (
   route: CurrentRoute,
+  locale: string,
   history: History | {},
 ): StorePageParamsAction => {
   return {
     type: events.APP__STORE_PAGE_PARAMS,
     payload: {
       route,
+      locale,
       history,
     },
   };

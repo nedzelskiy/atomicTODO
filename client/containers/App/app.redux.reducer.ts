@@ -8,9 +8,10 @@ export default (state: State = initialState, action: CommonAction): State => {
 
   switch (action.type) {
     case events.APP__STORE_PAGE_PARAMS: {
-      const { route, history } = <SetRoutePayload>action.payload;
+      const { route, history, locale } = <SetRoutePayload>action.payload;
       newState.route = route;
       newState.history = history;
+      newState.locale = locale;
     }
   }
 
@@ -20,4 +21,5 @@ export default (state: State = initialState, action: CommonAction): State => {
 interface SetRoutePayload {
   route: CurrentRoute;
   history: History | {};
+  locale: string;
 }

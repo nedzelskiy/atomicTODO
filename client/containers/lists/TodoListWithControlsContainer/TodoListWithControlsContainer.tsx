@@ -9,8 +9,9 @@ interface Props {
   todos: Todo[];
 }
 
-class TodoListWithControlsContainer extends React.Component<Props, {}> {
+class TodoListWithControlsContainer extends React.PureComponent<Props, {}> {
   render() {
+    console.log('render TodoListWithControlsContainer', this.props);
     return (
       <TodoListWithControls todos={this.props.todos} />
     );

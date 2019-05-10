@@ -40,6 +40,12 @@ function* changeLocaleForCurrentPage(locale: string, translations: ClientTransla
 
 function* changeLocale(action: CommonAction & ChangeLocaleAction) {
   const { locale } = action.payload;
+  const state: AppReducerState = yield select(s => s);
+  const appLocale: string = state.appReducer.locale;
+  if (appLocale === locale) {
+    return ;
+  }
+  console.log(appLocale === locale);
   const translationsStorage: ClientTranslationsDto = yield getContext('translationsStorage');
   const isExistsTranslations: boolean = yield call(translationsStorage.isExistTranslations, locale);
   if (!isExistsTranslations) {

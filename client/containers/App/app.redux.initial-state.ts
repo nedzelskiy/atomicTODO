@@ -2,6 +2,7 @@ import { History } from 'history';
 
 export interface State {
   route: CurrentRoute;
+  locale: string;
   history: History | {};
 }
 
@@ -16,6 +17,7 @@ const state: State = {
     params: {},
   },
   history: {},
+  locale: '',
 };
 
 export default state;

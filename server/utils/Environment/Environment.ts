@@ -32,17 +32,33 @@ export default class Environment {
     return Environment.getCheckedLocale(req.url.split('/')[1]);
   }
 
-  createUrlByPageName(pageName: string, routeParams: any): string | null {
+  compileReactPath(path: string, routeParams: any): string | null {
     try {
-      const route: ReactRoute | undefined = this.routes[pageName];
-      if (!route) {
-        return null;
-      }
-      const path: string = (route as ReactRoute).path;
       return compile(path)(routeParams);
-    } catch (err) {
+    } catch (e) {
       return null;
     }
+  }
+
+  createUrlByPageName(pageName: string, routeParams: any): string | null {
+    const route: ReactRoute | undefined = this.routes[pageName];
+    if (!route) {
+      return null;
+    }
+    const path: string | string[] = (route as ReactRoute).path;
+    if (typeof path === 'object') {
+      let foundPath: null| string = null;
+      path.some((p: string): boolean => {
+        const compiledPath: null | string = this.compileReactPath(p, routeParams);
+        if (compiledPath) {
+          foundPath = compiledPath;
+          return true;
+        }
+        return false;
+      });
+      return foundPath;
+    }
+    return path;
   }
 
   getMatchedRouteWithParams(url: string): ReactRouteWithMatchedParams {

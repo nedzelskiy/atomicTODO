@@ -20,6 +20,7 @@ hydrate(
     <Router
       routes={appRoutes}
       render={(routerProps: RouterProps, route: ReactRoute) => {
+        console.log('==========> router changed', routerProps.match.params.locale)
         const Component: any = route.getComponent();
         const translations: ClientTranslationsForLocale =
           translationsStorage.getTranslations(routerProps.match.params.locale);

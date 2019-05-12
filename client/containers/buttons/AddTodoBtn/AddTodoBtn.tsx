@@ -10,18 +10,10 @@ interface Props extends TranslateHelperProps {
   addTodo: AddTodo;
 }
 
-interface State {
-  counter: number;
-}
-
-class AddTodoBtn extends React.Component<Props, State> {
+class AddTodoBtn extends React.Component<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
-    this.countStateOnClick = this.countStateOnClick.bind(this);
-    this.state = {
-      counter: 0,
-    };
   }
 
   componentDidMount() {
@@ -52,28 +44,17 @@ class AddTodoBtn extends React.Component<Props, State> {
     }
   }
 
-  countStateOnClick() {
-    this.setState({ counter: this.state.counter + 1 });
-  }
-
   render() {
     const { t } = this.props;
-    console.log('$$');
-    return [
-      <button
-        key="1"
-        onClick={this.countStateOnClick}
-      >{this.state.counter}</button>,
+    return (
       <Button
-        key="2"
         className="create-todo"
         onClick={this.handleOnClick}
       >
         {`+ ${t('New task')}`}
-      </Button>,
-    ];
+      </Button>
+    );
   }
 }
-
 
 export default withTranslations(connect(null, { addTodo })(AddTodoBtn));

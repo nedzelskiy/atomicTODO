@@ -10,9 +10,9 @@ import TranslationsConnector
 import { ClientTranslationsForLocale }
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
-import { ReactRouteWithMatchedParams } from '../../../client/containers/App/app.routes';
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import Environment from '../Environment/Environment';
+import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/routes';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 
@@ -52,21 +52,22 @@ export default class ResponseBodyCreator {
         theme={Environment.defaultTheme}
         translationsForLocale={translationsForLocale}
       >
-        <Provider store={store}>
-          <StaticRouter location={this.route.url} context={this.context}>
-            <App
-              history={{}}
-              locale={this.locale}
-              route={{
-                pageName: this.route.pageName,
-                params: this.route.match.params,
-              }}
-              translations={translationsForLocale}
-            >
-              <Component />
-            </App>
-          </StaticRouter>
-        </Provider>
+      <Provider store={store}>
+        <StaticRouter location={this.route.url} context={this.context}>
+          <App
+            history={{}}
+            locale={this.locale}
+            route={{
+              id: this.route.id,
+              pageName: this.route.pageName,
+              params: this.route.routerParams,
+            }}
+            translations={translationsForLocale}
+          >
+            <Component {...this.route} />
+          </App>
+        </StaticRouter>
+      </Provider>
       </Html>,
     );
   }

@@ -10,9 +10,9 @@ import { getTranslations as getTranslationsRequest }
   from '../../../data/translations/http';
 import ClientTranslationsDto, { ClientTranslationsForLocale }
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
-import { default as appRoutes, ReactRoute } from './app.routes';
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
+import routes, { ApplicationRoute } from '../Router/routes';
 
 function* getTranslations(locale: string) {
   try {
@@ -25,14 +25,14 @@ function* getTranslations(locale: string) {
 
 function* changeLocaleForCurrentPage(locale: string, translations: ClientTranslationsForLocale) {
   const state: AppReducerState = yield select(s => s);
-  const { pageName, params } = state.appReducer.route;
+  const { params, id } = state.appReducer.route;
   const history: History = <History>state.appReducer.history;
-  const url = yield call(env.createUrlByPageName, pageName, {
+  const url = yield call(env.createUrlByRouteId, id, {
     ...params,
     locale,
   });
   yield call(history.push , url);
-  const route: ReactRoute = appRoutes[pageName];
+  const route: ApplicationRoute = routes[id];
   const translator: ClientTranslator = yield new ClientTranslator(translations);
   const t: TranslateHelper = yield translator.getTranslator();
   (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title, 'meta');

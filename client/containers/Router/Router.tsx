@@ -1,10 +1,14 @@
 import * as React from 'react';
-import { AppRoutes, HomeRouteParams, ReactRoute } from '../App/app.routes';
+import { ApplicationRoute, ApplicationRoutes, HomeRouteParams } from './routes';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
 
 interface Props {
-  routes: AppRoutes;
-  render: (routerProps: RouterProps, route: ReactRoute) => React.ReactNode;
+  routes: ApplicationRoutes;
+  render: (
+    routerProps: RouterProps,
+    route: ApplicationRoute,
+    routeId: string,
+  ) => React.ReactNode;
 }
 
 export interface RouterProps extends RouteComponentProps<HomeRouteParams> {}
@@ -15,13 +19,13 @@ class Router extends React.Component<Props, {}> {
     this.renderRoute = this.renderRoute.bind(this);
   }
 
-  renderRoute(route: ReactRoute) {
+  renderRoute(route: ApplicationRoute, id: string) {
     return (
       <Route
         {...route}
         key={route.pageName}
         render={(routerProps: RouterProps) => {
-          return this.props.render(routerProps, route);
+          return this.props.render(routerProps, route, id);
         }}
       />
     );
@@ -31,8 +35,8 @@ class Router extends React.Component<Props, {}> {
     return (
       <BrowserRouter>
         <Switch>
-          {Object.keys(this.props.routes).map((k) => {
-            return this.renderRoute(this.props.routes[k]);
+          {Object.keys(this.props.routes).map((id) => {
+            return this.renderRoute(this.props.routes[id], id);
           })}
         </Switch>
       </BrowserRouter>

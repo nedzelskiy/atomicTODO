@@ -9,10 +9,12 @@ export interface State {
 export interface CurrentRoute {
   pageName: string;
   params: any;
+  id: string;
 }
 
 const state: State = {
   route: {
+    id: '',
     pageName: '',
     params: {},
   },

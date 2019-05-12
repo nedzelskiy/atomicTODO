@@ -1,39 +1,39 @@
 import * as React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import todosStorage from '../../../../data/todos/TodosStorage/TodosLocalStorage';
-import HomeTemplate from '../../../components/templates/HomeTemplate/HomeTemplate';
-import { addTodos, AddTodos } from '../../../../data/todos/redux/todos.redux.actions';
+import { ApplicationRoute } from '../../Router/routes';
 import Header from '../../../components/atomes/Header/Header';
-import TodoListWithControlsContainer from '../../lists/TodoListWithControlsContainer/TodoListWithControlsContainer';
-import ChangeThemePanel from '../../../components/molecules/ChangeThemePanel/ChangeThemePanel';
+import PageTemplate from '../../../components/templates/PageTemplate/PageTemplate';
+import TodoListWithControls
+  from '../../../containers/lists/TodoListWithControls/TodoListWithControls';
 
-
-interface Props {
-  addTodos: AddTodos;
-}
+interface Props extends ApplicationRoute {}
 
 class HomePage extends React.Component<Props, {}> {
-  componentDidMount(): void {
-    const todos: Todo[] = todosStorage.getTodos();
-    this.props.addTodos(todos);
+  constructor(props: Props) {
+    super(props);
+    this.getHeader = this.getHeader.bind(this);
+  }
+
+  getHeader() {
+    if (this.props.pageComponentProps && this.props.pageComponentProps.hasOwnProperty('header')) {
+      return this.props.pageComponentProps.header;
+    }
+    return Header;
   }
 
   render() {
-    console.log('render Home page')
     return (
-      <div className="main-template wrapper">
-        <Header/>
-        <Switch>
-          <Route path="/:locale/theme" component={ChangeThemePanel} />
-        </Switch>
-        <TodoListWithControlsContainer />
-      </div>
+      <PageTemplate
+        Header={this.getHeader()}
+        pageName={this.props.pageName}
+      >
+        <TodoListWithControls />
+      </PageTemplate>
     );
   }
 }
 
-export default connect(null, {
-  addTodos,
-})(HomePage);
+export default HomePage;
+
+export const meta = {
+  title: 'This is an atomic TODO app',
+};

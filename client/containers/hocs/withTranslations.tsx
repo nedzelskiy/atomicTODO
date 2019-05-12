@@ -3,7 +3,7 @@ import { TranslateHelper } from '../../../data/translations/trnaslations.interfa
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 
 export const i18nContext: React.Context<TranslateHelper> = React.createContext(
-  new ClientTranslator({}).getTranslator()
+  new ClientTranslator({}).getTranslator(),
 );
 
 export interface TranslateHelperProps {
@@ -17,6 +17,7 @@ export default (Component: React.FunctionComponent<any> | React.ComponentClass<a
         {(translateHelper: TranslateHelper) => {
           console.log('render i18n consumer');
           return (<Component
+            {...props}
             t={translateHelper}
           />);
         }}

@@ -4282,6 +4282,10 @@ react-router-dom@^5.0.0:
     tiny-invariant "^1.0.2"
     tiny-warning "^1.0.0"
 
+react-router-server@^4.2.3:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/react-router-server/-/react-router-server-4.2.3.tgz#b5add7e4b22e6fcc853f0f0eea3144f582d3b583"
+
 react-router@5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/react-router/-/react-router-5.0.0.tgz#349863f769ffc2fa10ee7331a4296e86bc12879d"

@@ -1,4 +1,4 @@
 import Environment from '../Environment';
-import appRoutes from '../../../../client/containers/App/app.routes';
+import routes from '../../../../client/containers/Router/routes';
 
-export default new Environment(appRoutes);
+export default new Environment(routes);

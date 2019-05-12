@@ -5,9 +5,9 @@ import { Provider } from 'react-redux';
 import App from './containers/App/App';
 import configureStore from './configureStore';
 import Router, { RouterProps } from './containers/Router/Router';
-import appRoutes, { ReactRoute } from './containers/App/app.routes';
 import ClientTranslationsDto, { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
+import routes, { ApplicationRoute } from './containers/Router/routes';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
@@ -18,8 +18,8 @@ const store: Store = configureStore((window as any).state, { translationsStorage
 hydrate(
   <Provider store={store}>
     <Router
-      routes={appRoutes}
-      render={(routerProps: RouterProps, route: ReactRoute) => {
+      routes={routes}
+      render={(routerProps: RouterProps, route: ApplicationRoute, id: string) => {
         console.log('==========> router changed', routerProps.match.params.locale)
         const Component: any = route.getComponent();
         const translations: ClientTranslationsForLocale =
@@ -31,11 +31,16 @@ hydrate(
             locale={routerProps.match.params.locale}
             history={routerProps.history}
             route={{
+              id,
               pageName: route.pageName,
               params: routerProps.match.params,
             }}
           >
-            <Component/>
+            <Component
+              {...route}
+              url={routerProps.location.pathname}
+              routerParams={routerProps.match.params}
+            />
           </App>
         );
       }}

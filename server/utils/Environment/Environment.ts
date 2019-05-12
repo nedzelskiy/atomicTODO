@@ -1,11 +1,15 @@
 import { matchPath } from 'react-router-dom';
 import { compile } from 'path-to-regexp';
 import { NormalizedIncomingMessage } from '../../server';
-import { AppRoutes, HomeRouteParams, ReactRoute, ReactRouteWithMatchedParams, RouterMatch }
-  from '../../../client/containers/App/app.routes';
+import {
+  HomeRouteParams,
+  ApplicationRoute,
+  ApplicationRoutes,
+  ReactRouteWithMatchedParams,
+} from '../../../client/containers/Router/routes';
 
 export default class Environment {
-  private readonly routes: AppRoutes;
+  private readonly routes: ApplicationRoutes;
 
   static defaultLocale: string = 'en';
   static defaultTheme: string = 'white';
@@ -32,43 +36,26 @@ export default class Environment {
     return Environment.getCheckedLocale(req.url.split('/')[1]);
   }
 
-  compileReactPath(path: string, routeParams: any): string | null {
+  createUrlByRouteId(routeId: string, routeParams: any): string | null {
     try {
+      const route: ApplicationRoute | undefined = this.routes[routeId];
+      if (!route) {
+        return null;
+      }
+      const path: string = (route as ApplicationRoute).path;
       return compile(path)(routeParams);
-    } catch (e) {
+    } catch (err) {
       return null;
     }
-  }
-
-  createUrlByPageName(pageName: string, routeParams: any): string | null {
-    const route: ReactRoute | undefined = this.routes[pageName];
-    if (!route) {
-      return null;
-    }
-    const path: string | string[] = (route as ReactRoute).path;
-    if (typeof path === 'object') {
-      let foundPath: null| string = null;
-      path.some((p: string): boolean => {
-        const compiledPath: null | string = this.compileReactPath(p, routeParams);
-        if (compiledPath) {
-          foundPath = compiledPath;
-          return true;
-        }
-        return false;
-      });
-      return foundPath;
-    }
-    return path;
   }
 
   getMatchedRouteWithParams(url: string): ReactRouteWithMatchedParams {
-    let route: ReactRoute = this.routes[0];
-    let match: RouterMatch = {
-      params: {},
-    };
+    let route: ApplicationRoute = this.routes[0];
+    let routerParams = {};
+    let routeId = '';
 
-    const result: boolean = Object.keys(this.routes).some((pageName) => {
-      const r = this.routes[pageName];
+    const result: boolean = Object.keys(this.routes).some((id) => {
+      const r = this.routes[id];
       const m = matchPath(url, r);
       if (!m || !m.params) {
         return false;
@@ -79,23 +66,25 @@ export default class Environment {
         return false;
       }
       route = r;
-      match = m;
+      routeId = id;
+      routerParams = m.params;
       return true;
     });
 
     if (!result) {
-      route = this.routes['not-found'];
+      routeId = 'notFound';
+      route = this.routes[routeId];
     }
-
     return {
       ...route,
       url,
-      match,
+      routerParams,
+      id: routeId,
     };
   }
 
-  constructor(routes: AppRoutes) {
+  constructor(routes: ApplicationRoutes) {
     this.routes = routes;
-    this.createUrlByPageName = this.createUrlByPageName.bind(this);
+    this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
   }
 }

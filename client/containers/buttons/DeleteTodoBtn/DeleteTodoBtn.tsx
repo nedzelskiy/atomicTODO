@@ -20,8 +20,7 @@ class DeleteTodoBtn extends React.Component<Props, {}> {
   }
 
   render() {
-    console.log('render Delete Todo button')
-
+    console.log('render Delete Todo BTn');
     const { t } = this.props;
     return (
       <Button

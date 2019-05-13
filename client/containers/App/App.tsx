@@ -23,11 +23,11 @@ class App extends React.Component<Props> {
     this.storePageParams = this.storePageParams.bind(this);
   }
 
-  // shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
-  //   const oldLocale: string = this.props.locale;
-  //   const newLocale: string = nextProps.locale;
-  //   return newLocale !== oldLocale;
-  // }
+  shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
+    const oldLocale: string = this.props.locale;
+    const newLocale: string = nextProps.locale;
+    return newLocale !== oldLocale;
+  }
 
   componentDidMount() {
     this.storePageParams();

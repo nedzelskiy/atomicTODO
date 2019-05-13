@@ -46,6 +46,7 @@ class AddTodoBtn extends React.Component<Props, {}> {
 
   render() {
     const { t } = this.props;
+    console.log('render AddTodoBtn');
     return (
       <Button
         className="create-todo"

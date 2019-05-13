@@ -15,7 +15,8 @@ export default (Component: React.FunctionComponent<any> | React.ComponentClass<a
     (
       <i18nContext.Consumer>
         {(translateHelper: TranslateHelper) => {
-          console.log('render i18n consumer');
+          console.trace();
+          console.log('render i18n consumer', Component.displayName);
           return (<Component
             {...props}
             t={translateHelper}

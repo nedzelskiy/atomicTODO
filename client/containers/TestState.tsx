@@ -25,7 +25,6 @@ class TestState extends React.Component<Props, State> {
   }
 
   render() {
-    console.log('rerender TestState', this.state.counter);
     return (
       <button style={{
         color: 'black',

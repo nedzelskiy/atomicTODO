@@ -17,42 +17,18 @@ export interface TranslateHelperProps {
   t: TranslateHelper;
 }
 
-interface Props {
-  locale: string;
-}
-
 const createTranslator = (locale: string): TranslateHelper => {
   return new ClientTranslator(
     translationsStorage.getTranslations(locale),
   ).getTranslator();
 };
 
-export default (Component: any) => {
-  const WithTranslator = (props: Props): JSX.Element => {
+export default (Component: React.FunctionComponent<any> | React.ComponentClass<any, any>) => {
+  const WithTranslator = (props: any): JSX.Element => {
     return (
-      <Component {...props} t={createTranslator(props.locale)} />
+      <Component {...props} t={createTranslator(props.locale)}/>
     );
   };
-  // class WithTranslator extends React.Component<Props, {}> {
-  //   constructor(props: Props) {
-  //     super(props);
-  //     this.createTranslator = this.createTranslator.bind(this);
-  //   }
-  //
-  //   createTranslator(): TranslateHelper {
-  //     return new ClientTranslator(
-  //       translationsStorage.getTranslations(this.props.locale),
-  //     ).getTranslator();
-  //   }
-  //
-  //   render() {
-  //     const newProps = {
-  //       ...this.props,
-  //     };
-  //     delete newProps.locale;
-  //     return
-  //   }
-  // }
 
   return connect(
     (state: AppReducerState) => {
@@ -61,5 +37,5 @@ export default (Component: any) => {
       };
     },
     {},
-    )(WithTranslator);
+  )(WithTranslator);
 };

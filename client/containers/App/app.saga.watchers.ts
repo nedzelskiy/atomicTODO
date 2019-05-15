@@ -24,18 +24,19 @@ function* getTranslations(locale: string) {
 }
 
 function* changeLocaleForCurrentPage(locale: string, translations: ClientTranslationsForLocale) {
-  const state: AppReducerState = yield select(s => s);
-  const { params, id } = state.appReducer.route;
-  const history: History = <History>state.appReducer.history;
-  const url = yield call(env.createUrlByRouteId, id, {
-    ...params,
-    locale,
-  });
-  yield call(history.push , url);
-  const route: ApplicationRoute = routes[id];
-  const translator: ClientTranslator = yield new ClientTranslator(translations);
-  const t: TranslateHelper = yield translator.getTranslator();
-  (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title, 'meta');
+  yield;
+  // const state: AppReducerState = yield select(s => s);
+  // const { params, id } = state.appReducer.route;
+  // const history: History = <History>state.appReducer.history;
+  // const url = yield call(env.createUrlByRouteId, id, {
+  //   ...params,
+  //   locale,
+  // });
+  // yield call(history.push , url);
+  // const route: ApplicationRoute = routes[id];
+  // const translator: ClientTranslator = yield new ClientTranslator(translations);
+  // const t: TranslateHelper = yield translator.getTranslator();
+  // (document.getElementById('title') as HTMLElement).innerHTML = t(route.meta.title, 'meta');
 }
 
 function* changeLocale(action: CommonAction & ChangeLocaleAction) {

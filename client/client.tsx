@@ -10,8 +10,9 @@ import { ClientTranslationsForLocale }
 import routes, { ApplicationRoute } from './containers/Router/routes';
 import { getTranslationsStorage } from './containers/hocs/withTranslator';
 import PageFirewall from './containers/PageFirewall/PageFirewall';
-import { setLocale } from './containers/App/app.redux.actions';
+import { setCurrentRoute, setLocale } from './containers/App/app.redux.actions';
 import { AppReducerState } from '../data/redux.reducers';
+import { CurrentRoute } from './containers/App/app.redux.initial-state';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
@@ -27,20 +28,20 @@ hydrate(
           console.log('==========> router changed')
           const Component: any = route.getComponent();
           const { locale } = routerProps.match.params;
-          console.log((store.getState() as AppReducerState).appReducer.locale);
+          const currentRoute: CurrentRoute = {
+            id,
+            pageName: route.pageName,
+            params: routerProps.match.params,
+            url: routerProps.history.location.pathname,
+          };
           store.dispatch(setLocale(locale));
-          console.log((store.getState() as AppReducerState).appReducer.locale);
+          store.dispatch(setCurrentRoute(currentRoute));
           return (
             <PageFirewall>
               <App
                 translationsStorage={translationsStorage}
                 locale={locale}
-                route={{
-                  id,
-                  pageName: route.pageName,
-                  params: routerProps.match.params,
-                  url: routerProps.history.location.pathname,
-                }}
+                route={currentRoute}
               >
                 <Component
                   {...route}

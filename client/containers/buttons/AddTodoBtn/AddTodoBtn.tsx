@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import withTranslations, { TranslateHelperProps } from '../../hocs/withTranslations';
+import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';
 
 interface Props extends TranslateHelperProps {
   inputRef: React.RefObject<HTMLInputElement>;
@@ -45,8 +45,8 @@ class AddTodoBtn extends React.Component<Props, {}> {
   }
 
   render() {
+    console.log('___ render AddTodoBtn', this.props);
     const { t } = this.props;
-    console.log('render AddTodoBtn');
     return (
       <Button
         className="create-todo"
@@ -58,4 +58,4 @@ class AddTodoBtn extends React.Component<Props, {}> {
   }
 }
 
-export default withTranslations(connect(null, { addTodo })(AddTodoBtn));
+export default withTranslator(connect(null, { addTodo })(AddTodoBtn));

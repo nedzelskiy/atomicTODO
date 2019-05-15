@@ -1,17 +1,23 @@
 import * as React from 'react';
-import TodoList from '../../molecules/TodoList/TodoList';
-import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import TodoItemCreator from '../../molecules/TodoItemCreator/TodoItemCreator';
+import TodoListWithData from '../../../containers/lists/TodoListWithData/TodoListWithData';
 
-interface Props {
-  todos: Todo[];
+// const TodoListWithControls: React.FunctionComponent<Props> = ({ todos }: Props) => (
+//   <div className="todo-list-with-controls">
+//     <TodoItemCreator />
+//     <TodoList todos={todos} />
+//   </div>
+// );
+
+class TodoListWithControls extends React.Component<{}, {}> {
+  render() {
+    return (
+      <div className="todo-list-with-controls">
+         <TodoItemCreator />
+         <TodoListWithData />
+     </div>
+    );
+  }
 }
-
-const TodoListWithControls: React.FunctionComponent<Props> = ({ todos }: Props) => (
-  <div className="todo-list-with-controls">
-    <TodoItemCreator />
-    <TodoList todos={todos} />
-  </div>
-);
 
 export default TodoListWithControls;

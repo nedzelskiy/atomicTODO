@@ -3,11 +3,11 @@ import { ApplicationRoute } from '../../Router/routes';
 import Header from '../../../components/atomes/Header/Header';
 import PageTemplate from '../../../components/templates/PageTemplate/PageTemplate';
 import TodoListWithControls
-  from '../../../containers/lists/TodoListWithControls/TodoListWithControls';
+  from '../../../components/organismes/TodoListWithControls/TodoListWithControls';
 
 interface Props extends ApplicationRoute {}
 
-class HomePage extends React.Component<Props, {}> {
+class HomePage extends React.PureComponent<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.getHeader = this.getHeader.bind(this);
@@ -21,6 +21,7 @@ class HomePage extends React.Component<Props, {}> {
   }
 
   render() {
+    console.log('=========== render Home Page');
     return (
       <PageTemplate
         Header={this.getHeader()}

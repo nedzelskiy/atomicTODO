@@ -1,56 +1,106 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { i18nContext } from '../hocs/withTranslations';
-import { ClientTranslationsForLocale }
+import {
+  SetLocale, setLocale,
+  StartLoading, startLoading,
+  ChangeLocale, changeLocale,
+  SetCurrentRoute, setCurrentRoute,
+} from './app.redux.actions';
+import { CurrentRoute, PageError } from './app.redux.initial-state';
+import { getUrlWithOutLocale } from '../../utils/helpers';
+import { AppReducerState } from '../../../data/redux.reducers';
+import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import LoadingPage from '../pages/LoadingPage/LoadingPage';
+import ClientTranslationsDto
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
-import { storePageParams, StorePageParams } from './app.redux.actions';
-import { CurrentRoute } from './app.redux.initial-state';
 import './app.styles.scss';
-import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
-import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 
 interface Props {
-  storePageParams: StorePageParams;
   locale: string;
-  history: History | {};
+  isLoading: boolean;
   route: CurrentRoute;
-  translations: ClientTranslationsForLocale;
+  reduxLocale: string;
+  pageError: PageError;
+  setLocale: SetLocale;
+  changeLocale: ChangeLocale;
+  startLoading: StartLoading;
+  setCurrentRoute: SetCurrentRoute;
+  translationsStorage: ClientTranslationsDto;
 }
 
 class App extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
-    this.storePageParams = this.storePageParams.bind(this);
+    this.setLocale = this.setLocale.bind(this);
+    this.setCurrentRoute = this.setCurrentRoute.bind(this);
+    this.updateReduxStateBeforeRender();
   }
 
   shouldComponentUpdate(nextProps: Readonly<Props>): boolean {
     const oldLocale: string = this.props.locale;
     const newLocale: string = nextProps.locale;
-    return newLocale !== oldLocale;
+    const oldUrl = getUrlWithOutLocale(oldLocale, this.props.route.url);
+    const newUrl = getUrlWithOutLocale(newLocale, nextProps.route.url);
+    if (oldLocale !== newLocale) {
+      if (this.props.translationsStorage.isExistTranslations(newLocale)) {
+        this.setLocale(newLocale);
+      } else {
+        this.props.startLoading();
+        this.props.changeLocale(newLocale);
+      }
+    }
+    return (
+      oldUrl !== newUrl
+      || this.props.reduxLocale !== nextProps.reduxLocale
+      || this.props.isLoading !== nextProps.isLoading
+    );
   }
 
-  componentDidMount() {
-    this.storePageParams();
+  updateReduxStateBeforeRender() {
+    this.setCurrentRoute();
+    this.setLocale(this.props.locale);
   }
 
-  componentDidUpdate() {
-    this.storePageParams();
+  componentDidUpdate(): void {
+    this.setCurrentRoute();
   }
 
-  storePageParams() {
-    this.props.storePageParams(this.props.route, this.props.locale, this.props.history);
+  setLocale(locale: string) {
+    this.props.setLocale(locale);
+  }
+
+  setCurrentRoute() {
+    this.props.setCurrentRoute(this.props.route);
   }
 
   render() {
-    console.log('rerender App');
-    const translateHelper: TranslateHelper =
-      new ClientTranslator(this.props.translations).getTranslator();
-    return (
-      <i18nContext.Provider value={translateHelper}>
-        {this.props.children}
-      </i18nContext.Provider>
-    );
+    console.log('>> rerender App', this.props);
+    if (!this.props.reduxLocale) {
+      return null;
+    }
+
+    if (this.props.isLoading) {
+      return <LoadingPage/>;
+    }
+    if (this.props.pageError.isError && this.props.pageError.message) {
+      return <ErrorPage message={this.props.pageError.message}/>;
+    }
+    return this.props.children;
   }
 }
 
-export default connect(null, { storePageParams })(App);
+export default connect(
+  (state: AppReducerState) => {
+    return {
+      reduxLocale: state.appReducer.locale,
+      pageError: state.appReducer.pageError,
+      isLoading: state.appReducer.isLoading,
+    };
+  },
+  {
+    setLocale,
+    startLoading,
+    changeLocale,
+    setCurrentRoute,
+  },
+)(App);

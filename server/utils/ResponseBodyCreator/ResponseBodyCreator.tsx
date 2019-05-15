@@ -13,6 +13,8 @@ import { TranslateHelper } from '../../../data/translations/trnaslations.interfa
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import Environment from '../Environment/Environment';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/routes';
+import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
+import { setTranslationsStorage } from '../../../client/containers/hocs/withTranslator';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 
@@ -33,6 +35,15 @@ export default class ResponseBodyCreator {
     this.getContext = this.getContext.bind(this);
   }
 
+  private getCurrentRoute(): CurrentRoute {
+    return {
+      id: this.route.id,
+      url: this.route.url,
+      pageName: this.route.pageName,
+      params: this.route.routerParams,
+    };
+  }
+
   create(
     reactRender: ReactRender,
     store: Store,
@@ -41,6 +52,7 @@ export default class ResponseBodyCreator {
       this.translatorsConnector.getClientTranslationsForLocale(this.locale);
     const t: TranslateHelper = new ClientTranslator(translationsForLocale).getTranslator();
     const Component: any = this.route.getComponent();
+    setTranslationsStorage(this.translatorsConnector.getClientTranslationsDto());
 
     return reactRender(
       <Html
@@ -52,22 +64,17 @@ export default class ResponseBodyCreator {
         theme={Environment.defaultTheme}
         translationsForLocale={translationsForLocale}
       >
-      <Provider store={store}>
-        <StaticRouter location={this.route.url} context={this.context}>
-          <App
-            history={{}}
-            locale={this.locale}
-            route={{
-              id: this.route.id,
-              pageName: this.route.pageName,
-              params: this.route.routerParams,
-            }}
-            translations={translationsForLocale}
-          >
-            <Component {...this.route} />
-          </App>
-        </StaticRouter>
-      </Provider>
+        <Provider store={store}>
+          <StaticRouter location={this.route.url} context={this.context}>
+            <App
+              locale={this.locale}
+              route={this.getCurrentRoute()}
+              translationsStorage={this.translatorsConnector.getClientTranslationsDto()}
+            >
+              <Component {...this.route} />
+            </App>
+          </StaticRouter>
+        </Provider>
       </Html>,
     );
   }

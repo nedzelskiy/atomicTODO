@@ -25,6 +25,7 @@ class TestState extends React.Component<Props, State> {
   }
 
   render() {
+    console.log('rerender ', this.props.name)
     return (
       <button style={{
         color: 'black',

@@ -32,6 +32,7 @@ class TranslationsConnector implements ClientServerTranslationsFormats {
     if (!translations) {
       return {};
     }
+    this.clientTranslationsDto.setTranslations(locale, translations);
     return translations;
   }
 

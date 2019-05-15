@@ -1,24 +1,35 @@
-import { History } from 'history';
-
 export interface State {
+  isLoading: boolean;
+  pageError: PageError;
   route: CurrentRoute;
   locale: string;
-  history: History | {};
+}
+
+export interface PageError {
+  isError: boolean;
+  message: string;
+  code?: number;
 }
 
 export interface CurrentRoute {
+  id: string;
+  url: string;
   pageName: string;
   params: any;
-  id: string;
 }
 
 const state: State = {
+  pageError: {
+    isError: false,
+    message: '',
+  },
+  isLoading: false,
   route: {
     id: '',
+    url: '',
     pageName: '',
     params: {},
   },
-  history: {},
   locale: '',
 };
 

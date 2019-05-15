@@ -1,26 +1,25 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
+import { addTodos, AddTodos } from '../../../../data/todos/redux/todos.redux.actions';
 import { TodosReducerState } from '../../../../data/redux.reducers';
 import todosStorage from '../../../../data/todos/TodosStorage/TodosLocalStorage';
-import { addTodos, AddTodos } from '../../../../data/todos/redux/todos.redux.actions';
-import TodoListWithControls
-  from '../../../components/organismes/TodoListWithControls/TodoListWithControls';
+import TodoList from '../../../components/molecules/TodoList/TodoList';
 
 interface Props {
-  todos: Todo[];
+  todos: any;
   addTodos: AddTodos;
 }
 
-class TodoListWithControlsContainer extends React.PureComponent<Props, {}> {
+class TodoListWithData extends React.Component<Readonly<Props>, {}> {
   componentDidMount() {
     this.props.addTodos(todosStorage.getTodos());
   }
 
   render() {
-    if (this.props.todos) {
+    const { todos } = this.props;
+    if (todos && todos[0]) {
       return (
-        <TodoListWithControls todos={this.props.todos}/>
+        <TodoList todos={todos} />
       );
     }
     return null;
@@ -36,4 +35,4 @@ export default connect(
   {
     addTodos,
   },
-)(TodoListWithControlsContainer);
+)(TodoListWithData);

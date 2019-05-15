@@ -2,7 +2,7 @@ import * as React from 'react';
 import { connect } from 'react-redux';
 import Button from '../../../components/atomes/Button/Button';
 import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux.actions';
-import withTranslations, { TranslateHelperProps } from '../../hocs/withTranslations';
+import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';
 
 interface Props extends TranslateHelperProps {
   id: number;
@@ -20,7 +20,6 @@ class DeleteTodoBtn extends React.Component<Props, {}> {
   }
 
   render() {
-    console.log('render Delete Todo BTn');
     const { t } = this.props;
     return (
       <Button
@@ -33,4 +32,4 @@ class DeleteTodoBtn extends React.Component<Props, {}> {
   }
 }
 
-export default withTranslations(connect(null, { deleteTodo })(DeleteTodoBtn));
+export default withTranslator(connect(null, { deleteTodo })(DeleteTodoBtn));

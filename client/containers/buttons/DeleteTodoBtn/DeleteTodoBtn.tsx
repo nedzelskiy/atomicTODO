@@ -9,7 +9,7 @@ interface Props extends TranslateHelperProps {
   deleteTodo: DeleteTodo;
 }
 
-class DeleteTodoBtn extends React.Component<Props, {}> {
+class DeleteTodoBtn extends React.Component<Readonly<Props>, {}> {
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);

@@ -21,33 +21,38 @@ interface Props {
   locale: string;
 }
 
-const createTranslator = (locale: string) => {
+const createTranslator = (locale: string): TranslateHelper => {
   return new ClientTranslator(
-        translationsStorage.getTranslations(locale),
-      ).getTranslator();
+    translationsStorage.getTranslations(locale),
+  ).getTranslator();
 };
 
-export default (Component: React.FunctionComponent<any> | React.ComponentClass<any, any>) => {
-  class WithTranslator extends React.Component<Props, {}> {
-    constructor(props: Props) {
-      super(props);
-      this.createTranslator = this.createTranslator.bind(this);
-    }
-
-    createTranslator(): TranslateHelper {
-      return new ClientTranslator(
-        translationsStorage.getTranslations(this.props.locale),
-      ).getTranslator();
-    }
-
-    render() {
-      const newProps = {
-        ...this.props,
-      };
-      delete newProps.locale;
-      return <Component {...newProps} t={this.createTranslator()}/>;
-    }
-  }
+export default (Component: any) => {
+  const WithTranslator = (props: Props): JSX.Element => {
+    return (
+      <Component {...props} t={createTranslator(props.locale)} />
+    );
+  };
+  // class WithTranslator extends React.Component<Props, {}> {
+  //   constructor(props: Props) {
+  //     super(props);
+  //     this.createTranslator = this.createTranslator.bind(this);
+  //   }
+  //
+  //   createTranslator(): TranslateHelper {
+  //     return new ClientTranslator(
+  //       translationsStorage.getTranslations(this.props.locale),
+  //     ).getTranslator();
+  //   }
+  //
+  //   render() {
+  //     const newProps = {
+  //       ...this.props,
+  //     };
+  //     delete newProps.locale;
+  //     return
+  //   }
+  // }
 
   return connect(
     (state: AppReducerState) => {

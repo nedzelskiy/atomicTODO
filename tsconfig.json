@@ -9,12 +9,22 @@
     "allowJs": true,
     "downlevelIteration": true,
     "strictNullChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "noUnusedLocals": true,
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "baseUrl": ".",
     "lib": [
       "dom",
       "es2015",
+      "es2017",
       "es5",
-      "es6"
+      "es6",
+      "es7"
     ],
     "typeRoots": [
       "node_modules/@types",

@@ -11,7 +11,9 @@
     "stylelint": "sh/dev/stylelint.sh",
     "dev:server:run": "sh sh/dev/server.run.sh",
     "dev:client:build": "sh sh/dev/client.build.sh",
-    "dev:server:build": "sh sh/dev/server.build.sh"
+    "dev:server:build": "sh sh/dev/server.build.sh",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook"
   },
   "pre-push": [
     "lint",
@@ -34,6 +36,9 @@
     "@types/redux": "^3.6.0",
     "@types/redux-saga": "^0.10.5",
     "@types/serialize-javascript": "^1.5.0",
+    "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__addon-links": "^3.3.4",
+    "@types/storybook__react": "^4.0.1",
     "@types/webpack": "^4.4.27",
     "autoprefixer": "^9.5.1",
     "axios": "^0.18.0",
@@ -76,6 +81,12 @@
     "webpack-livereload-plugin": "^2.2.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.4.4",
+    "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-links": "^5.0.11",
+    "@storybook/addons": "^5.0.11",
+    "@storybook/react": "^5.0.11",
+    "babel-loader": "^8.0.6",
     "webpack-cli": "^3.3.0"
   }
 }

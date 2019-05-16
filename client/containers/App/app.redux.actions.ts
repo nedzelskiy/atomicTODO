@@ -96,14 +96,14 @@ export interface SetPageError {
   (error: PageError): SetPageErrorAction;
 }
 
-const setPageError: SetPageError = (error: PageError): SetPageErrorAction => {
-  return {
-    type: events.APP__SET_PAGE_ERROR,
-    payload: {
-      error,
-    },
-  };
-};
+// const setPageError: SetPageError = (error: PageError): SetPageErrorAction => {
+//   return {
+//     type: events.APP__SET_PAGE_ERROR,
+//     payload: {
+//       error,
+//     },
+//   };
+// };
 
 export interface ClearPageError {
   (): {

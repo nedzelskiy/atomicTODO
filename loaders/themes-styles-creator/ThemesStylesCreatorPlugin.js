@@ -6,6 +6,7 @@ const chalk = require('chalk');
 const fse = require('fs-extra');
 const uniqid = require('uniqid');
 const sass = require('node-sass');
+const cssToObject = require('css-to-object');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
 const cachedStylesKeysKeeper = require('./CachedStylesKeysKeeper');
@@ -14,56 +15,65 @@ class ThemesStylesCreatorPlugin {
   static getSassVariable(name, value) {
     return `$${name}: ${value};`;
   }
-
+  
   static getSassImport(path) {
     return `@import "${path}";`;
   }
-
+  
   static consoleMessage(level, message) {
     console.log(chalk.yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
   }
-
+  
   static getSassVariables(variablesObj) {
     return Object.keys(variablesObj).map(name => ThemesStylesCreatorPlugin.getSassVariable(name, variablesObj[name])).join('\n');
   }
-
+  
   static createCompilerData(sassEntry, sassVariables) {
     return ThemesStylesCreatorPlugin.getSassVariables(sassVariables)
       + ThemesStylesCreatorPlugin.getSassImport(sassEntry);
   }
-
+  
   static getSassFilesPathsFromCachedStylesKeys(cachedStylesKeys) {
     return cachedStylesKeys.map(key => key.split('!').pop());
   }
-
+  
   static getCompiledCssWithPostCss(cssData) {
     return postcss([autoprefixer]).process(cssData).css;
   }
-
+  
   constructor(options) {
     this.readyStyleFiles = {};
     this.options = options;
     this.stats = {};
   }
-
+  
   apply(compiler) {
     compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
-      this.readyStyleFiles = {};
-      this.stats = stats;
-      const cachedStylesKeys = this.getCachedStyles();
-      const sassFilesPaths =
-        ThemesStylesCreatorPlugin.getSassFilesPathsFromCachedStylesKeys(cachedStylesKeys);
-      this.deletedCachedStylesWithKeys(cachedStylesKeys);
-      this.prepareThemesFilesWithCompiledStylesFiles(sassFilesPaths);
-      this.createAndDropThemesFiles(this.stats.compilation.outputOptions.path);
-      this.updateCompilationHash();
+      try {
+        this.readyStyleFiles = {};
+        this.stats = stats;
+        const cachedStylesKeys = this.getCachedStyles();
+        console.log('cachedStylesKeys', cachedStylesKeys)
+        const sassFilesPaths =
+          ThemesStylesCreatorPlugin.getSassFilesPathsFromCachedStylesKeys(cachedStylesKeys);
+        this.deletedCachedStylesWithKeys(cachedStylesKeys);
+        this.prepareThemesFilesWithCompiledStylesFiles(sassFilesPaths);
+        if (this.options.join) {
+          this.createAndDropThemesFiles();
+        } else {
+          this.createAndDropThemesFilesForEachFile();
+        }
+        this.updateCompilationHash();
+      } catch (e) {
+        ThemesStylesCreatorPlugin.consoleMessage('error', JSON.stringify(e, null, 4));
+      }
     });
   }
-
+  
   updateCompilationHash() {
     this.stats.compilation.hash = uniqid();
   }
-
+  
   getCachedStyles() {
     const storedCachedKeys = cachedStylesKeysKeeper.getKeys();
     if (
@@ -78,7 +88,7 @@ class ThemesStylesCreatorPlugin {
     );
     return this.getCachedStylesKeysFromStats();
   }
-
+  
   prepareThemesFilesWithCompiledStylesFiles(sassFilePath) {
     sassFilePath.forEach((filePath) => {
       this.options.themes.forEach((theme) => {
@@ -93,7 +103,7 @@ class ThemesStylesCreatorPlugin {
       });
     });
   }
-
+  
   compileSassFile(sassFilePath, variables) {
     return sass.renderSync({
       data: ThemesStylesCreatorPlugin.createCompilerData(
@@ -105,21 +115,30 @@ class ThemesStylesCreatorPlugin {
         : 'nested',
     });
   }
-
+  
   getCachedStylesKeysFromStats() {
     return Object.keys(this.stats.compilation.cache).filter(cacheKey => cacheKey.indexOf('.scss') > -1);
   }
-
+  
   deletedCachedStylesWithKeys(cachedStylesKeys) {
     cachedStylesKeys.forEach((cachedStylesKey) => {
       delete this.stats.compilation.cache[cachedStylesKey];
     });
     cachedStylesKeysKeeper.clearKeys();
   }
-
-  createAndDropThemesFiles(buildFolder) {
+  
+  createAndDropThemesFiles() {
+    const buildFolder = this.options.output || this.stats.compilation.outputOptions.path;
     Object.keys(this.readyStyleFiles).forEach((themeName) => {
       fse.outputFileSync(`${buildFolder}${themeName}`, this.readyStyleFiles[themeName].join(''));
+      ThemesStylesCreatorPlugin.consoleMessage('info', `${PLUGIN_NAME}: created theme "${themeName}"!`);
+    });
+  }
+  
+  createAndDropThemesFilesForEachFile() {
+    const buildFolder = this.options.output || this.stats.compilation.outputOptions.path;
+    Object.keys(this.readyStyleFiles).forEach((themeName) => {
+      fse.outputFileSync(`${buildFolder}${themeName}`, JSON.stringify(cssToObject(this.readyStyleFiles[themeName].join('')), null, 4));
       ThemesStylesCreatorPlugin.consoleMessage('info', `${PLUGIN_NAME}: created theme "${themeName}"!`);
     });
   }

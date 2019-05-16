@@ -5,25 +5,52 @@
 // IMPORTANT
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
+const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 module.exports = {
   plugins: [
-    // your custom plugins
+    new ThemesStylesCreatorPlugin({
+      join: false,
+      output: `./build/storybook/`,
+      themes: [
+        {
+          themeName: 'white.json',
+          variables: {
+            theme: 'white',
+          },
+        },
+        {
+          themeName: 'dark.json',
+          variables: {
+            theme: 'dark',
+          },
+        },
+      ],
+    }),
   ],
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js', '.json'],
+  },
+  watchOptions: {
+    aggregateTimeout: 200,
+  },
+  resolveLoader: {
+    modules: ['node_modules', 'loaders'],
+  },
   module: {
     rules: [
-      // add your custom rules.
       {
         test: /\.tsx?$/,
         use: [
           {
             loader: 'ts-loader',
-            options: {
-              configFile: `${process.env.PWD}/build_configs/tsconfig.storybook.json`,
-            },
           },
         ],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.scss$/,
+        use: 'themes-styles-creator',
       },
     ],
   },

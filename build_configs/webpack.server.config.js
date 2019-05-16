@@ -23,7 +23,7 @@ module.exports = {
         use: {
           loader: 'ts-loader',
           options: {
-            configFile: `${process.env.PWD}/build_configs/tsconfig.server.json`,
+            configFile: path.normalize(`${process.env.PWD}/build_configs/tsconfig.server.json`),
           },
         },
         exclude: /node_modules/,

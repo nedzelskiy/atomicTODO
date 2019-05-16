@@ -12,7 +12,7 @@
     "dev:server:run": "sh sh/dev/server.run.sh",
     "dev:client:build": "sh sh/dev/client.build.sh",
     "dev:server:build": "sh sh/dev/server.build.sh",
-    "storybook": "start-storybook -p 6006",
+    "storybook": "start-storybook -s ./build -p 9001",
     "build-storybook": "build-storybook"
   },
   "pre-push": [
@@ -21,6 +21,7 @@
   ],
   "dependencies": {
     "@storybook/cli": "^5.0.11",
+    "@storybook/theming": "^5.0.11",
     "@types/axios": "^0.14.0",
     "@types/chalk": "^2.2.0",
     "@types/circular-json": "^0.4.0",
@@ -45,6 +46,7 @@
     "chalk": "^2.4.2",
     "circular-json": "^0.5.9",
     "concurrently": "^4.1.0",
+    "css-to-object": "^1.1.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.17.2",

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Button from '../../../components/atomes/Button/Button';
+import Button from '../../../presentations/atomes/Button/Button';
 
 interface Props {
   theme: string;

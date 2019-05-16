@@ -8,6 +8,8 @@ import ClientTranslator from '../../../data/translations/ClientTranslator/Client
 
 let translationsStorage = new ClientTranslationsDto();
 
+export const STORAGE_NAME = 'translationsStorage';
+
 export const getTranslationsStorage = (): ClientTranslationsDto => translationsStorage;
 export const setTranslationsStorage = (ts: ClientTranslationsDto) => {
   translationsStorage = ts;

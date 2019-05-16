@@ -15,4 +15,8 @@ const TodoList: React.FunctionComponent<Props> = ({ todos }: Props): JSX.Element
   </div>
 );
 
+TodoList.defaultProps = {
+  todos: [],
+};
+
 export default TodoList;

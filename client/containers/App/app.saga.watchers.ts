@@ -13,6 +13,7 @@ import ClientTranslationsDto, { ClientTranslationsForLocale }
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 import routes, { ApplicationRoute } from '../Router/routes';
+import { STORAGE_NAME } from '../hocs/withTranslator';
 
 function* getTranslations(locale: string) {
   try {
@@ -41,19 +42,21 @@ function* changeLocaleForCurrentPage(locale: string, translations: ClientTransla
 
 function* changeLocale(action: CommonAction & ChangeLocaleAction) {
   const { locale } = action.payload;
-  const state: AppReducerState = yield select(s => s);
-  const appLocale: string = state.appReducer.locale;
-  if (appLocale === locale) {
-    return ;
-  }
-  console.log(appLocale === locale);
-  const translationsStorage: ClientTranslationsDto = yield getContext('translationsStorage');
-  const isExistsTranslations: boolean = yield call(translationsStorage.isExistTranslations, locale);
-  if (!isExistsTranslations) {
-    const translations: ClientTranslationsForLocale = yield* getTranslations(locale);
-    yield call(translationsStorage.setTranslations, locale, translations);
-  }
-  yield* changeLocaleForCurrentPage(locale, translationsStorage.getTranslations(locale));
+  const translationsStorage: ClientTranslationsDto = yield getContext(STORAGE_NAME);
+  yield;
+  // const state: AppReducerState = yield select(s => s);
+  // const appLocale: string = state.appReducer.locale;
+  // if (appLocale === locale) {
+  //   return ;
+  // }
+  // console.log(appLocale === locale);
+  // const translationsStorage: ClientTranslationsDto = yield getContext('translationsStorage');
+  // const isExistsTranslations: boolean = yield call(translationsStorage.isExistTranslations, locale);
+  // if (!isExistsTranslations) {
+  //   const translations: ClientTranslationsForLocale = yield* getTranslations(locale);
+  //   yield call(translationsStorage.setTranslations, locale, translations);
+  // }
+  // yield* changeLocaleForCurrentPage(locale, translationsStorage.getTranslations(locale));
 }
 
 function* watchChangeLocale() {

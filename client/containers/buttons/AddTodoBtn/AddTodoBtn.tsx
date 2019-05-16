@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../../components/atomes/Button/Button';
+import Button from '../../../presentations/atomes/Button/Button';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';

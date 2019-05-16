@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { addTodos, AddTodos } from '../../../../data/todos/redux/todos.redux.actions';
 import { TodosReducerState } from '../../../../data/redux.reducers';
 import todosStorage from '../../../../data/todos/TodosStorage/TodosLocalStorage';
-import TodoList from '../../../components/molecules/TodoList/TodoList';
+import TodoList from '../../../presentations/molecules/TodoList/TodoList';
 
 interface Props {
   todos: any;

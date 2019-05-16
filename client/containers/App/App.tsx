@@ -63,10 +63,11 @@ class App extends React.Component<Props> {
 
   componentDidUpdate(): void {
     this.setCurrentRoute();
+    // this.props.changeLocale('sx');
   }
 
   setLocale(locale: string) {
-    this.props.setLocale(locale);
+    // this.props.setLocale(locale);
   }
 
   setCurrentRoute() {
@@ -75,9 +76,9 @@ class App extends React.Component<Props> {
 
   render() {
     console.log('>> rerender App', this.props);
-    if (!this.props.reduxLocale) {
-      return null;
-    }
+    // if (!this.props.reduxLocale) {
+    //   return null;
+    // }
 
     if (this.props.isLoading) {
       return <LoadingPage/>;

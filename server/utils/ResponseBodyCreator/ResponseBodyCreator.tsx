@@ -3,7 +3,7 @@ import * as React from 'react';
 import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
-import Html from '../../../client/components/Html';
+import Html from '../../../client/presentations/Html';
 import App from '../../../client/containers/App/App';
 import TranslationsConnector
   from '../../../data/translations/TranslationsConnector/TranslationsConnector';

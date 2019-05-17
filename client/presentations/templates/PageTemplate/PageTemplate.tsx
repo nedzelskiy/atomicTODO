@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ReactComponent } from '../../../containers/Router/routes';
+import { ReactComponent } from '../../../utils/interfaces';
 
 interface Props {
   pageName: string;

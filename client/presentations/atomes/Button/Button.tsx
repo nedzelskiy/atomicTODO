@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './button.styles.scss';
 
-interface Props {
+export interface Props {
   children: string;
   className?: string;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -19,6 +19,7 @@ const Button: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
 Button.defaultProps = {
   className: '',
   onClick: () => {},
+  children: 'some text',
 };
 
 export default Button;

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { ReactComponent } from '../../utils/interfaces';
 import { AppReducerState } from '../../../data/redux.reducers';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 import ClientTranslationsDto
@@ -25,7 +26,7 @@ const createTranslator = (locale: string): TranslateHelper => {
   ).getTranslator();
 };
 
-export default (Component: React.FunctionComponent<any> | React.ComponentClass<any, any>) => {
+export default (Component: ReactComponent) => {
   const WithTranslator = (props: any): JSX.Element => {
     return (
       <Component {...props} t={createTranslator(props.locale)}/>

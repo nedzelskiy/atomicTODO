@@ -1,0 +1,4 @@
+const themes = [
+  'dark',
+  'white',
+];

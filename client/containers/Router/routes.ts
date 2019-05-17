@@ -1,5 +1,5 @@
 import { RouteProps } from 'react-router-dom';
-import { ComponentClass, FunctionComponent } from 'react';
+import { ReactComponent } from '../../utils/interfaces';
 import HomePage, { meta as HomePageMeta } from '../../containers/pages/HomePage/HomePage';
 
 const defaultPageRoutes: ApplicationRoutes = {
@@ -50,7 +50,6 @@ export interface ApplicationRoutes {
   [routeId: string]: ApplicationRoute;
 }
 
-export type ReactComponent = FunctionComponent<any> | ComponentClass<any, any>;
 // 'missed-locale': {
 //   exact: true,
 //   path: '/',

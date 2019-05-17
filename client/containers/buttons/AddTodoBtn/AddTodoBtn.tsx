@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../../presentations/atomes/Button/Button';
+import withMockedContainer from '../../hocs/withMockedContainer';
+import Button, { Props as ButtonProps } from '../../../presentations/atomes/Button/Button';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';
@@ -10,7 +11,12 @@ interface Props extends TranslateHelperProps {
   addTodo: AddTodo;
 }
 
-class AddTodoBtn extends React.Component<Props, {}> {
+const PureComponent: React.FunctionComponent<Readonly<ButtonProps>> =
+  ({ children, ...other }: ButtonProps): JSX.Element => (
+    <Button className="create-todo" {...other}>{children}</Button>
+  );
+
+class AddTodoBtn extends React.Component<Readonly<Props>, {}> {
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -48,14 +54,16 @@ class AddTodoBtn extends React.Component<Props, {}> {
     console.log('___ render AddTodoBtn', this.props);
     const { t } = this.props;
     return (
-      <Button
-        className="create-todo"
+      <PureComponent
         onClick={this.handleOnClick}
       >
         {`+ ${t('New task')}`}
-      </Button>
+      </PureComponent>
     );
   }
 }
 
-export default withTranslator(connect(null, { addTodo })(AddTodoBtn));
+export default withMockedContainer(
+  PureComponent,
+  withTranslator(connect(null, { addTodo })(AddTodoBtn)),
+);

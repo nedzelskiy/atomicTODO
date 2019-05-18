@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../../presentations/atomes/Button/Button';
+import PrimaryBtn from '../../../presentations/atomes/buttons/PrimaryBtn/PrimaryBtn';
+import componentConnector from '../../decorators/componentConnector';
 import { triggerDoneTodo, TriggerDoneTodo } from '../../../../data/todos/redux/todos.redux.actions';
 
 interface Props {
@@ -20,14 +21,14 @@ class TriggerTodoStatusBtn extends React.Component<Props, {}> {
 
   render() {
     return (
-      <Button
-        className="todo-trigger-done"
-        onClick={this.handleOnClick}
-      >
+      <PrimaryBtn onClick={this.handleOnClick}>
         ☑
-      </Button>
+      </PrimaryBtn>
     );
   }
 }
 
-export default connect(null, { triggerDoneTodo })(TriggerTodoStatusBtn);
+export default componentConnector(
+  connect(null, { triggerDoneTodo })(TriggerTodoStatusBtn),
+  PrimaryBtn,
+);

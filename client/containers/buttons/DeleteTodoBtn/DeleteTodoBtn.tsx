@@ -1,8 +1,10 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import Button from '../../../presentations/atomes/Button/Button';
+import PrimaryLowNoticeBtn from
+    '../../../presentations/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn';
 import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux.actions';
-import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';
+import withTranslator, { TranslateHelperProps } from '../../decorators/withTranslator';
+import componentConnector from '../../decorators/componentConnector';
 
 interface Props extends TranslateHelperProps {
   id: number;
@@ -22,14 +24,14 @@ class DeleteTodoBtn extends React.Component<Readonly<Props>, {}> {
   render() {
     const { t } = this.props;
     return (
-      <Button
-        className="todo-delete"
-        onClick={this.handleOnClick}
-      >
+      <PrimaryLowNoticeBtn onClick={this.handleOnClick}>
         {t('delete')}
-      </Button>
+      </PrimaryLowNoticeBtn>
     );
   }
 }
 
-export default withTranslator(connect(null, { deleteTodo })(DeleteTodoBtn));
+export default componentConnector(
+  withTranslator(connect(null, { deleteTodo })(DeleteTodoBtn)),
+  PrimaryLowNoticeBtn,
+);

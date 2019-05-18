@@ -1,5 +1,11 @@
 import { matchPath } from 'react-router-dom';
 import { compile } from 'path-to-regexp';
+import {
+  getDefaultTheme,
+  getAllowedThemes,
+  getDefaultLocale,
+  getAllowedLocales,
+} from '../../../config';
 import { NormalizedIncomingMessage } from '../../server';
 import {
   HomeRouteParams,
@@ -11,15 +17,15 @@ import {
 export default class Environment {
   private readonly routes: ApplicationRoutes;
 
-  static defaultLocale: string = 'en';
-  static defaultTheme: string = 'white';
+  static defaultLocale: string = getDefaultLocale();
+  static defaultTheme: string = getDefaultTheme();
+
+  static getAllowedThemes(): Set<string> {
+    return getAllowedThemes();
+  }
 
   static getAllowedLocales(): Set<string> {
-    return new Set()
-      .add(Environment.defaultLocale)
-      .add('ru')
-      .add('zh')
-      .add('fi-FI');
+    return getAllowedLocales();
   }
 
   static getCheckedLocale(locale: string): string {

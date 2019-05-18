@@ -14,7 +14,7 @@ import ClientTranslator from '../../../data/translations/ClientTranslator/Client
 import Environment from '../Environment/Environment';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/routes';
 import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
-import { setTranslationsStorage } from '../../../client/containers/hocs/withTranslator';
+import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 

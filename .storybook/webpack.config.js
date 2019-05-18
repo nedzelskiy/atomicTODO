@@ -5,27 +5,16 @@
 // IMPORTANT
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
-const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
+
 const webpack = require('webpack');
+const getThemesWebpackConfig = require('../config').getThemesWebpackConfig;
+const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 module.exports = {
   plugins: [
     new ThemesStylesCreatorPlugin({
       output: `./build/storybook/`,
-      themes: [
-        {
-          themeName: 'storybook.white.css',
-          variables: {
-            theme: 'white',
-          },
-        },
-        {
-          themeName: 'storybook.dark.css',
-          variables: {
-            theme: 'dark',
-          },
-        },
-      ],
+      themes: getThemesWebpackConfig('storybook', 'css'),
     }),
     new webpack.DefinePlugin({
       'process.env.MODE': JSON.stringify('storybook'),

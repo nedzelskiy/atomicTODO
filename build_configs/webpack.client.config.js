@@ -3,24 +3,12 @@ const path = require('path');
 const chalk = require('chalk');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
+const { getThemesWebpackConfig } = require('../config');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 const preparedPlugins = [
   new ThemesStylesCreatorPlugin({
-    themes: [
-      {
-        themeName: 'client.white.css',
-        variables: {
-          theme: 'white',
-        },
-      },
-      {
-        themeName: 'client.dark.css',
-        variables: {
-          theme: 'dark',
-        },
-      },
-    ],
+    themes: getThemesWebpackConfig('client', 'css'),
   }),
   {
     apply(compiler) {

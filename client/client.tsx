@@ -8,7 +8,7 @@ import Router, { RouterProps } from './containers/Router/Router';
 import { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import routes, { ApplicationRoute } from './containers/Router/routes';
-import { getTranslationsStorage, STORAGE_NAME } from './containers/hocs/withTranslator';
+import { getTranslationsStorage, STORAGE_NAME } from './containers/decorators/withTranslator';
 import PageFirewall from './containers/PageFirewall/PageFirewall';
 import { setCurrentRoute } from './containers/App/app.redux.actions';
 import { CurrentRoute } from './containers/App/app.redux.initial-state';

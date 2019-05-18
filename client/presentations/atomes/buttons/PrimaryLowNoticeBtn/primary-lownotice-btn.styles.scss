@@ -1,0 +1,11 @@
+@import '../../../../containers/App/app.styles.palete';
+
+$backgroundColor: $gray;
+$color: $white;
+
+.button {
+  &.primary-lownotice-btn {
+    color: $color;
+    background-color: $backgroundColor;
+  }
+}

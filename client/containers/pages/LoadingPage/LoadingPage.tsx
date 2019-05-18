@@ -1,5 +1,5 @@
 import * as React from 'react';
-import withTranslator, { TranslateHelperProps } from '../../hocs/withTranslator';
+import withTranslator, { TranslateHelperProps } from '../../decorators/withTranslator';
 
 interface Props extends TranslateHelperProps {}
 

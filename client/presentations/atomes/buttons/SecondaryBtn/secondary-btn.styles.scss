@@ -1,0 +1,11 @@
+@import '../../../../containers/App/app.styles.palete';
+
+$backgroundColor: $light-green;
+$color: $white;
+
+.button {
+  &.secondary-btn {
+    color: $color;
+    background-color: $backgroundColor;
+  }
+}

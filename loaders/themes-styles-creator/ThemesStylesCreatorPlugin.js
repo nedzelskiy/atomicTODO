@@ -6,7 +6,6 @@ const chalk = require('chalk');
 const fse = require('fs-extra');
 const uniqid = require('uniqid');
 const sass = require('node-sass');
-const cssToObject = require('css-to-object');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
 const cachedStylesKeysKeeper = require('./CachedStylesKeysKeeper');
@@ -87,14 +86,14 @@ class ThemesStylesCreatorPlugin {
   prepareThemesFilesWithCompiledStylesFiles(sassFilePath) {
     sassFilePath.forEach((filePath) => {
       this.options.themes.forEach((theme) => {
-        const { themeName, variables = {} } = theme;
+        const { fileName, variables = {} } = theme;
         const sassCompiledResult = this.compileSassFile(filePath, variables);
         const compiledCssData =
           ThemesStylesCreatorPlugin.getCompiledCssWithPostCss(sassCompiledResult.css.toString());
-        if (!this.readyStyleFiles[themeName]) {
-          this.readyStyleFiles[themeName] = [];
+        if (!this.readyStyleFiles[fileName]) {
+          this.readyStyleFiles[fileName] = [];
         }
-        this.readyStyleFiles[themeName].push(compiledCssData);
+        this.readyStyleFiles[fileName].push(compiledCssData);
       });
     });
   }

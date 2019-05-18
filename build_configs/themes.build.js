@@ -1,4 +1,1 @@
-const themes = [
-  'dark',
-  'white',
-];
+

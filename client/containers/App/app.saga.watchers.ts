@@ -13,7 +13,7 @@ import { ChangeLocaleAction } from './app.redux.actions';
 // import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 // import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 // import routes, { ApplicationRoute } from '../Router/routes';
-// import { STORAGE_NAME } from '../hocs/withTranslator';
+// import { STORAGE_NAME } from '../decorators/withTranslator';
 
 // function* getTranslations(locale: string) {
 //   try {

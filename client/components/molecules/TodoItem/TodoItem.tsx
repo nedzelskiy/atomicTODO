@@ -3,7 +3,6 @@ import DeleteTodoBtn from '../../../containers/buttons/DeleteTodoBtn/DeleteTodoB
 import TriggerTodoStatusBtn
   from '../../../containers/buttons/TriggerTodoStatusBtn/TriggerTodoStatusBtn';
 import { Todo } from '../../../../data/todos/redux/todos.redux.initial-state';
-import TestState from '../../../containers/TestState';
 import './todoitem.styles.scss';
 
 export interface Props extends Todo {}
@@ -11,7 +10,6 @@ export interface Props extends Todo {}
 const TodoItem: React.FunctionComponent<Props> = ({ isDone, name, id }: Props): JSX.Element => (
   <div className={`todo-item ${isDone ? 'done' : ''}`}>
     <span className="todo-name">{name}</span>
-    <TestState name="in TodoItem" />
     <TriggerTodoStatusBtn id={id} />
     <DeleteTodoBtn id={id} />
   </div>

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { ApplicationRoute } from '../../Router/routes';
-import Header from '../../../presentations/atomes/Header/Header';
-import PageTemplate from '../../../presentations/templates/PageTemplate/PageTemplate';
+import Header from '../../../components/atomes/Header/Header';
+import PageTemplate from '../../../components/templates/PageTemplate/PageTemplate';
 import TodoListWithControls
-  from '../../../presentations/organismes/TodoListWithControls/TodoListWithControls';
+  from '../../../components/organismes/TodoListWithControls/TodoListWithControls';
 
 interface Props extends ApplicationRoute {}
 

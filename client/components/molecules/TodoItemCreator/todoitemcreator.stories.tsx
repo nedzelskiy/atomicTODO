@@ -3,4 +3,4 @@ import { storiesOf } from '@storybook/react';
 import TodoItemCreator from './TodoItemCreator';
 
 storiesOf('molecules/TodoItemCreator', module)
-  .add('with text', () => <TodoItemCreator />);
+  .add('instance', () => <TodoItemCreator />);

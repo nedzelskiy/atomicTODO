@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import PrimaryBtn from '../../../presentations/atomes/buttons/PrimaryBtn/PrimaryBtn';
-import componentConnector from '../../decorators/componentConnector';
+import PrimaryBtn from '../../../components/atomes/buttons/PrimaryBtn/PrimaryBtn';
+import withConnector from '../../decorators/withConnector';
 import { triggerDoneTodo, TriggerDoneTodo } from '../../../../data/todos/redux/todos.redux.actions';
 
 interface Props {
@@ -10,6 +10,10 @@ interface Props {
 }
 
 class TriggerTodoStatusBtn extends React.Component<Props, {}> {
+  static getBtnText() {
+    return '☑';
+  }
+
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -22,13 +26,16 @@ class TriggerTodoStatusBtn extends React.Component<Props, {}> {
   render() {
     return (
       <PrimaryBtn onClick={this.handleOnClick}>
-        ☑
+        {TriggerTodoStatusBtn.getBtnText()}
       </PrimaryBtn>
     );
   }
 }
 
-export default componentConnector(
+export default withConnector(
   connect(null, { triggerDoneTodo })(TriggerTodoStatusBtn),
   PrimaryBtn,
+  {
+    children: TriggerTodoStatusBtn.getBtnText(),
+  },
 );

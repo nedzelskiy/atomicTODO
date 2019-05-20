@@ -19,7 +19,6 @@ const Button: React.FunctionComponent<Props> = (props: Props): JSX.Element => (
 Button.defaultProps = {
   className: '',
   onClick: () => {},
-  children: 'some text',
 };
 
 export default Button;

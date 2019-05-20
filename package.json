@@ -20,7 +20,12 @@
     "stylelint"
   ],
   "dependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.4.4",
+    "@babel/preset-env": "^7.4.4",
+    "@babel/preset-react": "^7.0.0",
+    "@storybook/addon-viewport": "^5.0.11",
     "@storybook/cli": "^5.0.11",
+    "@storybook/core-events": "^5.0.11",
     "@storybook/theming": "^5.0.11",
     "@types/axios": "^0.14.0",
     "@types/chalk": "^2.2.0",
@@ -38,7 +43,9 @@
     "@types/redux-saga": "^0.10.5",
     "@types/serialize-javascript": "^1.5.0",
     "@types/storybook__addon-actions": "^3.4.2",
+    "@types/storybook__addon-knobs": "^5.0.0",
     "@types/storybook__addon-links": "^3.3.4",
+    "@types/storybook__addon-viewport": "^4.1.0",
     "@types/storybook__react": "^4.0.1",
     "@types/webpack": "^4.4.27",
     "autoprefixer": "^9.5.1",
@@ -84,6 +91,7 @@
   "devDependencies": {
     "@babel/core": "^7.4.4",
     "@storybook/addon-actions": "^5.0.11",
+    "@storybook/addon-knobs": "^5.0.11",
     "@storybook/addon-links": "^5.0.11",
     "@storybook/addons": "^5.0.11",
     "@storybook/react": "^5.0.11",

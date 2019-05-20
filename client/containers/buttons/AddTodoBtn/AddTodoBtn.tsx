@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import componentConnector from '../../decorators/componentConnector';
+import withConnector from '../../decorators/withConnector';
 import { addTodo, AddTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import { createNewTodo } from '../../../../data/todos/redux/todos.redux.initial-state';
 import withTranslator, { TranslateHelperProps } from '../../decorators/withTranslator';
-import SecondaryBtn from '../../../presentations/atomes/buttons/SecondaryBtn/SecondaryBtn';
+import SecondaryBtn from '../../../components/atomes/buttons/SecondaryBtn/SecondaryBtn';
+import { TranslateHelper } from '../../../../data/translations/trnaslations.interfaces';
 
 interface Props extends TranslateHelperProps {
   inputRef: React.RefObject<HTMLInputElement>;
@@ -12,6 +13,10 @@ interface Props extends TranslateHelperProps {
 }
 
 class AddTodoBtn extends React.Component<Readonly<Props>, {}> {
+  static getBtnText(t: TranslateHelper) {
+    return `+ ${t('New task')}`;
+  }
+
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -46,17 +51,18 @@ class AddTodoBtn extends React.Component<Readonly<Props>, {}> {
   }
 
   render() {
-    console.log('___ render AddTodoBtn', this.props);
-    const { t } = this.props;
     return (
       <SecondaryBtn onClick={this.handleOnClick}>
-        {`+ ${t('New task')}`}
+        {AddTodoBtn.getBtnText(this.props.t)}
       </SecondaryBtn>
     );
   }
 }
 
-export default componentConnector(
+export default withConnector(
   withTranslator(connect(null, { addTodo })(AddTodoBtn)),
   SecondaryBtn,
+  {
+    children: AddTodoBtn.getBtnText(t => t),
+  },
 );

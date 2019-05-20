@@ -8,11 +8,13 @@ const getAllowedThemes = () => (
   new Set()
     .add(getDefaultTheme())
     .add('dark')
+    .add('white')
 );
 
 const getAllowedLocales = () => (
   new Set()
     .add(getDefaultLocale())
+    .add('en')
     .add('ru')
     .add('zh')
     .add('fi-FI')

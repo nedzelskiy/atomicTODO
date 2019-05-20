@@ -1,10 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import PrimaryLowNoticeBtn from
-    '../../../presentations/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn';
+    '../../../components/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn';
 import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux.actions';
 import withTranslator, { TranslateHelperProps } from '../../decorators/withTranslator';
-import componentConnector from '../../decorators/componentConnector';
+import withConnector from '../../decorators/withConnector';
+import { TranslateHelper } from '../../../../data/translations/trnaslations.interfaces';
 
 interface Props extends TranslateHelperProps {
   id: number;
@@ -12,6 +13,10 @@ interface Props extends TranslateHelperProps {
 }
 
 class DeleteTodoBtn extends React.Component<Readonly<Props>, {}> {
+  static getBtnText(t: TranslateHelper) {
+    return t('delete');
+  }
+
   constructor(props: Props) {
     super(props);
     this.handleOnClick = this.handleOnClick.bind(this);
@@ -22,16 +27,18 @@ class DeleteTodoBtn extends React.Component<Readonly<Props>, {}> {
   }
 
   render() {
-    const { t } = this.props;
     return (
       <PrimaryLowNoticeBtn onClick={this.handleOnClick}>
-        {t('delete')}
+        {DeleteTodoBtn.getBtnText(this.props.t)}
       </PrimaryLowNoticeBtn>
     );
   }
 }
 
-export default componentConnector(
+export default withConnector(
   withTranslator(connect(null, { deleteTodo })(DeleteTodoBtn)),
   PrimaryLowNoticeBtn,
+  {
+    children: DeleteTodoBtn.getBtnText(t => t),
+  },
 );

@@ -2,9 +2,9 @@ const fse = require('fs-extra');
 const config = require('../config');
 
 const createStylesTag = (themeName) => (
-  `<link rel="stylesheet" type="text/css" href="/storybook/storybook.${themeName}.css" />`
+  `<link rel="stylesheet" type="text/css" href="/storybook/storybook.${themeName}.css" id="storybook" />`
 );
 
 const stylesTag = createStylesTag(config.getDefaultTheme());
 
-// fse.outputFileSync('./.storybook/preview-head.html', stylesTag);
+fse.outputFileSync('./.storybook/preview-head.html', stylesTag);

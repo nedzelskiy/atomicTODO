@@ -4,15 +4,17 @@ import { NormalizedIncomingMessage } from '../server';
 import { getResponseBodyCreator }
   from '../utils/ResponseBodyCreator/bindings/responseBodyCreatorWithHelpers';
 import ResponseBodyCreator from '../utils/ResponseBodyCreator/ResponseBodyCreator';
-import configureStore from '../../client/configureStore';
+import dataFetcherWithFile from '../utils/DataFetcher/bindings/dataFetcherWithFile';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 200;
 
   const responseBodyCreator: ResponseBodyCreator = getResponseBodyCreator(req);
+
+  dataFetcherWithFile.collectFetchJobs();
   const responseBody: string = <string>responseBodyCreator.create(
     renderToStaticMarkup,
-    configureStore({}, {}),
+    dataFetcherWithFile.getFilledStore(),
   );
   const context = responseBodyCreator.getContext();
   if (!context.url) {

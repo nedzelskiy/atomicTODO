@@ -29,7 +29,13 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.scss?$/,
+        test: /\.scss$/,
+        use: {
+          loader: 'ignore-loader',
+        },
+      },
+      {
+        test: /\.css$/,
         use: {
           loader: 'ignore-loader',
         },

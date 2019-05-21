@@ -4,9 +4,6 @@ import Environment from '../../Environment/Environment';
 import EnvironmentWithRoutes from '../../Environment/bindings/withRoutes';
 import withFilesFromRealFs
   from '../../../../data/translations/TranslationsConnector/bindings/withFilesFromRealFs';
-import dataFetcherWithFile from '../../DataFetcher/bindings/dataFetcherWithFile';
-
-dataFetcherWithFile.collectFetchJobs();
 
 export const getResponseBodyCreator = (
   req: NormalizedIncomingMessage,

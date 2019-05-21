@@ -52,7 +52,6 @@ export default class ResponseBodyCreator {
       this.translatorsConnector.getClientTranslationsForLocale(this.locale);
     const t: TranslateHelper = new ClientTranslator(translationsForLocale).getTranslator();
     const Component: any = this.route.getComponent();
-    console.log('==> s', Component);
     setTranslationsStorage(this.translatorsConnector.getClientTranslationsDto());
 
     return reactRender(

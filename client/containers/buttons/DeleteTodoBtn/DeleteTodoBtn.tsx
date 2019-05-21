@@ -42,3 +42,16 @@ export default withConnector(
     children: DeleteTodoBtn.getBtnText(t => t),
   },
 );
+
+export const serverDataFetchJobs = [
+  async () => {
+    const data = await new Promise((res) => {
+      setTimeout(
+        () => {
+          res(1);
+        },
+        2000);
+    });
+    return data;
+  },
+];

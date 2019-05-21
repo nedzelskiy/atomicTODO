@@ -3,7 +3,7 @@ const path = require('path');
 const chalk = require('chalk');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
-const { getThemesWebpackConfig } = require('../config');
+const { getThemesWebpackConfig, getFileNameOfNeededInServerData } = require('../config');
 const ServerFetchDataCreator = require('../loaders/server-fetch-data-creator/ServerFetchDataCreator');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
@@ -12,7 +12,7 @@ const preparedPlugins = [
     themes: getThemesWebpackConfig('client', 'css'),
   }),
   new ServerFetchDataCreator({
-    fileName: 'componentsNeededInData.json',
+    fileName: getFileNameOfNeededInServerData(),
   }),
   {
     apply(compiler) {
@@ -55,7 +55,7 @@ module.exports = {
           {
             loader: 'server-fetch-data-creator',
             options: {
-              fetchPropertyName: 'fetchData',
+              fetchPropertyName: 'serverDataFetchJobs',
             },
           },
           {

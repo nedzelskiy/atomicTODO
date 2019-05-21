@@ -19,12 +19,9 @@ class ServerFetchDataCreator {
   }
 
   dropServerFetchJobsFile(urls) {
-    if (urls.length < 1) {
-      return;
-    }
     const buildFolder = this.stats.compilation.outputOptions.path;
     const { fileName } = this.options;
-    fse.outputFileSync(`${buildFolder}${fileName}`, JSON.stringify(urls));
+    fse.outputFileSync(`${buildFolder}${fileName}.json`, JSON.stringify(urls));
     ServerFetchDataCreator.consoleMessage('info', `${PLUGIN_NAME}: created file for fetching server data: "${fileName}"!`);
   }
 

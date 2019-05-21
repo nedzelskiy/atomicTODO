@@ -3,6 +3,14 @@ class CachedFilesUrlsKeeper {
     this.clearCache();
   }
 
+  isExistUrl(url) {
+    return typeof this.cachedFilesUrls[url] !== 'undefined';
+  }
+
+  removeUrl(url) {
+    delete this.cachedFilesUrls[url];
+  }
+
   setUrl(url, value) {
     this.cachedFilesUrls[url] = value;
   }

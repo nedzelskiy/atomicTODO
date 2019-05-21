@@ -5,6 +5,7 @@ import {
   getAllowedThemes,
   getDefaultLocale,
   getAllowedLocales,
+  getFileNameOfNeededInServerData,
 } from '../../../config';
 import { NormalizedIncomingMessage } from '../../server';
 import {
@@ -19,6 +20,7 @@ export default class Environment {
 
   static defaultLocale: string = getDefaultLocale();
   static defaultTheme: string = getDefaultTheme();
+  static fileNameOfNeededInServerData: string = getFileNameOfNeededInServerData();
 
   static getAllowedThemes(): Set<string> {
     return getAllowedThemes();

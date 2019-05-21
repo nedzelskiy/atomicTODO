@@ -8,8 +8,9 @@ module.exports = function serverFetchDataCreator(content, map) {
     const index = content.indexOf(fetchPropertyName);
     if (index > -1) {
       cachedFilesUrlsKeeper.setUrl(map.file, true);
-    } else if (cachedFilesUrlsKeeper.getUrls()[map.file]) {
+    } else if (cachedFilesUrlsKeeper.isExistUrl(map.file)) {
       cachedFilesUrlsKeeper.setUrl(map.file, false);
+      cachedFilesUrlsKeeper.removeUrl(map.file);
     }
   }
   return content;

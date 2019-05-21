@@ -20,11 +20,13 @@ const getAllowedLocales = () => (
     .add('fi-FI')
 );
 
-const getThemesWebpackConfig = (prefix, ext) => {
+const getThemeFileName = (prefix, themeName, ext = 'css') => `${prefix}.${themeName}.${ext}`;
+
+const getThemesWebpackConfig = (prefix, ext = 'css') => {
   const result = [];
   getAllowedThemes().forEach((themeName) => {
     result.push({
-      fileName: `${prefix}.${themeName}.${ext}`,
+      fileName: getThemeFileName(prefix, themeName, ext),
       variables: {
         theme: themeName,
       },
@@ -35,6 +37,7 @@ const getThemesWebpackConfig = (prefix, ext) => {
 
 module.exports = {
   getDefaultTheme,
+  getThemeFileName,
   getDefaultLocale,
   getAllowedThemes,
   getAllowedLocales,

@@ -4,11 +4,15 @@ const chalk = require('chalk');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
 const { getThemesWebpackConfig } = require('../config');
+const ServerFetchDataCreator = require('../loaders/server-fetch-data-creator/ServerFetchDataCreator');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 const preparedPlugins = [
   new ThemesStylesCreatorPlugin({
     themes: getThemesWebpackConfig('client', 'css'),
+  }),
+  new ServerFetchDataCreator({
+    fileName: 'componentsNeededInData.json',
   }),
   {
     apply(compiler) {
@@ -47,12 +51,20 @@ module.exports = {
     rules: [
       {
         test: /\.tsx?$/,
-        use: {
-          loader: 'ts-loader',
-          options: {
-            configFile: path.normalize(`${process.env.PWD}/build_configs/tsconfig.client.json`),
+        use: [
+          {
+            loader: 'server-fetch-data-creator',
+            options: {
+              fetchPropertyName: 'fetchData',
+            },
           },
-        },
+          {
+            loader: 'ts-loader',
+            options: {
+              configFile: path.normalize(`${process.env.PWD}/build_configs/tsconfig.client.json`),
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {

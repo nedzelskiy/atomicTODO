@@ -20,7 +20,11 @@ class ThemesStylesCreatorPlugin {
   }
 
   static consoleMessage(level, message) {
-    console.log(chalk.yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
+    if (level === 'error') {
+      console.log(chalk.red(`======> ${level.toUpperCase()} ${PLUGIN_NAME}:`), message);
+    } else {
+      console.log(chalk.yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
+    }
   }
 
   static getSassVariables(variablesObj) {
@@ -59,7 +63,7 @@ class ThemesStylesCreatorPlugin {
         this.createAndDropThemesFiles();
         this.updateCompilationHash();
       } catch (e) {
-        ThemesStylesCreatorPlugin.consoleMessage('error', JSON.stringify(e, null, 4));
+        ThemesStylesCreatorPlugin.consoleMessage('error', e);
       }
     });
   }

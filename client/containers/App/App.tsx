@@ -75,7 +75,7 @@ class App extends React.Component<Props> {
   }
 
   render() {
-    console.log('>> rerender App', this.props);
+    // console.log('>> rerender App', this.props);
     // if (!this.props.reduxLocale) {
     //   return null;
     // }

@@ -1,18 +1,17 @@
 import React from 'react';
-import { getAllowedThemes } from '../config';
+import { stylesTagID } from './pre-build';
+import { getAllowedThemes, getThemeFileName } from '../config';
 import addons, { types } from '@storybook/addons';
 
 class ThemeChanger extends React.Component {
   static getHrefTag(themeName) {
-    return `/storybook/storybook.${themeName}.css`;
+    return `/storybook/${getThemeFileName('storybook', themeName)}`;
   }
 
-  static renderThemesOptions() {
-    const options = [];
-     getAllowedThemes().forEach((themeName) => {
-       options.push(<option key={themeName} value={themeName}>{themeName}</option>);
+  renderThemesOptions() {
+    return this.props.themes.map((themeName) => {
+       return <option key={themeName} value={themeName}>{themeName}</option>;
      });
-    return options;
   }
 
   constructor(props) {
@@ -22,17 +21,17 @@ class ThemeChanger extends React.Component {
   }
 
   getThemeTag() {
-    if (!this.themeTag) {
-      this.themeTag = document.getElementById('storybook-preview-iframe')
-        .contentWindow.document.getElementById('storybook');
+    if (!this.stylesTag) {
+      this.stylesTag = document.getElementById('storybook-preview-iframe')
+        .contentWindow.document.getElementById(stylesTagID);
     }
-    return this.themeTag;
+    return this.stylesTag;
   }
 
   onChange(e) {
-    const themeTag = this.getThemeTag();
+    const stylesTag = this.getThemeTag();
     const themeName = e.target.value;
-    themeTag.setAttribute('href', ThemeChanger.getHrefTag(themeName));
+    stylesTag.setAttribute('href', ThemeChanger.getHrefTag(themeName));
   }
 
   render() {
@@ -48,7 +47,7 @@ class ThemeChanger extends React.Component {
             fontSize: "14px",
           }}
         >
-          {ThemeChanger.renderThemesOptions()}
+          {this.renderThemesOptions()}
         </select>
       );
     }
@@ -57,7 +56,14 @@ class ThemeChanger extends React.Component {
 }
 
 addons.register('themeChanger', api => {
-  const render = ({ active }) => <ThemeChanger api={api} active={active} key="theme-changer" />;
+  const render = ({ active }) => (
+    <ThemeChanger
+      api={api}
+      active={active}
+      themes={Array.from(getAllowedThemes())}
+      key="theme-changer"
+    />
+  );
   const title = 'Themes';
 
   addons.add('themeChanger', {

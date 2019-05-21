@@ -2,7 +2,7 @@ import * as path from 'upath';
 import { Store } from 'redux';
 
 interface StoreFiller {
-  getFilledStore(): Store;
+  getStore(): Store;
 }
 
 class DataFetcher implements StoreFiller {
@@ -15,7 +15,7 @@ class DataFetcher implements StoreFiller {
     this.dataFetchComponents = dataFetchComponents;
   }
 
-  getFilledStore(): Store {
+  getStore(): Store {
     return this.store;
   }
 

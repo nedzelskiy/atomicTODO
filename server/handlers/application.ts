@@ -14,7 +14,7 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   dataFetcherWithFile.collectFetchJobs();
   const responseBody: string = <string>responseBodyCreator.create(
     renderToStaticMarkup,
-    dataFetcherWithFile.getFilledStore(),
+    dataFetcherWithFile.getStore(),
   );
   const context = responseBodyCreator.getContext();
   if (!context.url) {

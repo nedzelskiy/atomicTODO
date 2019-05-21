@@ -3,6 +3,7 @@ import { Store } from 'redux';
 
 interface StoreFiller {
   getStore(): Store;
+  fillStore(): void;
 }
 
 class DataFetcher implements StoreFiller {
@@ -29,6 +30,9 @@ class DataFetcher implements StoreFiller {
         this.dataFetchJobs.concat(require(`../../../client${u}`).serverDataFetchJobs);
     });
     console.log(this.dataFetchJobs);
+  }
+
+  fillStore(): void {
   }
 }
 

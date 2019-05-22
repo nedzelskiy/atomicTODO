@@ -1,10 +1,8 @@
 const defaultLocale = 'en';
 const defaultTheme = 'white';
-const fileNameOfNeededInServerData = 'inDataNeeded';
 
 const getDefaultTheme = () => defaultTheme;
 const getDefaultLocale = () => defaultLocale;
-const getFileNameOfNeededInServerData = () => fileNameOfNeededInServerData;
 
 const getAllowedThemes = () => (
   new Set()
@@ -44,5 +42,4 @@ module.exports = {
   getAllowedThemes,
   getAllowedLocales,
   getThemesWebpackConfig,
-  getFileNameOfNeededInServerData,
 };

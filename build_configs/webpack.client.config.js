@@ -1,18 +1,20 @@
 /* eslint-disable global-require, no-console */
 const path = require('path');
 const chalk = require('chalk');
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
-const { getThemesWebpackConfig, getFileNameOfNeededInServerData } = require('../config');
+const { getThemesWebpackConfig } = require('../config');
 const ServerFetchDataCreator = require('../loaders/server-fetch-data-creator/ServerFetchDataCreator');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 
 const preparedPlugins = [
+  // new BundleAnalyzerPlugin(),
   new ThemesStylesCreatorPlugin({
     themes: getThemesWebpackConfig('client', 'css'),
   }),
   new ServerFetchDataCreator({
-    fileName: getFileNameOfNeededInServerData(),
+    fileName: 'inDataNeeded',
   }),
   {
     apply(compiler) {
@@ -43,6 +45,17 @@ module.exports = {
   },
   resolve: {
     extensions: ['.ts', '.tsx', '.js', '.json'],
+  },
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'initial',
+        },
+      },
+    },
   },
   resolveLoader: {
     modules: ['node_modules', 'loaders'],

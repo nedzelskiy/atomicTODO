@@ -1,0 +1,91 @@
+{
+    "id": "./client/components/atomes/buttons/Button/Button.tsx",
+    "identifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/components/atomes/buttons/Button/Button.tsx",
+    "name": "./client/components/atomes/buttons/Button/Button.tsx",
+    "index": 109,
+    "index2": 102,
+    "size": 401,
+    "cacheable": true,
+    "built": true,
+    "optional": false,
+    "prefetched": false,
+    "chunks": [
+        "client"
+    ],
+    "issuer": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/containers/TestContainer.tsx",
+    "issuerId": "./client/containers/TestContainer.tsx",
+    "issuerName": "./client/containers/TestContainer.tsx",
+    "issuerPath": [
+        {
+            "id": 0,
+            "identifier": "multi /home/pavel/work/atomicTODO/client/client.tsx",
+            "name": "multi ./client/client.tsx"
+        },
+        {
+            "id": "./client/client.tsx",
+            "identifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/client.tsx",
+            "name": "./client/client.tsx"
+        },
+        {
+            "id": "./client/containers/Router/routes.ts",
+            "identifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/containers/Router/routes.ts",
+            "name": "./client/containers/Router/routes.ts"
+        },
+        {
+            "id": "./client/containers/pages/TestPage/TestPage.tsx",
+            "identifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/containers/pages/TestPage/TestPage.tsx",
+            "name": "./client/containers/pages/TestPage/TestPage.tsx"
+        },
+        {
+            "id": "./client/containers/TestContainer.tsx",
+            "identifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/containers/TestContainer.tsx",
+            "name": "./client/containers/TestContainer.tsx"
+        }
+    ],
+    "failed": false,
+    "errors": 0,
+    "warnings": 0,
+    "assets": [],
+    "reasons": [
+        {
+            "moduleId": "./client/components/atomes/buttons/PrimaryBtn/PrimaryBtn.tsx",
+            "moduleIdentifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/components/atomes/buttons/PrimaryBtn/PrimaryBtn.tsx",
+            "module": "./client/components/atomes/buttons/PrimaryBtn/PrimaryBtn.tsx",
+            "moduleName": "./client/components/atomes/buttons/PrimaryBtn/PrimaryBtn.tsx",
+            "type": "cjs require",
+            "userRequest": "../Button/Button",
+            "loc": "24:15-42"
+        },
+        {
+            "moduleId": "./client/components/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn.tsx",
+            "moduleIdentifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/components/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn.tsx",
+            "module": "./client/components/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn.tsx",
+            "moduleName": "./client/components/atomes/buttons/PrimaryLowNoticeBtn/PrimaryLowNoticeBtn.tsx",
+            "type": "cjs require",
+            "userRequest": "../Button/Button",
+            "loc": "24:15-42"
+        },
+        {
+            "moduleId": "./client/components/atomes/buttons/SecondaryBtn/SecondaryBtn.tsx",
+            "moduleIdentifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/components/atomes/buttons/SecondaryBtn/SecondaryBtn.tsx",
+            "module": "./client/components/atomes/buttons/SecondaryBtn/SecondaryBtn.tsx",
+            "moduleName": "./client/components/atomes/buttons/SecondaryBtn/SecondaryBtn.tsx",
+            "type": "cjs require",
+            "userRequest": "../Button/Button",
+            "loc": "24:15-42"
+        },
+        {
+            "moduleId": "./client/containers/TestContainer.tsx",
+            "moduleIdentifier": "/home/pavel/work/atomicTODO/loaders/server-fetch-data-creator/index.js??ref--4-0!/home/pavel/work/atomicTODO/node_modules/ts-loader/index.js??ref--4-1!/home/pavel/work/atomicTODO/client/containers/TestContainer.tsx",
+            "module": "./client/containers/TestContainer.tsx",
+            "moduleName": "./client/containers/TestContainer.tsx",
+            "type": "cjs require",
+            "userRequest": "../components/atomes/buttons/Button/Button",
+            "loc": "17:15-68"
+        }
+    ],
+    "providedExports": null,
+    "optimizationBailout": [],
+    "depth": 5,
+    "source": "\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nvar React = require(\"react\");\nrequire(\"./button.styles.scss\");\nvar Button = function (props) { return (React.createElement(\"button\", { onClick: props.onClick, className: \"button \" + props.className }, props.children)); };\nButton.defaultProps = {\n    className: '',\n    onClick: function () { },\n};\nexports.default = Button;\n"
+}

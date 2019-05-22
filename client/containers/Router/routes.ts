@@ -1,6 +1,7 @@
 import { RouteProps } from 'react-router-dom';
 import { ReactComponent } from '../../utils/interfaces';
 import HomePage, { meta as HomePageMeta } from '../../containers/pages/HomePage/HomePage';
+import TestPage from '../../containers/pages/TestPage/TestPage';
 
 const defaultPageRoutes: ApplicationRoutes = {
   home: {
@@ -19,6 +20,15 @@ const defaultPageRoutes: ApplicationRoutes = {
       header: null,
     },
     meta: HomePageMeta,
+  },
+  test: {
+    exact: true,
+    path: '/:locale/test',
+    pageName: 'test',
+    getComponent: () => TestPage,
+    meta: {
+      title: '',
+    },
   },
 };
 

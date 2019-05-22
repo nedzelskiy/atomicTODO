@@ -43,15 +43,15 @@ export default withConnector(
   },
 );
 
-export const serverDataFetchJobs = [
-  async () => {
-    const data = await new Promise((res) => {
-      setTimeout(
-        () => {
-          res(1);
-        },
-        2000);
-    });
-    return data;
-  },
-];
+// export const serverDataFetchJobs = [
+//   async () => {
+//     const data = await new Promise((res) => {
+//       setTimeout(
+//         () => {
+//           res(1);
+//         },
+//         2000);
+//     });
+//     return data;
+//   },
+// ];

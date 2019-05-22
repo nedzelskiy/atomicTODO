@@ -1,4 +1,4 @@
-import * as path from 'upath';
+// import * as path from 'upath';
 import { Store } from 'redux';
 
 interface StoreFiller {
@@ -7,13 +7,16 @@ interface StoreFiller {
 }
 
 class DataFetcher implements StoreFiller {
-  private dataFetchJobs = [];
-  private readonly dataFetchComponents = {};
+  // private dataFetchJobs = [];
+  // private readonly dataFetchComponents = {};
   private readonly store: Store;
 
-  constructor(store: Store, dataFetchComponents: object) {
+  constructor(
+    store: Store,
+    dataFetchComponents: object,
+  ) {
     this.store = store;
-    this.dataFetchComponents = dataFetchComponents;
+    // this.dataFetchComponents = dataFetchComponents;
   }
 
   getStore(): Store {
@@ -21,15 +24,15 @@ class DataFetcher implements StoreFiller {
   }
 
   collectFetchJobs() {
-    Object.keys(this.dataFetchComponents).forEach((url) => {
-      if (!this.dataFetchComponents[url]) {
-        return;
-      }
-      const u = path.normalize(url.split('.').shift() as string);
-      this.dataFetchJobs =
-        this.dataFetchJobs.concat(require(`../../../client${u}`).serverDataFetchJobs);
-    });
-    console.log(this.dataFetchJobs);
+    // Object.keys(this.dataFetchComponents).forEach((url) => {
+    //   if (!this.dataFetchComponents[url]) {
+    //     return;
+    //   }
+    //   const u = path.normalize(url.split('.').shift() as string);
+    //   this.dataFetchJobs =
+    //     this.dataFetchJobs.concat(require(`../../../client${u}`).serverDataFetchJobs);
+    // });
+    // console.log(this.dataFetchJobs);
   }
 
   fillStore(): void {

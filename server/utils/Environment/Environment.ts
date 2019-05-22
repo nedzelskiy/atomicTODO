@@ -5,7 +5,6 @@ import {
   getAllowedThemes,
   getDefaultLocale,
   getAllowedLocales,
-  getFileNameOfNeededInServerData,
 } from '../../../config';
 import { NormalizedIncomingMessage } from '../../server';
 import {
@@ -18,9 +17,8 @@ import {
 export default class Environment {
   private readonly routes: ApplicationRoutes;
 
-  static defaultLocale: string = getDefaultLocale();
   static defaultTheme: string = getDefaultTheme();
-  static fileNameOfNeededInServerData: string = getFileNameOfNeededInServerData();
+  static defaultLocale: string = getDefaultLocale();
 
   static getAllowedThemes(): Set<string> {
     return getAllowedThemes();

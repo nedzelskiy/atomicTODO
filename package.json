@@ -61,8 +61,10 @@
     "fs-extra": "^7.0.1",
     "get-value": "^3.0.1",
     "ignore-loader": "^0.1.2",
+    "json-circular": "^0.0.1",
     "loader-utils": "^1.2.3",
     "lodash": "^4.17.11",
+    "madge": "^3.4.4",
     "mime-types": "^2.1.22",
     "minimist": "^1.2.0",
     "node-sass": "^4.11.0",
@@ -86,6 +88,8 @@
     "uniqid": "^5.0.3",
     "upath": "^1.1.2",
     "webpack": "^4.29.6",
+    "webpack-bundle-analyzer": "^3.3.2",
+    "webpack-dependency-tree": "^0.0.2",
     "webpack-livereload-plugin": "^2.2.0"
   },
   "devDependencies": {

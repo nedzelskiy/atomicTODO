@@ -12,9 +12,9 @@ import { ClientTranslationsForLocale }
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import Environment from '../Environment/Environment';
-import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/routes';
 import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
 import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
+import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/interfaces';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 

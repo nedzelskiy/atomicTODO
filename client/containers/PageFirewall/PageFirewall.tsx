@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import ErrorPage from '../pages/ErrorPage/ErrorPage';
+import ErrorPage from '../../pages/ErrorPage/ErrorPage';
 import { PageError } from '../App/app.redux.initial-state';
-import LoadingPage from '../pages/LoadingPage/LoadingPage';
+import LoadingPage from '../../pages/LoadingPage/LoadingPage';
 import { AppReducerState } from '../../../data/redux.reducers';
 
 interface Props {

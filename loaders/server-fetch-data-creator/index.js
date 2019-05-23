@@ -6,11 +6,10 @@ module.exports = function serverFetchDataCreator(content, map) {
   const { fetchPropertyName } = options;
   if (fetchPropertyName) {
     const index = content.indexOf(fetchPropertyName);
-    const path = map.file.split('client').pop();
+    const path = map.file;
     if (index > -1) {
-      cachedFilesUrlsKeeper.setUrl(path, true);
+      cachedFilesUrlsKeeper.setUrl(path);
     } else if (cachedFilesUrlsKeeper.isExistUrl(path)) {
-      cachedFilesUrlsKeeper.setUrl(path, false);
       cachedFilesUrlsKeeper.removeUrl(path);
     }
   }

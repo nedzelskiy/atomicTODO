@@ -12,7 +12,7 @@ import {
   ApplicationRoute,
   ApplicationRoutes,
   ReactRouteWithMatchedParams,
-} from '../../../client/containers/Router/routes';
+} from '../../../client/containers/Router/interfaces';
 
 export default class Environment {
   private readonly routes: ApplicationRoutes;

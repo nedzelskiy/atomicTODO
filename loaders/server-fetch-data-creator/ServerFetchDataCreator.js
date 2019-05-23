@@ -1,9 +1,8 @@
 /* eslint-disable no-console */
 const PLUGIN_NAME = 'ServerFetchDataCreator';
 const chalk = require('chalk');
-const fse = require('fs-extra');
 const madge = require('madge');
-// const jsonCircular = require('json-circular');
+const fse = require('fs-extra');
 const cachedFilesUrlsKeeper = require('./CachedFilesUrlsKeeper');
 
 class ServerFetchDataCreator {
@@ -27,36 +26,47 @@ class ServerFetchDataCreator {
     ServerFetchDataCreator.consoleMessage('info', `${PLUGIN_NAME}: created file for fetching server data: "${fileName}"!`);
   }
 
-  apply(compiler) {
-    compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
-      try {
-        let i = 0;
-        stats.toJson({ modules: true }).modules.forEach((module) => {
-          i++;
-          if (
-            module.id.toString().indexOf('Button.tsx') > -1
-          ){
-            const text = JSON.stringify(module, null, 4);
-            console.log('==========================================', i);
-            require('fs').writeFileSync(`11${i}.txt`, JSON.stringify(module, null, 4));
-          }
-        });
+  static async buildDependencies(entry) {
+    return madge(entry, {})
+      .then(res => res);
+  }
 
-    //     // madge('../../client/client').then((res) => {
-    //     //   console.log(res.warnings());
-    //     //   console.log(res.obj());
-    //     // });
-    //     this.stats = stats;
-    //     const urls = cachedFilesUrlsKeeper.getUrls();
-    //     this.dropServerFetchJobsFile(urls);
+  async buildServerFetchJobsObject() {
+    const result = {};
+    const urls = cachedFilesUrlsKeeper.getUrls();
+    return new Promise(async (res, rej) => {
+      try {
+        for (const page of this.options.pages) {
+          const pageComponentName = page.split('/').pop().split('.').shift();
+          const dependencies = await ServerFetchDataCreator.buildDependencies(page);
+          for (const url of Object.keys(urls)) {
+            const normalisedUrl = `../../${url.split('/client/').pop()}`;
+            if (dependencies.depends(normalisedUrl)[0]) {
+              if (!result[pageComponentName]) {
+                result[pageComponentName] = [];
+              }
+              result[pageComponentName].push(url.split('/client/').pop());
+            }
+          }
+        }
+        res(result);
+      } catch (e) {
+        rej(e);
+      }
+    });
+  }
+
+  async apply(compiler) {
+    compiler.hooks.done.tapAsync(PLUGIN_NAME, async (stats, callback)  => {
+      try {
+        this.stats = stats;
+        const res = await this.buildServerFetchJobsObject();
+        this.dropServerFetchJobsFile(res);
       } catch (e) {
         ServerFetchDataCreator.consoleMessage('error', e);
       }
+      callback();
     });
-
-    // compiler.hooks.compilation.hooks.buildModule.tap('MyPlugin', (module) => {
-    //   console.log(module);
-    // });
   }
 }
 

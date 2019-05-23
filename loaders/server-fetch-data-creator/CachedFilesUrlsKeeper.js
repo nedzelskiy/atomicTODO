@@ -11,8 +11,8 @@ class CachedFilesUrlsKeeper {
     delete this.cachedFilesUrls[url];
   }
 
-  setUrl(url, value) {
-    this.cachedFilesUrls[url] = value;
+  setUrl(url) {
+    this.cachedFilesUrls[url] = {};
   }
 
   getUrls() {

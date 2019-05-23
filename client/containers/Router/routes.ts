@@ -1,7 +1,6 @@
-import { RouteProps } from 'react-router-dom';
-import { ReactComponent } from '../../utils/interfaces';
-import HomePage, { meta as HomePageMeta } from '../../containers/pages/HomePage/HomePage';
-import TestPage from '../../containers/pages/TestPage/TestPage';
+import HomePage, { meta as HomePageMeta } from '../../pages/HomePage/HomePage';
+import TestPage from '../../pages/TestPage/TestPage';
+import { ApplicationRoutes } from './interfaces';
 
 const defaultPageRoutes: ApplicationRoutes = {
   home: {
@@ -33,32 +32,6 @@ const defaultPageRoutes: ApplicationRoutes = {
 };
 
 export default defaultPageRoutes;
-
-export interface HomeRouteParams {
-  locale: string;
-}
-
-export interface ReactRouteWithMatchedParams extends ApplicationRoute {
-  id: string;
-  url: string;
-  routerParams: any;
-}
-
-export interface RouteMeta {
-  title: string;
-}
-
-export interface ApplicationRoute extends RouteProps {
-  path: string;
-  pageName: string;
-  meta: RouteMeta;
-  pageComponentProps?: any | {};
-  getComponent(): ReactComponent;
-}
-
-export interface ApplicationRoutes {
-  [routeId: string]: ApplicationRoute;
-}
 
 // 'missed-locale': {
 //   exact: true,

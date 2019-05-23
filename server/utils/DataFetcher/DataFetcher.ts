@@ -8,7 +8,7 @@ interface StoreFiller {
 
 class DataFetcher implements StoreFiller {
   // private dataFetchJobs = [];
-  // private readonly dataFetchComponents = {};
+  private readonly dataFetchComponents = {};
   private readonly store: Store;
 
   constructor(
@@ -16,7 +16,7 @@ class DataFetcher implements StoreFiller {
     dataFetchComponents: object,
   ) {
     this.store = store;
-    // this.dataFetchComponents = dataFetchComponents;
+    this.dataFetchComponents = dataFetchComponents;
   }
 
   getStore(): Store {
@@ -24,14 +24,15 @@ class DataFetcher implements StoreFiller {
   }
 
   collectFetchJobs() {
-    // Object.keys(this.dataFetchComponents).forEach((url) => {
+    Object.keys(this.dataFetchComponents).forEach((url) => {
+      console.log(url)
     //   if (!this.dataFetchComponents[url]) {
     //     return;
     //   }
     //   const u = path.normalize(url.split('.').shift() as string);
     //   this.dataFetchJobs =
     //     this.dataFetchJobs.concat(require(`../../../client${u}`).serverDataFetchJobs);
-    // });
+    });
     // console.log(this.dataFetchJobs);
   }
 

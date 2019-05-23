@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Button from '../components/atomes/buttons/Button/Button';
+import DeleteTodoBtn from './buttons/DeleteTodoBtn/DeleteTodoBtn';
 
 class TestContainer extends React.Component {
   render() {
     return (
-      <Button>ss</Button>
+      <DeleteTodoBtn id={1} />
     );
   }
 }

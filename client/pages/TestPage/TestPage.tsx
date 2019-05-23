@@ -1,5 +1,5 @@
 import * as React from 'react';
-import TestContainer from '../../TestContainer';
+import TestContainer from '../../containers/TestContainer';
 
 class TestPage extends React.Component<{}, {}> {
   render() {

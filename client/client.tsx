@@ -7,11 +7,12 @@ import configureStore from './configureStore';
 import Router, { RouterProps } from './containers/Router/Router';
 import { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
-import routes, { ApplicationRoute } from './containers/Router/routes';
+import routes from './containers/Router/routes';
 import { getTranslationsStorage, STORAGE_NAME } from './containers/decorators/withTranslator';
 import PageFirewall from './containers/PageFirewall/PageFirewall';
 import { setCurrentRoute } from './containers/App/app.redux.actions';
 import { CurrentRoute } from './containers/App/app.redux.initial-state';
+import { ApplicationRoute } from './containers/Router/interfaces';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];

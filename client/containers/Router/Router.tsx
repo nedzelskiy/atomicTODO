@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ApplicationRoute, ApplicationRoutes, HomeRouteParams } from './routes';
 import { BrowserRouter, Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { ApplicationRoute, ApplicationRoutes, HomeRouteParams } from './interfaces';
 
 interface Props {
   routes: ApplicationRoutes;

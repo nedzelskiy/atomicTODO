@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { ApplicationRoute } from '../../Router/routes';
-import Header from '../../../components/atomes/Header/Header';
-import PageTemplate from '../../../components/templates/PageTemplate/PageTemplate';
+import { ApplicationRoute } from '../../containers/Router/interfaces';
+import Header from '../../components/atomes/Header/Header';
+import PageTemplate from '../../components/templates/PageTemplate/PageTemplate';
 import TodoListWithControls
-  from '../../../components/organismes/TodoListWithControls/TodoListWithControls';
+  from '../../components/organismes/TodoListWithControls/TodoListWithControls';
 
 interface Props extends ApplicationRoute {}
 
@@ -38,5 +38,3 @@ export default HomePage;
 export const meta = {
   title: 'This is an atomic TODO app',
 };
-
-

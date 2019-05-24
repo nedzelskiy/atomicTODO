@@ -1,42 +1,43 @@
-// import * as path from 'upath';
-import { Store } from 'redux';
+import * as upath from 'upath';
+import { reflect } from '../helpers';
+import Environment from '../Environment/Environment';
+import { CommonAction } from '../../../data/redux.interfaces';
 
-interface StoreFiller {
-  getStore(): Store;
-  fillStore(): void;
+interface ReduxInstructions {
+  getReduxInstructions(): CommonAction[];
 }
 
-class DataFetcher implements StoreFiller {
-  // private dataFetchJobs = [];
+class DataFetcher implements ReduxInstructions{
+  private dataFetchJobs = [];
+  private readonly env: Environment;
   private readonly dataFetchComponents = {};
-  private readonly store: Store;
+
+  private collectFetchJobs() {
+    const route = this.env.getMatchedRouteWithParams();
+    Object.keys(this.dataFetchComponents).forEach((pageName) => {
+      if (route.pageName !== pageName.toLowerCase()) {
+        return;
+      }
+      this.dataFetchComponents[pageName].forEach((url: string) => {
+        const u = upath.normalize(url.split('.').shift() as string);
+        this.dataFetchJobs =
+          this.dataFetchJobs.concat(require(`../../../client/${u}`).serverDataFetchJobs);
+      });
+    });
+  }
 
   constructor(
-    store: Store,
+    env: Environment,
     dataFetchComponents: object,
   ) {
-    this.store = store;
+    this.env = env;
     this.dataFetchComponents = dataFetchComponents;
+    this.collectFetchJobs();
   }
 
-  getStore(): Store {
-    return this.store;
-  }
-
-  collectFetchJobs() {
-    Object.keys(this.dataFetchComponents).forEach((url) => {
-      console.log(url)
-    //   if (!this.dataFetchComponents[url]) {
-    //     return;
-    //   }
-    //   const u = path.normalize(url.split('.').shift() as string);
-    //   this.dataFetchJobs =
-    //     this.dataFetchJobs.concat(require(`../../../client${u}`).serverDataFetchJobs);
-    });
-    // console.log(this.dataFetchJobs);
-  }
-
-  fillStore(): void {
+  async getReduxInstructions() {
+    const reduxInstructions: CommonAction[] = await Promise.all(this.dataFetchJobs.map(reflect));
+    return reduxInstructions;
   }
 }
 

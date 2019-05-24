@@ -7,7 +7,7 @@ import TodoListWithControls
 
 interface Props extends ApplicationRoute {}
 
-class HomePage extends React.PureComponent<Props, {}> {
+class Home extends React.PureComponent<Props, {}> {
   constructor(props: Props) {
     super(props);
     this.getHeader = this.getHeader.bind(this);
@@ -33,7 +33,7 @@ class HomePage extends React.PureComponent<Props, {}> {
   }
 }
 
-export default HomePage;
+export default Home;
 
 export const meta = {
   title: 'This is an atomic TODO app',

@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  nginx:
+    image: nginx:1.14.0
+    container_name: nginx_atomic_todo
+    ports:
+      - "80:80"
+    volumes:
+      - ./:/app
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./docker/logs/nginx/:/var/log/nginx
+    links:
+      - web
+  web:
+    container_name: atomic_todo
+    build: .
+    volumes:
+      - ./:/app
+    working_dir: /app
+    ports:
+      - "3003:3003"
+    command: ["pm2-runtime", "pm2/dev.server.config.js"]

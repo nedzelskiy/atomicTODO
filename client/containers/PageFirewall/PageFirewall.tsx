@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import ErrorPage from '../../pages/ErrorPage/ErrorPage';
+import Error from '../../pages/Error/Error';
 import { PageError } from '../App/app.redux.initial-state';
-import LoadingPage from '../../pages/LoadingPage/LoadingPage';
+import LoadingPage from '../../pages/Loading/Loading';
 import { AppReducerState } from '../../../data/redux.reducers';
 
 interface Props {
@@ -15,7 +15,7 @@ class PageFirewall extends React.Component<Props, {}> {
     const {  isLoading } = this.props;
     const { isError, message } = this.props.pageError;
     if (isError && message) {
-      return <ErrorPage message={message}/>;
+      return <Error message={message}/>;
     }
     if (isLoading) {
       return <LoadingPage />;

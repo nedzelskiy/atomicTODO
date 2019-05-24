@@ -4,7 +4,7 @@ interface Props {
   message: string;
 }
 
-class ErrorPage extends React.Component<Readonly<Props>, {}>{
+class Error extends React.Component<Readonly<Props>, {}>{
   render() {
     return (
       <div>error {this.props.message}</div>
@@ -12,4 +12,4 @@ class ErrorPage extends React.Component<Readonly<Props>, {}>{
   }
 }
 
-export default ErrorPage;
+export default Error;

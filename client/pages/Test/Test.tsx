@@ -1,13 +1,13 @@
 import * as React from 'react';
 import TestContainer from '../../containers/TestContainer';
 
-class TestPage extends React.Component<{}, {}> {
+class Test extends React.Component<{}, {}> {
   render() {
     return <TestContainer />;
   }
 }
 
-export default TestPage;
+export default Test;
 
 // export const serverDataFetchJobs = [
 //   async () => {

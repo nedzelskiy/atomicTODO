@@ -1,12 +1,11 @@
 import ClientTranslationsDto, { ClientTranslationsForLocale }
   from '../ClientTranslationsDto';
 import { WithTranslationFiles } from '../../ServerTranslationsDto/ServerTranslationsDto';
-import { FileSystemConnector, WithFileSystemConnector }
-  from '../../../../server/utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
+import { FileSystemConnector } from '../../../../server/utils/connectors/interfaces';
 
 class ClientTranslationsWithFiles
   extends ClientTranslationsDto
-  implements WithFileSystemConnector, WithTranslationFiles
+  implements WithTranslationFiles
 {
   private readonly fsc: FileSystemConnector;
 
@@ -23,10 +22,6 @@ class ClientTranslationsWithFiles
     } catch (e) {
       return null;
     }
-  }
-
-  getFileSystemConnector(): FileSystemConnector {
-    return this.fsc;
   }
 }
 

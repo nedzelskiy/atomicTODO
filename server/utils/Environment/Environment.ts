@@ -1,11 +1,5 @@
-import { matchPath } from 'react-router-dom';
 import { compile } from 'path-to-regexp';
-import {
-  getDefaultTheme,
-  getAllowedThemes,
-  getDefaultLocale,
-  getAllowedLocales,
-} from '../../../config';
+import { matchPath } from 'react-router-dom';
 import { NormalizedIncomingMessage } from '../../server';
 import {
   HomeRouteParams,
@@ -13,33 +7,48 @@ import {
   ApplicationRoutes,
   ReactRouteWithMatchedParams,
 } from '../../../client/containers/Router/interfaces';
+import ApplicationConfig from '../ApplicationConfig/ApplicationConfig';
 
-export default class Environment {
+export interface WithNodeRequest {
+  getNodeRequest(): NormalizedIncomingMessage;
+}
+
+export interface WithApplicationsRoutes {
+  getMatchedRouteWithParams(): ReactRouteWithMatchedParams;
+  createUrlByRouteId(routeId: string, routeParams: any): string | null;
+}
+
+export default class Environment
+  extends ApplicationConfig
+  implements WithNodeRequest, WithApplicationsRoutes {
+  private currentLocale: string;
   private readonly routes: ApplicationRoutes;
+  private readonly req: NormalizedIncomingMessage;
+  private matchedRoute: ReactRouteWithMatchedParams;
 
-  static defaultTheme: string = getDefaultTheme();
-  static defaultLocale: string = getDefaultLocale();
-
-  static getAllowedThemes(): Set<string> {
-    return getAllowedThemes();
+  private getLocaleFromReq(): string {
+    return Environment.getCheckedLocale(this.req.url.split('/')[1]);
   }
 
-  static getAllowedLocales(): Set<string> {
-    return getAllowedLocales();
+  constructor(
+    req: NormalizedIncomingMessage,
+    routes: ApplicationRoutes,
+  ) {
+    super();
+    this.req = req;
+    this.routes = routes;
+    this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
   }
 
-  static getCheckedLocale(locale: string): string {
-    return Environment.isAcceptedLocale(locale)
-      ? locale
-      : Environment.defaultLocale;
+  getLocale(): string {
+    if (!this.currentLocale) {
+      this.currentLocale = this.getLocaleFromReq();
+    }
+    return this.currentLocale;
   }
 
-  static isAcceptedLocale(locale: string): boolean {
-    return Environment.getAllowedLocales().has(locale);
-  }
-
-  static getLocaleFromReq(req: NormalizedIncomingMessage): string {
-    return Environment.getCheckedLocale(req.url.split('/')[1]);
+  getNodeRequest(): NormalizedIncomingMessage {
+    return this.req;
   }
 
   createUrlByRouteId(routeId: string, routeParams: any): string | null {
@@ -55,7 +64,11 @@ export default class Environment {
     }
   }
 
-  getMatchedRouteWithParams(url: string): ReactRouteWithMatchedParams {
+  getMatchedRouteWithParams(): ReactRouteWithMatchedParams {
+    if (this.matchedRoute) {
+      return this.matchedRoute;
+    }
+    const url = this.req.url;
     let route: ApplicationRoute = this.routes[0];
     let routerParams = {};
     let routeId = '';
@@ -81,16 +94,12 @@ export default class Environment {
       routeId = 'notFound';
       route = this.routes[routeId];
     }
-    return {
+    this.matchedRoute = {
       ...route,
       url,
       routerParams,
       id: routeId,
     };
-  }
-
-  constructor(routes: ApplicationRoutes) {
-    this.routes = routes;
-    this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
+    return this.matchedRoute;
   }
 }

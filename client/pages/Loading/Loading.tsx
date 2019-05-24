@@ -3,7 +3,7 @@ import withTranslator, { TranslateHelperProps } from '../../containers/decorator
 
 interface Props extends TranslateHelperProps {}
 
-class LoadingPage extends React.Component<Readonly<Props>, {}> {
+class Loading extends React.Component<Readonly<Props>, {}> {
   render() {
     const { t } = this.props;
     return (
@@ -12,4 +12,4 @@ class LoadingPage extends React.Component<Readonly<Props>, {}> {
   }
 }
 
-export default withTranslator(LoadingPage);
+export default withTranslator(Loading);

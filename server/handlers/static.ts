@@ -1,7 +1,7 @@
 import { ServerResponse } from 'http';
 import { contentType } from 'mime-types';
 import { NormalizedIncomingMessage } from '../server';
-import { FileSystemConnector } from '../utils/FileSystemConnectorFabric/FileSystemConnectorFabric';
+import { FileSystemConnector } from '../utils/connectors/interfaces';
 
 export default (
   req: NormalizedIncomingMessage,

@@ -1,6 +1,6 @@
 import { normalize } from 'path';
 import { readFileSync } from 'fs';
-import { FileSystemConnector } from '../FileSystemConnectorFabric';
+import { FileSystemConnector } from './interfaces';
 
 class RealFileSystemConnector implements FileSystemConnector {
   readJSON(path: string): any | never {

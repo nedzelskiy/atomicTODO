@@ -6,6 +6,7 @@ import { deleteTodo, DeleteTodo } from '../../../../data/todos/redux/todos.redux
 import withTranslator, { TranslateHelperProps } from '../../decorators/withTranslator';
 import withConnector from '../../decorators/withConnector';
 import { TranslateHelper } from '../../../../data/translations/trnaslations.interfaces';
+import { setLocale } from '../../App/app.redux.actions';
 
 interface Props extends TranslateHelperProps {
   id: number;
@@ -45,13 +46,16 @@ export default withConnector(
 
 export const serverDataFetchJobs = [
   async () => {
-    const data = await new Promise((res) => {
+    const locale: string = await new Promise((res, rej) => {
       setTimeout(
         () => {
-          res(2);
+          rej();
+          console.log('callback');
+          res('ru');
         },
-        2000);
+        1000);
     });
-    return data;
+    console.log('asdsadsda');
+    return setLocale(locale);
   },
 ];

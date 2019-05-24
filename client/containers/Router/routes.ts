@@ -1,5 +1,5 @@
-import HomePage, { meta as HomePageMeta } from '../../pages/HomePage/HomePage';
-import TestPage from '../../pages/TestPage/TestPage';
+import Home, { meta as HomePageMeta } from '../../pages/Home/Home';
+import Test from '../../pages/Test/Test';
 import { ApplicationRoutes } from './interfaces';
 
 const defaultPageRoutes: ApplicationRoutes = {
@@ -7,14 +7,14 @@ const defaultPageRoutes: ApplicationRoutes = {
     exact: true,
     path: '/:locale',
     pageName: 'home',
-    getComponent: () => HomePage,
+    getComponent: () => Home,
     meta: HomePageMeta,
   },
   homeHeaderLess: {
     exact: true,
     path: '/:locale/without-header',
     pageName: 'home',
-    getComponent: () => HomePage,
+    getComponent: () => Home,
     pageComponentProps: {
       header: null,
     },
@@ -24,7 +24,7 @@ const defaultPageRoutes: ApplicationRoutes = {
     exact: true,
     path: '/:locale/test',
     pageName: 'test',
-    getComponent: () => TestPage,
+    getComponent: () => Test,
     meta: {
       title: '',
     },

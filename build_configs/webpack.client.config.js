@@ -16,8 +16,8 @@ const preparedPlugins = [
   new ServerFetchDataCreator({
     fileName: 'inDataNeeded',
     pages: [
-      `${process.env.PWD}/client/pages/HomePage/HomePage.tsx`,
-      `${process.env.PWD}/client/pages/TestPage/TestPage.tsx`,
+      `${process.env.PWD}/client/pages/Home/Home.tsx`,
+      `${process.env.PWD}/client/pages/Test/Test.tsx`,
     ],
   }),
   {

@@ -9,8 +9,8 @@ import {
 import { CurrentRoute, PageError } from './app.redux.initial-state';
 import { getUrlWithOutLocale } from '../../utils/helpers';
 import { AppReducerState } from '../../../data/redux.reducers';
-import ErrorPage from '../../pages/ErrorPage/ErrorPage';
-import LoadingPage from '../../pages/LoadingPage/LoadingPage';
+import Error from '../../pages/Error/Error';
+import LoadingPage from '../../pages/Loading/Loading';
 import ClientTranslationsDto
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import './app.styles.scss';
@@ -84,7 +84,7 @@ class App extends React.Component<Props> {
       return <LoadingPage/>;
     }
     if (this.props.pageError.isError && this.props.pageError.message) {
-      return <ErrorPage message={this.props.pageError.message}/>;
+      return <Error message={this.props.pageError.message}/>;
     }
     return this.props.children;
   }

@@ -9,9 +9,10 @@
     "dev": "sh sh/dev/dev.sh",
     "lint": "sh sh/dev/lint.sh",
     "stylelint": "sh/dev/stylelint.sh",
+    "debug:server": "sh sh/dev/server.run.debug.sh",
     "dev:server:run": "sh sh/dev/server.run.sh",
-    "dev:client:build": "sh sh/dev/client.build.sh",
     "dev:server:build": "sh sh/dev/server.build.sh",
+    "dev:client:build": "sh sh/dev/client.build.sh",
     "storybook": "sh sh/dev/storybook.sh",
     "build-storybook": "build-storybook"
   },

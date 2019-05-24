@@ -35,6 +35,7 @@ export default (props: Props): JSX.Element => (
         dangerouslySetInnerHTML={{ __html: `window.state=${serialize(props.state)};` }}
       />
       <div id="root">{props.children}</div>
+      <script id="js-vendors" type="text/javascript" src="/static/vendors.js"/>
       <script id="js-app" type="text/javascript" src="/static/client.js"/>
     </body>
   </html>

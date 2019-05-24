@@ -13,6 +13,7 @@ import withFilesFromRealFs
 import DataFetcher from './utils/DataFetcher/DataFetcher';
 import configureStore from '../client/configureStore';
 import loggerFacade from './utils/Logger/LoggerFacade';
+import { ErrorCheckedPromiseResult } from './utils/helpers';
 
 const SERVER_PORT: string = process.env.PORT || '8080';
 const SERVER_URL: string = `http://localhost:${SERVER_PORT}`;
@@ -45,12 +46,12 @@ server
     );
     console.log('1');
     const reduxInstruction = await dataFetcher.getReduxInstructions();
-    reduxInstruction.forEach((promise) => {
-      if (promise.isError) {
-        loggerFacade.log(promise.e);
+    reduxInstruction.forEach((promiseResult: ErrorCheckedPromiseResult) => {
+      if (promiseResult.isError) {
+        loggerFacade.log(promiseResult.error);
         return;
       }
-      store.dispatch(promise.v);
+      store.dispatch(promiseResult.result);
     });
     console.log('2');
 

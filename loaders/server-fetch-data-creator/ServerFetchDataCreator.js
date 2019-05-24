@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 const PLUGIN_NAME = 'ServerFetchDataCreator';
+const upath = require('upath');
 const chalk = require('chalk');
 const madge = require('madge');
 const fse = require('fs-extra');
@@ -40,12 +41,12 @@ class ServerFetchDataCreator {
           const pageComponentName = page.split('/').pop().split('.').shift();
           const dependencies = await ServerFetchDataCreator.buildDependencies(page);
           for (const url of Object.keys(urls)) {
-            const normalisedUrl = `../../${url.split('/client/').pop()}`;
+            const normalisedUrl = `../../${upath.normalize(url).split('/client/').pop()}`;
             if (dependencies.depends(normalisedUrl)[0]) {
               if (!result[pageComponentName]) {
                 result[pageComponentName] = [];
               }
-              result[pageComponentName].push(url.split('/client/').pop());
+              result[pageComponentName].push(upath.normalize(url).split('/client/').pop());
             }
           }
         }

@@ -1,8 +1,13 @@
-export const reflect = (p: Function): Promise<any> => {
-  return p().then(
-    (v: any) => { return { v, status: 'fulfilled', isError: false }; },
-    (e: any) => { return { e, status: 'rejected', isError: true }; },
+export const reflect = (asyncFunc: Function): ErrorCheckedPromiseResult[] => {
+  return asyncFunc().then(
+    (result: any) => { return { result, status: 'fulfilled', isError: false }; },
+    (error: any) => { return { error, status: 'rejected', isError: true }; },
   );
 };
 
-// export type
+export type ErrorCheckedPromiseResult = {
+  result?: any;
+  error?: any;
+  status: string;
+  isError: boolean;
+};

@@ -1,10 +1,9 @@
 import * as upath from 'upath';
 import { reflect } from '../helpers';
 import Environment from '../Environment/Environment';
-import { CommonAction } from '../../../data/redux.interfaces';
 
 interface ReduxInstructions {
-  getReduxInstructions(): CommonAction[];
+  getReduxInstructions(): any;
 }
 
 class DataFetcher implements ReduxInstructions{
@@ -15,11 +14,13 @@ class DataFetcher implements ReduxInstructions{
   private collectFetchJobs() {
     const route = this.env.getMatchedRouteWithParams();
     Object.keys(this.dataFetchComponents).forEach((pageName) => {
+      console.log(this.dataFetchComponents, route.pageName, pageName.toLowerCase());
       if (route.pageName !== pageName.toLowerCase()) {
         return;
       }
       this.dataFetchComponents[pageName].forEach((url: string) => {
         const u = upath.normalize(url.split('.').shift() as string);
+        console.log(u)
         this.dataFetchJobs =
           this.dataFetchJobs.concat(require(`../../../client/${u}`).serverDataFetchJobs);
       });
@@ -36,7 +37,9 @@ class DataFetcher implements ReduxInstructions{
   }
 
   async getReduxInstructions() {
-    const reduxInstructions: CommonAction[] = await Promise.all(this.dataFetchJobs.map(reflect));
+    const reduxInstructions: any =
+      await Promise.all(this.dataFetchJobs.map(reflect));
+    console.log(reduxInstructions, 's')
     return reduxInstructions;
   }
 }

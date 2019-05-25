@@ -9,10 +9,14 @@ import { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import routes from './containers/Router/routes';
 import { getTranslationsStorage, STORAGE_NAME } from './containers/decorators/withTranslator';
-import PageFirewall from './containers/PageFirewall/PageFirewall';
-import { setCurrentRoute } from './containers/App/app.redux.actions';
-import { CurrentRoute } from './containers/App/app.redux.initial-state';
+import {
+  setLocale,
+  changeLocale,
+  startLoading,
+  setCurrentRoute,
+} from './containers/App/app.redux.actions';
 import { ApplicationRoute } from './containers/Router/interfaces';
+import ResponseBodyCreator from '../server/utils/ResponseBodyCreator/ResponseBodyCreator';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
@@ -21,41 +25,37 @@ translationsStorage.setTranslations(locale, clientTranslationsForLocale);
 const store: Store = configureStore((window as any).state, { [STORAGE_NAME]: translationsStorage });
 
 hydrate(
-  <Provider store={store}>
-    <Router
-      routes={routes}
-      render={(routerProps: RouterProps, route: ApplicationRoute, id: string) => {
-        console.log('==========> router changed');
-        const Component: any = route.getComponent();
-        const { locale } = routerProps.match.params;
-        const currentRoute: CurrentRoute = {
-          id,
-          pageName: route.pageName,
-          params: routerProps.match.params,
-          url: routerProps.history.location.pathname,
-        };
-
-        store.dispatch(setCurrentRoute(currentRoute));
-
-        return (
-          <PageFirewall>
-            <App
-              translationsStorage={translationsStorage}
-              locale={locale}
-              route={currentRoute}
-            >
+  <React.StrictMode>
+    <Provider store={store}>
+      <Router
+        routes={routes}
+        render={(routerProps: RouterProps, route: ApplicationRoute, id: string) => {
+          const Component: any = route.getComponent();
+          const { locale } = routerProps.match.params;
+          const currentRoute = ResponseBodyCreator.getCurrentRoute({
+            id,
+            ...route,
+            routerParams: routerProps.match.params,
+            url: routerProps.history.location.pathname,
+          });
+          store.dispatch(setCurrentRoute(currentRoute));
+          if (translationsStorage.isExistTranslations(locale)) {
+            store.dispatch(setLocale(locale));
+          } else {
+            store.dispatch(startLoading());
+            store.dispatch(changeLocale(locale));
+          }
+          return (
+            <App>
               <Component
-                {...route}
-                url={routerProps.location.pathname}
-                routerParams={routerProps.match.params}
+                pageName={route.pageName}
+                templateProps={route.templateProps}
               />
             </App>
-          </PageFirewall>
-        );
-      }}
-    />
-  </Provider>,
+          );
+        }}
+      />
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root'),
 );
-
-// <React.StrictMode>

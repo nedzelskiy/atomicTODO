@@ -19,7 +19,7 @@ export interface ApplicationRoute extends RouteProps {
   path: string;
   pageName: string;
   meta: RouteMeta;
-  pageComponentProps?: any | {};
+  templateProps?: any | {};
   getComponent(): ReactComponent;
 }
 

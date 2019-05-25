@@ -12,7 +12,7 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
     withFSConnector.getClientTranslationsForLocale(locale);
   let response: ResponseData = {
     success: false,
-    data: null,
+    error: null,
   };
   if (translations && Object.keys(translations).length > 0) {
     res.statusCode = 200;

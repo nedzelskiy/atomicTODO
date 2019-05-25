@@ -1,6 +1,7 @@
 import Home, { meta as HomePageMeta } from '../../pages/Home/Home';
 import Test from '../../pages/Test/Test';
 import { ApplicationRoutes } from './interfaces';
+import NotFound from '../../pages/NotFound/NotFound';
 
 const defaultPageRoutes: ApplicationRoutes = {
   home: {
@@ -15,7 +16,7 @@ const defaultPageRoutes: ApplicationRoutes = {
     path: '/:locale/without-header',
     pageName: 'home',
     getComponent: () => Home,
-    pageComponentProps: {
+    templateProps: {
       header: null,
     },
     meta: HomePageMeta,
@@ -29,39 +30,14 @@ const defaultPageRoutes: ApplicationRoutes = {
       title: '',
     },
   },
+  notFound: {
+    path: '*',
+    pageName: 'not-found',
+    getComponent: () => NotFound,
+    meta: {
+      title: '',
+    },
+  },
 };
 
 export default defaultPageRoutes;
-
-// 'missed-locale': {
-//   exact: true,
-//   path: '/',
-//   pageName: 'missed-locale',
-//   meta: {
-//     title: '',
-//   },
-//   getComponent: () => createElement(
-//     'div',
-//     {
-//       to: `/${Environment.defaultLocale}`,
-//     },
-//     Redirect,
-//   ),
-// },
-// // 'theme-panel': {
-// //   exact: true,
-// //   path: '/:locale/theme',
-// //   pageName: 'theme-panel',
-// //   getComponent: () => HomeWithoutHeader,
-// //   meta: {
-// //     title: '',
-// //   },
-// // },
-// 'not-found': {
-//   path: '*',
-//   pageName: 'not-found',
-//   getComponent: () => NotFoundPage,
-//   meta: {
-//     title: '',
-//   },
-// },

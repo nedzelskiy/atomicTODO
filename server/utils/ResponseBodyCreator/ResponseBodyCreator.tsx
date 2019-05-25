@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import Html from '../../../client/components/Html';
+import Environment from '../Environment/Environment';
 import App from '../../../client/containers/App/App';
 import TranslationsConnector
   from '../../../data/translations/TranslationsConnector/TranslationsConnector';
@@ -14,7 +15,6 @@ import ClientTranslator from '../../../data/translations/ClientTranslator/Client
 import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
 import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/interfaces';
-import Environment from '../Environment/Environment';
 import { setCurrentRoute, setLocale } from '../../../client/containers/App/app.redux.actions';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
@@ -73,12 +73,11 @@ export default class ResponseBodyCreator {
       >
       <Provider store={store}>
         <StaticRouter location={this.matchedRoute.url} context={this.context}>
-          <App
-            locale={this.locale}
-            route={ResponseBodyCreator.getCurrentRoute(this.matchedRoute)}
-            translationsStorage={this.translatorsConnector.getClientTranslationsDto()}
-          >
-            <Component {...this.matchedRoute} />
+          <App>
+            <Component
+              pageName={this.matchedRoute.pageName}
+              templateProps={this.matchedRoute.templateProps}
+            />
           </App>
         </StaticRouter>
       </Provider>

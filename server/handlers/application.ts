@@ -27,9 +27,7 @@ export default async (
 
   if (pageComponent) {
     const dataFetcher = new DataFetcher(inDataNeeded[pageComponent]);
-    console.log(1);
     const reduxInstruction = await dataFetcher.fetch();
-    console.log(2);
     reduxInstruction.forEach((promiseResult: any) => {
       if (promiseResult.isError) {
         loggerFacade.log(promiseResult.error);

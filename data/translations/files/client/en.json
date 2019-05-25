@@ -1,0 +1,9 @@
+{
+  "common": {
+    "New task": "New task",
+    "delete": "delete"
+  },
+  "meta": {
+    "This is an atomic TODO app": "This is an atomic TODO app"
+  }
+}

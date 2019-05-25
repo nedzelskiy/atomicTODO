@@ -49,13 +49,11 @@ export const serverDataFetchJobs = [
     const locale: string = await new Promise((res, rej) => {
       setTimeout(
         () => {
-          rej();
-          console.log('callback');
+          rej('some fetch error');
           res('ru');
         },
-        1000);
+        200);
     });
-    console.log('asdsadsda');
     return setLocale(locale);
   },
 ];

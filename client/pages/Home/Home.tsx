@@ -14,14 +14,13 @@ class Home extends React.PureComponent<Props, {}> {
   }
 
   getHeader() {
-    if (this.props.pageComponentProps && this.props.pageComponentProps.hasOwnProperty('header')) {
-      return this.props.pageComponentProps.header;
+    if (this.props.templateProps && this.props.templateProps.hasOwnProperty('header')) {
+      return this.props.templateProps.header;
     }
     return Header;
   }
 
   render() {
-    console.log('=========== render Home Page');
     return (
       <PageTemplate
         Header={this.getHeader()}

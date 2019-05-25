@@ -1,9 +1,14 @@
 import { IncomingMessage } from 'http';
 
-export interface ResponseData {
-  success: boolean;
+export type ResponseData = {
+  success: true;
   data: any;
-}
+  error?: any
+} | {
+  success: false;
+  data?: any;
+  error: any;
+};
 
 export interface NormalizedIncomingMessage extends IncomingMessage {
   url: string;

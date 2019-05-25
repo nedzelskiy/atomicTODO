@@ -53,7 +53,7 @@ class AddTodoBtn extends React.Component<Readonly<Props>, {}> {
   render() {
     return (
       <SecondaryBtn onClick={this.handleOnClick}>
-        {AddTodoBtn.getBtnText(this.props.t)}
+        { AddTodoBtn.getBtnText(this.props.t) }
       </SecondaryBtn>
     );
   }

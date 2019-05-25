@@ -3,3 +3,5 @@ build/
 .idea/
 yarn-error.log
 storybook-static
+pm2/logs
+docker/logs

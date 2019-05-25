@@ -1,7 +1,0 @@
-172.19.0.1 - - [24/May/2019:15:47:45 +0000] "GET / HTTP/1.1" 302 5 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:47:46 +0000] "GET /en HTTP/1.1" 200 1113 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:47:49 +0000] "GET /en HTTP/1.1" 200 1113 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:55:24 +0000] "GET /en HTTP/1.1" 200 1113 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:55:24 +0000] "GET /static/client.white.css HTTP/1.1" 200 2059 "http://atomictodo.local/en" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:55:24 +0000] "GET /static/vendors.js HTTP/1.1" 200 1885600 "http://atomictodo.local/en" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"
-172.19.0.1 - - [24/May/2019:15:55:24 +0000] "GET /static/client.js HTTP/1.1" 200 100614 "http://atomictodo.local/en" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.103 Safari/537.36"

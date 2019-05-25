@@ -1,5 +1,4 @@
 import React from 'react';
-import { stylesTagID } from './pre-build';
 import { getAllowedThemes, getThemeFileName } from '../config';
 import addons, { types } from '@storybook/addons';
 
@@ -23,7 +22,7 @@ class ThemeChanger extends React.Component {
   getThemeTag() {
     if (!this.stylesTag) {
       this.stylesTag = document.getElementById('storybook-preview-iframe')
-        .contentWindow.document.getElementById(stylesTagID);
+        .contentWindow.document.getElementById('storybook');
     }
     return this.stylesTag;
   }

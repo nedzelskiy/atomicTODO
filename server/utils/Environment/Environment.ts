@@ -1,6 +1,5 @@
 import { compile } from 'path-to-regexp';
 import { matchPath } from 'react-router-dom';
-import { NormalizedIncomingMessage } from '../../server';
 import {
   HomeRouteParams,
   ApplicationRoute,
@@ -9,46 +8,36 @@ import {
 } from '../../../client/containers/Router/interfaces';
 import ApplicationConfig from '../ApplicationConfig/ApplicationConfig';
 
-export interface WithNodeRequest {
-  getNodeRequest(): NormalizedIncomingMessage;
-}
-
 export interface WithApplicationsRoutes {
   getMatchedRouteWithParams(): ReactRouteWithMatchedParams;
   createUrlByRouteId(routeId: string, routeParams: any): string | null;
 }
 
-export default class Environment
-  extends ApplicationConfig
-  implements WithNodeRequest, WithApplicationsRoutes {
+export default class Environment extends ApplicationConfig implements WithApplicationsRoutes {
   private currentLocale: string;
+  private readonly currentUrl: string;
   private readonly routes: ApplicationRoutes;
-  private readonly req: NormalizedIncomingMessage;
   private matchedRoute: ReactRouteWithMatchedParams;
 
-  private getLocaleFromReq(): string {
-    return Environment.getCheckedLocale(this.req.url.split('/')[1]);
+  private getLocaleFromUrl(): string {
+    return Environment.getCheckedLocale(this.currentUrl.split('/')[1]);
   }
 
   constructor(
-    req: NormalizedIncomingMessage,
+    currentUrl: string,
     routes: ApplicationRoutes,
   ) {
     super();
-    this.req = req;
     this.routes = routes;
+    this.currentUrl = currentUrl;
     this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
   }
 
   getLocale(): string {
     if (!this.currentLocale) {
-      this.currentLocale = this.getLocaleFromReq();
+      this.currentLocale = this.getLocaleFromUrl();
     }
     return this.currentLocale;
-  }
-
-  getNodeRequest(): NormalizedIncomingMessage {
-    return this.req;
   }
 
   createUrlByRouteId(routeId: string, routeParams: any): string | null {
@@ -68,7 +57,7 @@ export default class Environment
     if (this.matchedRoute) {
       return this.matchedRoute;
     }
-    const url = this.req.url;
+    const url = this.currentUrl;
     let route: ApplicationRoute = this.routes[0];
     let routerParams = {};
     let routeId = '';

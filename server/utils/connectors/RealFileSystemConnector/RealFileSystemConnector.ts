@@ -1,6 +1,6 @@
-import { normalize } from 'path';
+import { normalize } from 'upath';
 import { readFileSync } from 'fs';
-import { FileSystemConnector } from './interfaces';
+import { FileSystemConnector } from '../interfaces';
 
 class RealFileSystemConnector implements FileSystemConnector {
   readJSON(path: string): any | never {
@@ -9,7 +9,7 @@ class RealFileSystemConnector implements FileSystemConnector {
     );
   }
 
-  readFile(path: string): string {
+  readFile(path: string): string | never {
     return readFileSync(normalize(path), 'utf-8');
   }
 }

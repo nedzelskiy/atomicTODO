@@ -11,17 +11,18 @@ import { ClientTranslationsForLocale }
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
 import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
-import Environment from '../Environment/Environment';
 import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
 import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/interfaces';
+import Environment from '../Environment/Environment';
+import { setCurrentRoute, setLocale } from '../../../client/containers/App/app.redux.actions';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 
 export default class ResponseBodyCreator {
-  private readonly store: Store;
-  private readonly env: Environment;
+  private readonly locale: string;
   private readonly context: StaticRouterContext = {};
+  private readonly matchedRoute: ReactRouteWithMatchedParams;
   private readonly translatorsConnector: TranslationsConnector;
 
   static getCurrentRoute(route: ReactRouteWithMatchedParams): CurrentRoute {
@@ -33,49 +34,54 @@ export default class ResponseBodyCreator {
     };
   }
 
+  private fillStore(store: Store) {
+    store.dispatch(setLocale(this.locale));
+    store.dispatch(setCurrentRoute(ResponseBodyCreator.getCurrentRoute(this.matchedRoute)));
+  }
+
   constructor(
-    env: Environment,
-    store: Store,
+    locale: string,
+    matchedRoute: ReactRouteWithMatchedParams,
     translatorsConnector: TranslationsConnector,
   ) {
-    this.env = env;
-    this.store = store;
+    this.locale = locale;
+    this.matchedRoute = matchedRoute;
     this.translatorsConnector = translatorsConnector;
     this.getContext = this.getContext.bind(this);
   }
 
   create(
+    store: Store,
     reactRender: ReactRender,
   ): string | NodeJS.ReadableStream {
-    const route: ReactRouteWithMatchedParams = this.env.getMatchedRouteWithParams();
-    const locale = this.env.getLocale();
     const translationsForLocale: ClientTranslationsForLocale =
-      this.translatorsConnector.getClientTranslationsForLocale(locale);
+      this.translatorsConnector.getClientTranslationsForLocale(this.locale);
     const t: TranslateHelper = new ClientTranslator(translationsForLocale).getTranslator();
-    const Component: any = route.getComponent();
+    const Component: any = this.matchedRoute.getComponent();
     setTranslationsStorage(this.translatorsConnector.getClientTranslationsDto());
+    this.fillStore(store);
 
     return reactRender(
       <Html
         meta={{
-          title: t(route.meta.title, 'meta'),
+          title: t(this.matchedRoute.meta.title, 'meta'),
         }}
-        locale={locale}
-        state={this.store.getState()}
+        locale={this.locale}
+        state={store.getState()}
         theme={Environment.defaultTheme}
         translationsForLocale={translationsForLocale}
       >
-        <Provider store={this.store}>
-          <StaticRouter location={route.url} context={this.context}>
-            <App
-              locale={locale}
-              route={ResponseBodyCreator.getCurrentRoute(route)}
-              translationsStorage={this.translatorsConnector.getClientTranslationsDto()}
-            >
-              <Component {...route} />
-            </App>
-          </StaticRouter>
-        </Provider>
+      <Provider store={store}>
+        <StaticRouter location={this.matchedRoute.url} context={this.context}>
+          <App
+            locale={this.locale}
+            route={ResponseBodyCreator.getCurrentRoute(this.matchedRoute)}
+            translationsStorage={this.translatorsConnector.getClientTranslationsDto()}
+          >
+            <Component {...this.matchedRoute} />
+          </App>
+        </StaticRouter>
+      </Provider>
       </Html>,
     );
   }

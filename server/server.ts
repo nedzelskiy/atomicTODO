@@ -1,19 +1,12 @@
 import staticHandler from './handlers/static';
 import applicationHandler from './handlers/application';
-import routes from '../client/containers/Router/routes';
+import { NormalizedIncomingMessage } from './interfaces';
 import translationsHandler from './handlers/translations';
 import missedLocaleHandler from './handlers/missedLocale';
 import { Server, createServer, ServerResponse, IncomingMessage } from 'http';
 import RealFileSystemConnector
-  from './utils/connectors/RealFileSystemConnector';
-import Environment from './utils/Environment/Environment';
-import ResponseBodyCreator from './utils/ResponseBodyCreator/ResponseBodyCreator';
-import withFilesFromRealFs
-  from '../data/translations/TranslationsConnector/bindings/withFilesFromRealFs';
-import DataFetcher from './utils/DataFetcher/DataFetcher';
-import configureStore from '../client/configureStore';
-import loggerFacade from './utils/Logger/LoggerFacade';
-import { ErrorCheckedPromiseResult } from './utils/helpers';
+  from './utils/connectors/RealFileSystemConnector/RealFileSystemConnector';
+import cachedRFSConnector from './utils/connectors/CacheRFSConnector/bindings/cachedRFSConnector';
 
 const SERVER_PORT: string = process.env.PORT || '8080';
 const SERVER_URL: string = `http://localhost:${SERVER_PORT}`;
@@ -38,32 +31,6 @@ server
       return staticHandler(<NormalizedIncomingMessage>req, res, new RealFileSystemConnector());
     }
 
-    const env = new Environment(<NormalizedIncomingMessage>req, routes);
-    const store = configureStore({}, {});
-    const dataFetcher = new DataFetcher(
-      env,
-      require('../build/client/inDataNeeded'),
-    );
-    console.log('1');
-    const reduxInstruction = await dataFetcher.getReduxInstructions();
-    reduxInstruction.forEach((promiseResult: ErrorCheckedPromiseResult) => {
-      if (promiseResult.isError) {
-        loggerFacade.log(promiseResult.error);
-        return;
-      }
-      store.dispatch(promiseResult.result);
-    });
-    console.log('2');
-
-    return applicationHandler(res, new ResponseBodyCreator(env, store, withFilesFromRealFs));
+    return applicationHandler(<NormalizedIncomingMessage>req, res, cachedRFSConnector);
   })
   .listen(SERVER_PORT, () => console.log(`==> SERVER STARTED on ${SERVER_URL}`));
-
-export interface NormalizedIncomingMessage extends IncomingMessage {
-  url: string;
-}
-
-export interface ResponseData {
-  success: boolean;
-  data: any;
-}

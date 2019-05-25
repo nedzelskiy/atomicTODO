@@ -2,7 +2,7 @@
 const PLUGIN_NAME = 'ThemesStylesCreatorPlugin';
 
 const upath = require('upath');
-const chalk = require('chalk');
+const { red, yellow } = require('chalk');
 const fse = require('fs-extra');
 const uniqid = require('uniqid');
 const sass = require('node-sass');
@@ -21,9 +21,9 @@ class ThemesStylesCreatorPlugin {
 
   static consoleMessage(level, message) {
     if (level === 'error') {
-      console.log(chalk.red(`======> ${level.toUpperCase()} ${PLUGIN_NAME}:`), message);
+      console.log(red(`======> ${level.toUpperCase()} ${PLUGIN_NAME}:`), message);
     } else {
-      console.log(chalk.yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
+      console.log(yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
     }
   }
 
@@ -129,7 +129,7 @@ class ThemesStylesCreatorPlugin {
     const buildFolder = this.options.output || this.stats.compilation.outputOptions.path;
     Object.keys(this.readyStyleFiles).forEach((themeName) => {
       fse.outputFileSync(`${buildFolder}${themeName}`, this.readyStyleFiles[themeName].join(''));
-      ThemesStylesCreatorPlugin.consoleMessage('info', `${PLUGIN_NAME}: created theme "${themeName}"!`);
+      ThemesStylesCreatorPlugin.consoleMessage('info', `created theme "${themeName}"!`);
     });
   }
 }

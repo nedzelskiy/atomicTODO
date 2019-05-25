@@ -9,15 +9,15 @@ class Test extends React.Component<{}, {}> {
 
 export default Test;
 
-// export const serverDataFetchJobs = [
-//   async () => {
-//     const data = await new Promise((res) => {
-//       setTimeout(
-//         () => {
-//           res(3);
-//         },
-//         2000);
-//     });
-//     return data;
-//   },
-// ];
+export const serverDataFetchJobs = [
+  async () => {
+    const data = await new Promise((res) => {
+      setTimeout(
+        () => {
+          res(3);
+        },
+        2000);
+    });
+    return data;
+  },
+];

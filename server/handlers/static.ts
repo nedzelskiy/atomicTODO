@@ -1,6 +1,6 @@
 import { ServerResponse } from 'http';
 import { contentType } from 'mime-types';
-import { NormalizedIncomingMessage } from '../server';
+import { NormalizedIncomingMessage } from '../interfaces';
 import { FileSystemConnector } from '../utils/connectors/interfaces';
 
 export default (

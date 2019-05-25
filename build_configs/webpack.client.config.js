@@ -1,6 +1,6 @@
 /* eslint-disable global-require, no-console */
 const path = require('path');
-const chalk = require('chalk');
+const { cyan } = require('chalk');
 // const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
@@ -23,7 +23,7 @@ const preparedPlugins = [
   {
     apply(compiler) {
       compiler.hooks.done.tap('LifecycleHooker', () => {
-        setTimeout(() => console.log(chalk.cyan('====> client bundle is compiled!')), 0);
+        setTimeout(() => console.log(cyan('====> client bundle is compiled!')), 0);
       });
     },
   },

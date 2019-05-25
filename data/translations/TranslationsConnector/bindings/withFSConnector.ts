@@ -1,15 +1,15 @@
 import TranslationsConnector from '../TranslationsConnector';
 import ClientTranslationsWithFiles
   from '../../ClientTranslationsDto/bindings/TranslationsWithFiles';
-import RealFileSystemConnector
-  from '../../../../server/utils/connectors/RealFileSystemConnector';
+import cachedRFSConnector
+  from '../../../../server/utils/connectors/CacheRFSConnector/bindings/cachedRFSConnector';
 import { ServerTranslationsDto } from '../../ServerTranslationsDto/ServerTranslationsDto';
 
 export default new TranslationsConnector(
   new ClientTranslationsWithFiles(
-    new RealFileSystemConnector(),
+    cachedRFSConnector,
   ),
   new ServerTranslationsDto(
-    new RealFileSystemConnector(),
+    cachedRFSConnector,
   ),
 );

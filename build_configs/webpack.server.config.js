@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 const path = require('path');
-const chalk = require('chalk');
+const { magenta } = require('chalk');
 
 module.exports = {
   target: 'node',
@@ -29,13 +29,7 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.scss$/,
-        use: {
-          loader: 'ignore-loader',
-        },
-      },
-      {
-        test: /\.css$/,
+        test: /\.scss|css$/,
         use: {
           loader: 'ignore-loader',
         },
@@ -46,7 +40,7 @@ module.exports = {
     {
       apply(compiler) {
         compiler.hooks.done.tap('LifecycleHooker', () => {
-          setTimeout(() => console.log(chalk.magenta('====> server bundle is compiled!')), 0);
+          setTimeout(() => console.log(magenta('====> server bundle is compiled!')), 0);
         });
       },
     },

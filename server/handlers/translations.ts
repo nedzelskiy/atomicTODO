@@ -1,15 +1,15 @@
 import { ServerResponse } from 'http';
-import { NormalizedIncomingMessage, ResponseData } from '../server';
-import withFilesFromRealFs
-  from '../../data/translations/TranslationsConnector/bindings/withFilesFromRealFs';
+import { NormalizedIncomingMessage, ResponseData } from '../interfaces';
 import { ClientTranslationsForLocale }
   from '../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
+import withFSConnector
+  from '../../data/translations/TranslationsConnector/bindings/withFSConnector';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
   res.statusCode = 404;
   const locale: string = <string>req.url.split('/').pop();
   const translations: ClientTranslationsForLocale | {} =
-    withFilesFromRealFs.getClientTranslationsForLocale(locale);
+    withFSConnector.getClientTranslationsForLocale(locale);
   let response: ResponseData = {
     success: false,
     data: null,

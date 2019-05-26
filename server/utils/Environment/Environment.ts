@@ -10,6 +10,7 @@ import ApplicationConfig from '../ApplicationConfig/ApplicationConfig';
 
 export interface WithApplicationsRoutes {
   getMatchedRouteWithParams(): ReactRouteWithMatchedParams;
+
   createUrlByRouteId(routeId: string, routeParams: any): string | null;
 }
 
@@ -31,6 +32,10 @@ export default class Environment extends ApplicationConfig implements WithApplic
     this.routes = routes;
     this.currentUrl = currentUrl;
     this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
+  }
+
+  getDefaultTheme() {
+    return Environment.defaultTheme;
   }
 
   getLocale(): string {
@@ -68,7 +73,7 @@ export default class Environment extends ApplicationConfig implements WithApplic
       if (!m || !m.params) {
         return false;
       }
-      const { params } = m;
+      const {params} = m;
       const locale: string = (params as HomeRouteParams).locale;
       if (!locale || !Environment.isAcceptedLocale(locale)) {
         return false;

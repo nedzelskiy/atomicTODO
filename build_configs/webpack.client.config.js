@@ -5,20 +5,25 @@ const { cyan } = require('chalk');
 const LiveReloadPlugin = require('webpack-livereload-plugin');
 const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
 const { getThemesWebpackConfig } = require('../config');
-const ServerFetchDataCreator = require('../loaders/server-fetch-data-creator/ServerFetchDataCreator');
+const AssetsHashGetterPlugin = require('../loaders/assets-hash-getter/AssetsHashGetterPlugin');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
+const ServerFetchDataCreatorPlugin = require('../loaders/server-fetch-data-creator/ServerFetchDataCreatorPlugin');
 
 const preparedPlugins = [
   // new BundleAnalyzerPlugin(),
   new ThemesStylesCreatorPlugin({
     themes: getThemesWebpackConfig('client', 'css'),
   }),
-  new ServerFetchDataCreator({
+  new ServerFetchDataCreatorPlugin({
     fileName: 'inDataNeeded',
     pages: [
       `${process.env.PWD}/client/pages/Home/Home.tsx`,
       `${process.env.PWD}/client/pages/Test/Test.tsx`,
     ],
+  }),
+  new AssetsHashGetterPlugin({
+    fileName: 'manifest',
+    additionalHashes: ThemesStylesCreatorPlugin.getHashes(),
   }),
   {
     apply(compiler) {

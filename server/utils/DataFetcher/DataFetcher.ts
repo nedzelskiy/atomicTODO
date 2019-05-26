@@ -1,15 +1,15 @@
 import * as upath from 'upath';
-import { reflect } from '../helpers';
+import { ErrorCheckedPromiseResult, reflect } from '../helpers';
 
-interface ReduxInstructions {
-  fetch(): any;
+interface ReflectedPromiseResult {
+  fetch(): Promise<ErrorCheckedPromiseResult[]>;
 }
 
-class DataFetcher implements ReduxInstructions{
+class DataFetcher implements ReflectedPromiseResult {
   private dataFetchJobs = [];
   private readonly dataFetchComponents: string[] = [];
 
-  private collectFetchJobs() {
+  private collectFetchJobs(): void {
     this.dataFetchComponents.forEach((url: string) => {
       const u = upath.normalize(url.split('.').shift() as string);
       this.dataFetchJobs =
@@ -24,7 +24,7 @@ class DataFetcher implements ReduxInstructions{
     this.collectFetchJobs();
   }
 
-  async fetch() {
+  async fetch(): Promise<ErrorCheckedPromiseResult[]> {
     return Promise.all(this.dataFetchJobs.map(reflect));
   }
 }

@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
-const PLUGIN_NAME = 'ServerFetchDataCreator';
+const PLUGIN_NAME = 'ServerFetchDataCreatorPlugin';
 const upath = require('upath');
-const { red, blue } = require('chalk');
+const { red, yellow } = require('chalk');
 const madge = require('madge');
 const fse = require('fs-extra');
 const cachedFilesUrlsKeeper = require('./CachedFilesUrlsKeeper');
 
-class ServerFetchDataCreator {
+class ServerFetchDataCreatorPlugin {
   static consoleMessage(level, message) {
     if (level === 'error') {
       console.log(red(`======> ${level.toUpperCase()} ${PLUGIN_NAME}:`), message);
     } else {
-      console.log(blue(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
+      console.log(yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
     }
   }
 
@@ -22,9 +22,9 @@ class ServerFetchDataCreator {
 
   dropServerFetchJobsFile(urls) {
     const buildFolder = this.stats.compilation.outputOptions.path;
-    const { fileName } = this.options;
-    fse.outputFileSync(`${buildFolder}${fileName}.json`, JSON.stringify(urls));
-    ServerFetchDataCreator.consoleMessage('info', `created file for fetching server data: "${fileName}"!`);
+    const fileName = `${this.options.fileName}.json`;
+    fse.outputFileSync(`${buildFolder}${fileName}`, JSON.stringify(urls));
+    ServerFetchDataCreatorPlugin.consoleMessage('info', `created file for fetching server data: "${fileName}"!`);
   }
 
   static async buildDependencies(entry) {
@@ -34,7 +34,7 @@ class ServerFetchDataCreator {
 
   async getPagesDependincies() {
     return Promise.all(
-      this.options.pages.map(page => ServerFetchDataCreator.buildDependencies(page)),
+      this.options.pages.map(page => ServerFetchDataCreatorPlugin.buildDependencies(page)),
     );
   }
 
@@ -67,7 +67,10 @@ class ServerFetchDataCreator {
       try {
         const pageDependencies = await this.getPagesDependincies();
         const pageComponentsNames = this.getPageComponentsNames();
-        res(ServerFetchDataCreator.getServerFetchJobsObject(pageDependencies, pageComponentsNames));
+        res(ServerFetchDataCreatorPlugin.getServerFetchJobsObject(
+          pageDependencies,
+          pageComponentsNames,
+        ));
       } catch (e) {
         rej(e);
       }
@@ -81,11 +84,11 @@ class ServerFetchDataCreator {
         const res = await this.buildServerFetchJobsObject();
         this.dropServerFetchJobsFile(res);
       } catch (e) {
-        ServerFetchDataCreator.consoleMessage('error', e);
+        ServerFetchDataCreatorPlugin.consoleMessage('error', e);
       }
       callback();
     });
   }
 }
 
-module.exports = ServerFetchDataCreator;
+module.exports = ServerFetchDataCreatorPlugin;

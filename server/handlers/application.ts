@@ -10,6 +10,7 @@ import { FileSystemConnector } from '../utils/connectors/interfaces';
 import ResponseBodyCreator from '../utils/ResponseBodyCreator/ResponseBodyCreator';
 import translationsConnector
   from '../../data/translations/TranslationsConnector/bindings/withFSConnector';
+import { ErrorCheckedPromiseResult } from '../utils/helpers';
 
 export default async (
   req: NormalizedIncomingMessage,
@@ -27,8 +28,8 @@ export default async (
 
   if (pageComponent) {
     const dataFetcher = new DataFetcher(inDataNeeded[pageComponent]);
-    const reduxInstruction = await dataFetcher.fetch();
-    reduxInstruction.forEach((promiseResult: any) => {
+    const errorCheckedPromiseResults: ErrorCheckedPromiseResult[] = await dataFetcher.fetch();
+    errorCheckedPromiseResults.forEach((promiseResult: ErrorCheckedPromiseResult) => {
       if (promiseResult.isError) {
         loggerFacade.log(promiseResult.error);
         return;
@@ -37,8 +38,7 @@ export default async (
     });
   }
 
-  const responseBodyCreator =
-    new ResponseBodyCreator(env.getLocale(), matchedRoute, translationsConnector);
+  const responseBodyCreator = new ResponseBodyCreator(env, translationsConnector);
   const responseBody: string = <string>responseBodyCreator.create(store, renderToStaticMarkup);
 
   const context = responseBodyCreator.getContext();

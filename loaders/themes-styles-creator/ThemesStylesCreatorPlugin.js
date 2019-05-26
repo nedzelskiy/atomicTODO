@@ -1,18 +1,25 @@
 /* eslint-disable no-console */
 const PLUGIN_NAME = 'ThemesStylesCreatorPlugin';
 
+const md5 = require('md5');
 const upath = require('upath');
-const { red, yellow } = require('chalk');
 const fse = require('fs-extra');
 const uniqid = require('uniqid');
 const sass = require('node-sass');
+const { red, blue } = require('chalk');
 const autoprefixer = require('autoprefixer');
 const postcss = require('postcss/lib/postcss');
 const cachedStylesKeysKeeper = require('./CachedStylesKeysKeeper');
 
+let hashes = {};
+
 class ThemesStylesCreatorPlugin {
   static getSassVariable(name, value) {
     return `$${name}: ${value};`;
+  }
+
+  static getHashes() {
+    return hashes;
   }
 
   static getSassImport(path) {
@@ -23,7 +30,7 @@ class ThemesStylesCreatorPlugin {
     if (level === 'error') {
       console.log(red(`======> ${level.toUpperCase()} ${PLUGIN_NAME}:`), message);
     } else {
-      console.log(yellow(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
+      console.log(blue(`======> ${level.toUpperCase()} ${PLUGIN_NAME}: ${message}`));
     }
   }
 
@@ -45,9 +52,10 @@ class ThemesStylesCreatorPlugin {
   }
 
   constructor(options) {
-    this.readyStyleFiles = {};
-    this.options = options;
+    hashes = {};
     this.stats = {};
+    this.options = options;
+    this.readyStyleFiles = {};
   }
 
   apply(compiler) {
@@ -98,6 +106,7 @@ class ThemesStylesCreatorPlugin {
           this.readyStyleFiles[fileName] = [];
         }
         this.readyStyleFiles[fileName].push(compiledCssData);
+        hashes[fileName.split('/').pop()] = md5(compiledCssData);
       });
     });
   }

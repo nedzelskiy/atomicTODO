@@ -59,6 +59,10 @@ class ThemesStylesCreatorPlugin {
   }
 
   apply(compiler) {
+    compiler.hooks.emit.tap(PLUGIN_NAME, (compilation) => {
+      // console.log(compilation);
+    });
+
     compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
       try {
         this.readyStyleFiles = {};
@@ -138,6 +142,7 @@ class ThemesStylesCreatorPlugin {
     Object.keys(this.readyStyleFiles).forEach((themeName) => {
       const themeContent = this.readyStyleFiles[themeName].join('');
       hashes[themeName] = md5(themeContent);
+      // fse.outputFileSync('123.txt', themeContent);
       fse.outputFileSync(`${buildFolder}${themeName}`, themeContent);
       ThemesStylesCreatorPlugin.consoleMessage('info', `created theme "${themeName}"!`);
     });

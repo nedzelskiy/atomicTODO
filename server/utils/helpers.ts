@@ -9,10 +9,8 @@ export type ErrorCheckedPromiseResult = {
   status: 'fulfilled';
   isError: false
   result: any;
-  error?: any
 } | {
   status: 'rejected';
-  isError: true
-  error: any
-  result?: any;
+  isError: true;
+  error: any;
 };

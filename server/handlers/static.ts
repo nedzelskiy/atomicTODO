@@ -1,6 +1,8 @@
 import { ServerResponse } from 'http';
+import { parse } from 'url';
 import { contentType } from 'mime-types';
 import { NormalizedIncomingMessage } from '../interfaces';
+import Environment from '../utils/Environment/Environment';
 import { FileSystemConnector } from '../utils/connectors/interfaces';
 
 export default (
@@ -10,14 +12,19 @@ export default (
 ): void => {
   try {
     const resourceName: string | undefined = req.url.split('/').pop();
-    const file = fsc.readFile(`build/client/${resourceName}`);
-    if (resourceName) {
-      const ct: string | false = contentType(<string>resourceName.split('.').pop());
-      if (ct) {
-        res.setHeader('Content-Type', ct);
-      }
+    if (!resourceName) {
+      throw new Error;
     }
-    res.setHeader('Cache-Control', `max-age=${60 * 60 * 24 * 31}`);
+    const pathname: string = <string>parse(resourceName).pathname;
+    const ext = pathname.split('.').pop() || '';
+    const file = fsc.readFile(`build/client/${pathname}`);
+    const ct: string | false = contentType(ext);
+    if (ct) {
+      res.setHeader('Content-Type', ct);
+    }
+    if (ext !== 'json') {
+      res.setHeader('Cache-Control', `max-age=${Environment.maxAgeForStatics}`);
+    }
     res.statusCode = 200;
     return res.end(file);
   } catch (e) {

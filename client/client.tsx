@@ -20,9 +20,13 @@ import ResponseBodyCreator from '../server/utils/ResponseBodyCreator/ResponseBod
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
+const manifest = (window as any).manifest;
 const translationsStorage = getTranslationsStorage();
 translationsStorage.setTranslations(locale, clientTranslationsForLocale);
-const store: Store = configureStore((window as any).state, { [STORAGE_NAME]: translationsStorage });
+const store: Store = configureStore((window as any).state, {
+  manifest,
+  [STORAGE_NAME]: translationsStorage,
+});
 
 hydrate(
   <React.StrictMode>

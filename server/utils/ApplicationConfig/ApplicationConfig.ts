@@ -8,6 +8,7 @@ import {
 export default abstract class ApplicationConfig {
   static defaultTheme: string = getDefaultTheme();
   static defaultLocale: string = getDefaultLocale();
+  static maxAgeForStatics: number = 60 * 60 * 24 * 31;
 
   static getAllowedThemes(): Set<string> {
     return getAllowedThemes();

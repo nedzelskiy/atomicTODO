@@ -51,6 +51,7 @@ export default class ResponseBodyCreator {
 
   create(
     store: Store,
+    manifest: object,
     reactRender: ReactRender,
   ): string | NodeJS.ReadableStream {
     const translationsForLocale: ClientTranslationsForLocale =
@@ -66,6 +67,7 @@ export default class ResponseBodyCreator {
         meta={{
           title: t(matchedRoute.meta.title, 'meta'),
         }}
+        manifest={manifest}
         locale={this.env.getLocale()}
         state={store.getState()}
         theme={this.env.getDefaultTheme()}

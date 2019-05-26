@@ -106,7 +106,6 @@ class ThemesStylesCreatorPlugin {
           this.readyStyleFiles[fileName] = [];
         }
         this.readyStyleFiles[fileName].push(compiledCssData);
-        hashes[fileName.split('/').pop()] = md5(compiledCssData);
       });
     });
   }
@@ -137,7 +136,9 @@ class ThemesStylesCreatorPlugin {
   createAndDropThemesFiles() {
     const buildFolder = this.options.output || this.stats.compilation.outputOptions.path;
     Object.keys(this.readyStyleFiles).forEach((themeName) => {
-      fse.outputFileSync(`${buildFolder}${themeName}`, this.readyStyleFiles[themeName].join(''));
+      const themeContent = this.readyStyleFiles[themeName].join('');
+      hashes[themeName] = md5(themeContent);
+      fse.outputFileSync(`${buildFolder}${themeName}`, themeContent);
       ThemesStylesCreatorPlugin.consoleMessage('info', `created theme "${themeName}"!`);
     });
   }

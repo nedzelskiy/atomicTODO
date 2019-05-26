@@ -39,7 +39,11 @@ export default async (
   }
 
   const responseBodyCreator = new ResponseBodyCreator(env, translationsConnector);
-  const responseBody: string = <string>responseBodyCreator.create(store, renderToStaticMarkup);
+  const responseBody: string = <string>responseBodyCreator.create(
+    store,
+    fsc.readJSON('./build/client/manifest'),
+    renderToStaticMarkup,
+  );
 
   const context = responseBodyCreator.getContext();
   if (!context.url) {

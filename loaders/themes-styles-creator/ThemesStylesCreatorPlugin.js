@@ -142,7 +142,7 @@ class ThemesStylesCreatorPlugin {
     themesNames.forEach((themeName) => {
       let themeContent = '';
       filesNames.forEach((fileName) => {
-        themeContent = themeContent + this.readyStyleFiles[themeName][fileName];
+        themeContent += this.readyStyleFiles[themeName][fileName];
       });
       hashes[themeName] = md5(themeContent);
       fse.outputFileSync(`${buildFolder}${themeName}`, themeContent);

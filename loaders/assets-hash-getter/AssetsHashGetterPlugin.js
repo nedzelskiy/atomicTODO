@@ -1,7 +1,10 @@
 /* eslint-disable no-console */
 const PLUGIN_NAME = 'AssetsHashGetterPlugin';
 
+const md5 = require('md5');
+const upath = require('upath');
 const fse = require('fs-extra');
+const { readFileSync } = require('fs');
 const { red, green } = require('chalk');
 
 class AssetsHashGetterPlugin {
@@ -21,11 +24,11 @@ class AssetsHashGetterPlugin {
     compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
       try {
         const manifest = {};
-        stats.compilation.chunks.forEach((chunk) => {
-          const assetName = chunk.name.split('/').pop();
-          manifest[assetName] = chunk.contentHash.javascript;
-        });
         const buildFolder = stats.compilation.outputOptions.path;
+        Object.keys(stats.compilation.assets).forEach((assetName) => {
+          const u = upath.normalize(`${buildFolder}${assetName}`);
+          manifest[assetName] = md5(readFileSync(u, 'utf-8'));
+        });
         const fileName = `${this.options.fileName}.json`;
         fse.outputFileSync(
           `${buildFolder}${fileName}`,

@@ -44,9 +44,9 @@ export default (props: Props): JSX.Element => (
       />
       <div id="root">{props.children}</div>
       <script id="js-vendors" type="text/javascript"
-        src={`/static/vendors.js?${get(props.manifest, 'vendors')}`} />
+        src={`/static/vendors.js?${get(props.manifest, 'vendors.js')}`} />
       <script id="js-app" type="text/javascript"
-        src={`/static/client.js?${get(props.manifest, 'client')}`}/>
+        src={`/static/client.js?${get(props.manifest, 'client.js')}`}/>
     </body>
   </html>
 );

@@ -73,7 +73,7 @@ export default class Environment extends ApplicationConfig implements WithApplic
       if (!m || !m.params) {
         return false;
       }
-      const {params} = m;
+      const { params } = m;
       const locale: string = (params as HomeRouteParams).locale;
       if (!locale || !Environment.isAcceptedLocale(locale)) {
         return false;

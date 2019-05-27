@@ -1,4 +1,4 @@
-import { cloneDeep } from 'lodash';
+import cloneDeep from 'lodash.clonedeep';
 import events from './todos.redux.events';
 import { CommonAction } from '../../redux.interfaces';
 import initialState, { State, Todo } from './todos.redux.initial-state';

@@ -76,6 +76,11 @@ export default withConnector(
 //         },
 //         2000);
 //     });
-//     return data;
+//     return {
+//       type: 'test',
+//       payload: {
+//         data,
+//       },
+//     };
 //   },
 // ];

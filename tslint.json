@@ -4,7 +4,10 @@
     "exclude": [
       "build/**/*",
       "build_configs/**/*",
-      "loaders/**/*"
+      "loaders/**/*",
+      "pm2/**/*",
+      "checkCircular.js",
+      "config.js"
     ]
   },
   "rules": {

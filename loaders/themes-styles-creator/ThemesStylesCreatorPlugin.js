@@ -59,10 +59,6 @@ class ThemesStylesCreatorPlugin {
   }
 
   apply(compiler) {
-    compiler.hooks.emit.tap(PLUGIN_NAME, (compilation) => {
-      // console.log(compilation);
-    });
-
     compiler.hooks.done.tap(PLUGIN_NAME, (stats) => {
       try {
         this.readyStyleFiles = {};
@@ -101,15 +97,16 @@ class ThemesStylesCreatorPlugin {
 
   prepareThemesFilesWithCompiledStylesFiles(sassFilePath) {
     sassFilePath.forEach((filePath) => {
+      const key = filePath.split(upath.sep).pop();
       this.options.themes.forEach((theme) => {
         const { fileName, variables = {} } = theme;
         const sassCompiledResult = this.compileSassFile(filePath, variables);
         const compiledCssData =
           ThemesStylesCreatorPlugin.getCompiledCssWithPostCss(sassCompiledResult.css.toString());
         if (!this.readyStyleFiles[fileName]) {
-          this.readyStyleFiles[fileName] = [];
+          this.readyStyleFiles[fileName] = {};
         }
-        this.readyStyleFiles[fileName].push(compiledCssData);
+        this.readyStyleFiles[fileName][key] = compiledCssData;
       });
     });
   }
@@ -139,10 +136,15 @@ class ThemesStylesCreatorPlugin {
 
   createAndDropThemesFiles() {
     const buildFolder = this.options.output || this.stats.compilation.outputOptions.path;
-    Object.keys(this.readyStyleFiles).forEach((themeName) => {
-      const themeContent = this.readyStyleFiles[themeName].join('');
+    const themesNames = Object.keys(this.readyStyleFiles);
+    const filesNames = Object.keys(this.readyStyleFiles[themesNames[0]]).sort();
+
+    themesNames.forEach((themeName) => {
+      let themeContent = '';
+      filesNames.forEach((fileName) => {
+        themeContent = themeContent + this.readyStyleFiles[themeName][fileName];
+      });
       hashes[themeName] = md5(themeContent);
-      // fse.outputFileSync('123.txt', themeContent);
       fse.outputFileSync(`${buildFolder}${themeName}`, themeContent);
       ThemesStylesCreatorPlugin.consoleMessage('info', `created theme "${themeName}"!`);
     });

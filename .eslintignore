@@ -1,2 +1,5 @@
 node_modules/
 build/
+./checkCircular.js
+./config.js
+pm2/

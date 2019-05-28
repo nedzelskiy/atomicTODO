@@ -7,7 +7,7 @@ class Loading extends React.Component<Readonly<Props>, {}> {
   render() {
     const { t } = this.props;
     return (
-      <div>{t('Loading...')}</div>
+      <div>{`${t('Loading', 'service')}...`}</div>
     );
   }
 }

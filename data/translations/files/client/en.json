@@ -5,5 +5,8 @@
   },
   "meta": {
     "This is an atomic TODO app": "This is an atomic TODO app"
+  },
+  "service": {
+    "Loading": "Loading"
   }
 }

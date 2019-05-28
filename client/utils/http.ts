@@ -1,6 +1,10 @@
-export const getRequest = (url: RequestInfo, options: RequestInit): Promise<void | object> => {
-  return fetch(url, options)
-    .then((response) => {
-      return response.json();
-    });
+import axios from 'axios/index';
+
+export const getRequest = (url: string, params: any = {}): Promise<void | object> => {
+  return axios.get(url, {
+    params,
+  })
+  .then((response) => {
+    return response.data;
+  });
 };

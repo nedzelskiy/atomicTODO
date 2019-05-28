@@ -1,10 +1,10 @@
-import { cloneDeep } from 'lodash';
+import * as clone from 'clone';
 import events from './app.redux.events';
 import { CommonAction } from '../../../data/redux.interfaces';
 import initialState, { State, CurrentRoute, PageError } from './app.redux.initial-state';
 
 export default (state: State = initialState, action: CommonAction): State => {
-  const newState: State = cloneDeep(state);
+  const newState: State = clone(state);
 
   switch (action.type) {
     case events.APP__SET_CURRENT_ROUTE: {
@@ -30,8 +30,8 @@ export default (state: State = initialState, action: CommonAction): State => {
     }
 
     case events.APP__SET_PAGE_ERROR: {
-      const { pageError } = <SetPageErrorPayload>action.payload;
-      newState.pageError = pageError;
+      const { error } = <SetPageErrorPayload>action.payload;
+      newState.pageError = error;
       break;
     }
 
@@ -49,7 +49,7 @@ interface SetRoutePayload {
 }
 
 interface SetPageErrorPayload {
-  pageError: PageError;
+  error: PageError;
 }
 
 interface SetLocalePayload {

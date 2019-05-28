@@ -41,20 +41,20 @@ export const setLocale: SetLocale = (locale: string): SetLocaleAction => {
   };
 };
 
-export interface ChangeLocaleAction {
-  type: events.APP__CHANGE_LOCALE;
+export interface GetLocaleAction {
+  type: events.APP__GET_LOCALE;
   payload: {
     locale: string;
   };
 }
 
-export interface ChangeLocale {
-  (locale: string): ChangeLocaleAction;
+export interface GetLocale {
+  (locale: string): GetLocaleAction;
 }
 
-export const changeLocale: ChangeLocale = (locale: string): ChangeLocaleAction => {
+export const getLocale: GetLocale = (locale: string): GetLocaleAction => {
   return {
-    type: events.APP__CHANGE_LOCALE,
+    type: events.APP__GET_LOCALE,
     payload: {
       locale,
     },
@@ -96,14 +96,14 @@ export interface SetPageError {
   (error: PageError): SetPageErrorAction;
 }
 
-// const setPageError: SetPageError = (error: PageError): SetPageErrorAction => {
-//   return {
-//     type: events.APP__SET_PAGE_ERROR,
-//     payload: {
-//       error,
-//     },
-//   };
-// };
+export const setPageError: SetPageError = (error: PageError): SetPageErrorAction => {
+  return {
+    type: events.APP__SET_PAGE_ERROR,
+    payload: {
+      error,
+    },
+  };
+};
 
 export interface ClearPageError {
   (): {

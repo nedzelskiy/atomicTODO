@@ -1,16 +1,16 @@
 /* eslint-disable global-require, no-console */
 const path = require('path');
 const { cyan } = require('chalk');
-// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
-const LiveReloadPlugin = require('webpack-livereload-plugin');
-const devMode = require('minimist')(process.argv.slice(2)).mode !== 'production';
+const args = require('minimist')(process.argv.slice(2));
 const { getThemesWebpackConfig } = require('../config');
 const AssetsHashGetterPlugin = require('../loaders/assets-hash-getter/AssetsHashGetterPlugin');
 const ThemesStylesCreatorPlugin = require('../loaders/themes-styles-creator/ThemesStylesCreatorPlugin');
 const ServerFetchDataCreatorPlugin = require('../loaders/server-fetch-data-creator/ServerFetchDataCreatorPlugin');
 
+const devMode = args.mode === 'production' ? 'production' : 'development';
+const analyzeMode = args.analyze;
+
 const preparedPlugins = [
-  // new BundleAnalyzerPlugin(),
   new ThemesStylesCreatorPlugin({
     themes: getThemesWebpackConfig('client', 'css'),
   }),
@@ -35,9 +35,17 @@ const preparedPlugins = [
 ];
 
 if (devMode) {
+  const LiveReloadPlugin = require('webpack-livereload-plugin');
   preparedPlugins.push(new LiveReloadPlugin({
     appendScriptTag: true,
   }));
+}
+
+if (analyzeMode) {
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  preparedPlugins.push(
+    new BundleAnalyzerPlugin(),
+  );
 }
 
 module.exports = {
@@ -45,6 +53,11 @@ module.exports = {
     client: [
       path.normalize(`${process.env.PWD}/client/client.tsx`),
     ],
+  },
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000
   },
   output: {
     path: path.normalize(`${process.env.PWD}/build/client/`),

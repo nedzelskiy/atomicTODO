@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import Error from '../../pages/Error/Error';
-import { PageError } from './app.redux.initial-state';
 import Loading from '../overlays/Loading/Loading';
+import { PageError } from './app.redux.initial-state';
+import AppPortal from '../portals/AppPortal/AppPortal';
 import { AppReducerState } from '../../../data/redux.reducers';
 import './app.styles.scss';
 
@@ -12,16 +13,26 @@ interface Props {
 }
 
 class App extends React.Component<Props, {}> {
+  renderAppPortal() {
+    if (this.props.isLoading) {
+      return (
+        <AppPortal>
+          <Loading />
+        </AppPortal>
+      );
+    }
+    return null;
+  }
+
   render() {
-    const {  isLoading } = this.props;
-    const { isError, message } = this.props.pageError;
+    const { isError, message, code } = this.props.pageError;
     if (isError && message) {
-      return <Error message={message}/>;
+      return <Error message={message} code={code} />;
     }
     return (
       <React.Fragment>
-        { isLoading ? <Loading /> : null }
-        { this.props.children}
+        {this.renderAppPortal()}
+        {this.props.children}
       </React.Fragment>
     );
   }

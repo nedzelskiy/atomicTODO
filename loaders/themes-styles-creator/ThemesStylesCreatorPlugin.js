@@ -128,9 +128,11 @@ class ThemesStylesCreatorPlugin {
   }
 
   deletedCachedStylesWithKeys(cachedStylesKeys) {
-    cachedStylesKeys.forEach((cachedStylesKey) => {
-      delete this.stats.compilation.cache[cachedStylesKey];
-    });
+    if (this.stats.compilation.cache) {
+      cachedStylesKeys.forEach((cachedStylesKey) => {
+        delete this.stats.compilation.cache[cachedStylesKey];
+      });
+    }
     cachedStylesKeysKeeper.clearKeys();
   }
 

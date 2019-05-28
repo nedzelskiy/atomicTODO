@@ -5,5 +5,8 @@
   },
   "meta": {
     "This is an atomic TODO app": "這是一個原子去做應用程序"
+  },
+  "service": {
+    "Loading": "裝載"
   }
 }

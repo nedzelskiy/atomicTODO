@@ -1,10 +1,10 @@
-import cloneDeep from 'lodash.clonedeep';
+import * as clone from 'clone';
 import events from './todos.redux.events';
 import { CommonAction } from '../../redux.interfaces';
 import initialState, { State, Todo } from './todos.redux.initial-state';
 
 export default (state: State = initialState, action: CommonAction): State => {
-  const newState: State = cloneDeep(state);
+  const newState: State = clone(state);
   switch (action.type) {
     case events.ADD_TODOS: {
       const { todos } = <AddTodosPayload>action.payload;

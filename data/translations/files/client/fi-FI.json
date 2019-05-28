@@ -6,5 +6,8 @@
   },
   "meta": {
     "This is an atomic TODO app": "Tämä on atomi-TODO-sovellus"
+  },
+  "service": {
+    "Loading": "Lastaus"
   }
 }

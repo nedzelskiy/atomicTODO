@@ -21,6 +21,7 @@ class Home extends React.PureComponent<Props, {}> {
   }
 
   render() {
+    console.log('render Home Page')
     return (
       <PageTemplate
         Header={this.getHeader()}

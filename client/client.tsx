@@ -11,8 +11,7 @@ import routes from './containers/Router/routes';
 import { getTranslationsStorage, STORAGE_NAME } from './containers/decorators/withTranslator';
 import {
   setLocale,
-  changeLocale,
-  startLoading,
+  getLocale,
   setCurrentRoute,
 } from './containers/App/app.redux.actions';
 import { ApplicationRoute } from './containers/Router/interfaces';
@@ -28,8 +27,19 @@ const store: Store = configureStore((window as any).state, {
   [STORAGE_NAME]: translationsStorage,
 });
 
+const strict = true;
+
 hydrate(
+  strict ?
   <React.StrictMode>
+    {render()}
+  </React.StrictMode>
+  : render(),
+  document.getElementById('root'),
+);
+
+function render() {
+  return (
     <Provider store={store}>
       <Router
         routes={routes}
@@ -46,8 +56,7 @@ hydrate(
           if (translationsStorage.isExistTranslations(locale)) {
             store.dispatch(setLocale(locale));
           } else {
-            store.dispatch(startLoading());
-            store.dispatch(changeLocale(locale));
+            store.dispatch(getLocale(locale));
           }
           return (
             <App>
@@ -60,6 +69,5 @@ hydrate(
         }}
       />
     </Provider>
-  </React.StrictMode>,
-  document.getElementById('root'),
-);
+  );
+}

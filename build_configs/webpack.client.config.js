@@ -42,7 +42,7 @@ if (devMode) {
 }
 
 if (analyzeMode) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+  const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
   preparedPlugins.push(
     new BundleAnalyzerPlugin(),
   );
@@ -57,7 +57,7 @@ module.exports = {
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
-    maxAssetSize: 512000
+    maxAssetSize: 512000,
   },
   output: {
     path: path.normalize(`${process.env.PWD}/build/client/`),

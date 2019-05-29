@@ -4,10 +4,10 @@ import { hydrate } from 'react-dom';
 import { Provider } from 'react-redux';
 import App from './containers/App/App';
 import configureStore from './configureStore';
+import routes from './containers/Router/routes';
 import Router, { RouterProps } from './containers/Router/Router';
 import { ClientTranslationsForLocale }
   from '../data/translations/ClientTranslationsDto/ClientTranslationsDto';
-import routes from './containers/Router/routes';
 import { getTranslationsStorage, STORAGE_NAME } from './containers/decorators/withTranslator';
 import {
   setLocale,

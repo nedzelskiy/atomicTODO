@@ -54,11 +54,6 @@ module.exports = {
       path.normalize(`${process.env.PWD}/client/client.tsx`),
     ],
   },
-  performance: {
-    hints: false,
-    maxEntrypointSize: 512000,
-    maxAssetSize: 512000,
-  },
   output: {
     path: path.normalize(`${process.env.PWD}/build/client/`),
   },

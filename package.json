@@ -15,6 +15,7 @@
     "debug:server": "sh sh/dev/server.run.debug.sh",
     "debug:client": "sh sh/dev/client.build.debug.sh",
     "prod:client:analyze": "sh sh/prod/client.build.analyze.sh",
+    "prod:client:build": "sh sh/prod/client.build.sh",
     "dev:client:analyze": "sh sh/dev/client.build.analyze.sh",
     "dev:server:run": "sh sh/dev/server.run.sh",
     "dev:server:build": "sh sh/dev/server.build.sh",

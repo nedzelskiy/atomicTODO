@@ -1,5 +1,5 @@
 node_modules/
-build/
+build/storybook
 .idea/
 yarn-error.log
 storybook-static

@@ -20,12 +20,14 @@ export default (state: State = initialState, action: CommonAction): State => {
     }
 
     case events.APP__START_LOADING: {
-      newState.isLoading = true;
+      const { id } = <StartLoadingPayload>action.payload;
+      newState.loading[id] = id;
       break;
     }
 
     case events.APP__STOP_LOADING: {
-      newState.isLoading = false;
+      const { id } = <StopLoadingPayload>action.payload;
+      delete newState.loading[id];
       break;
     }
 
@@ -43,6 +45,14 @@ export default (state: State = initialState, action: CommonAction): State => {
 
   return newState;
 };
+
+interface StartLoadingPayload {
+  id: string;
+}
+
+interface StopLoadingPayload {
+  id: string;
+}
 
 interface SetRoutePayload {
   route: CurrentRoute;

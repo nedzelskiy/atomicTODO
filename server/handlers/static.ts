@@ -2,7 +2,7 @@ import { ServerResponse } from 'http';
 import { parse } from 'url';
 import { contentType } from 'mime-types';
 import { NormalizedIncomingMessage } from '../interfaces';
-import Environment from '../utils/Environment/Environment';
+import ServerEnvironment from '../utils/ServerEnvironment/ServerEnvironment';
 import { FileSystemConnector } from '../utils/connectors/interfaces';
 
 export default (
@@ -23,7 +23,7 @@ export default (
       res.setHeader('Content-Type', ct);
     }
     if (ext !== 'json') {
-      res.setHeader('Cache-Control', `max-age=${Environment.maxAgeForStatics}`);
+      res.setHeader('Cache-Control', `max-age=${ServerEnvironment.maxAgeForStatics}`);
     }
     res.statusCode = 200;
     return res.end(file);

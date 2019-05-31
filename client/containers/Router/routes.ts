@@ -1,7 +1,8 @@
-import Home, { meta as HomePageMeta } from '../../pages/Home/Home';
 import Test from '../../pages/Test/Test';
+import { Redirect } from 'react-router-dom';
 import { ApplicationRoutes } from './interfaces';
 import NotFound from '../../pages/NotFound/NotFound';
+import Home, { meta as HomePageMeta } from '../../pages/Home/Home';
 
 const defaultPageRoutes: ApplicationRoutes = {
   home: {
@@ -30,8 +31,17 @@ const defaultPageRoutes: ApplicationRoutes = {
       title: '',
     },
   },
+  missingLocale: {
+    exact: true,
+    path: '/',
+    pageName: 'missingLocale',
+    getComponent: () => Redirect,
+    meta: {
+      title: '',
+    },
+  },
   notFound: {
-    path: '*',
+    path: '/:locale/*',
     pageName: 'not-found',
     getComponent: () => NotFound,
     meta: {

@@ -1,3 +1,4 @@
+import { parse } from 'cookie';
 import { compile } from 'path-to-regexp';
 import { matchPath } from 'react-router-dom';
 import {
@@ -6,6 +7,7 @@ import {
   ApplicationRoutes,
   ReactRouteWithMatchedParams,
 } from '../../../client/containers/Router/interfaces';
+import { NormalizedIncomingMessage } from '../../interfaces';
 import ApplicationConfig from '../ApplicationConfig/ApplicationConfig';
 
 export interface WithApplicationsRoutes {
@@ -14,33 +16,55 @@ export interface WithApplicationsRoutes {
   createUrlByRouteId(routeId: string, routeParams: any): string | null;
 }
 
-export default class Environment extends ApplicationConfig implements WithApplicationsRoutes {
+export default class ServerEnvironment extends ApplicationConfig implements WithApplicationsRoutes {
   private currentLocale: string;
-  private readonly currentUrl: string;
   private readonly routes: ApplicationRoutes;
+  private readonly req: NormalizedIncomingMessage;
   private matchedRoute: ReactRouteWithMatchedParams;
 
-  private getLocaleFromUrl(): string {
-    return Environment.getCheckedLocale(this.currentUrl.split('/')[1]);
+  private getLocaleFromUrl(): string | undefined {
+    return this.req.url.split('/')[1];
   }
 
   constructor(
-    currentUrl: string,
+    req: NormalizedIncomingMessage,
     routes: ApplicationRoutes,
   ) {
     super();
+    this.req = req;
     this.routes = routes;
-    this.currentUrl = currentUrl;
     this.createUrlByRouteId = this.createUrlByRouteId.bind(this);
   }
 
   getDefaultTheme() {
-    return Environment.defaultTheme;
+    return ServerEnvironment.defaultTheme;
+  }
+
+  getLocaleFromHeaders(): string | undefined {
+    return Array.from(ServerEnvironment.getAllowedLocales()).find((locale: string) => {
+      return (this.req.headers['accept-language'] as string)
+        .split(';')
+        .filter((langPairs: string) => {
+          return langPairs.toLowerCase().match(locale);
+        },
+      ).length > 0;
+    });
+  }
+
+  getLocaleFromCookie(): string | undefined {
+    return parse(this.req.headers.cookie || '').locale;
   }
 
   getLocale(): string {
     if (!this.currentLocale) {
-      this.currentLocale = this.getLocaleFromUrl();
+      let locale = this.getLocaleFromUrl();
+      if (!locale) {
+        locale = this.getLocaleFromCookie();
+      }
+      if (!locale) {
+        locale = this.getLocaleFromHeaders();
+      }
+      this.currentLocale = ServerEnvironment.getCheckedLocale(locale);
     }
     return this.currentLocale;
   }
@@ -62,7 +86,7 @@ export default class Environment extends ApplicationConfig implements WithApplic
     if (this.matchedRoute) {
       return this.matchedRoute;
     }
-    const url = this.currentUrl;
+    const url = this.req.url;
     let route: ApplicationRoute = this.routes[0];
     let routerParams = {};
     let routeId = '';
@@ -75,7 +99,7 @@ export default class Environment extends ApplicationConfig implements WithApplic
       }
       const { params } = m;
       const locale: string = (params as HomeRouteParams).locale;
-      if (!locale || !Environment.isAcceptedLocale(locale)) {
+      if (!locale || !ServerEnvironment.isAcceptedLocale(locale)) {
         return false;
       }
       route = r;
@@ -83,7 +107,6 @@ export default class Environment extends ApplicationConfig implements WithApplic
       routerParams = m.params;
       return true;
     });
-
     if (!result) {
       routeId = 'notFound';
       route = this.routes[routeId];

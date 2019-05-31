@@ -1,4 +1,5 @@
 /* eslint-disable global-require, no-console */
+
 const path = require('path');
 const { cyan } = require('chalk');
 const args = require('minimist')(process.argv.slice(2));

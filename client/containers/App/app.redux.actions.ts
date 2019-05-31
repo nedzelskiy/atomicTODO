@@ -62,26 +62,38 @@ export const getLocale: GetLocale = (locale: string): GetLocaleAction => {
 };
 
 export interface StartLoading {
-  (): {
+  (id: string): {
     type: events.APP__START_LOADING;
+    payload: {
+      id: string;
+    };
   };
 }
 
-export const startLoading: StartLoading = () => {
+export const startLoading: StartLoading = (id: string) => {
   return {
     type: events.APP__START_LOADING,
+    payload: {
+      id,
+    },
   };
 };
 
 export interface StopLoading {
-  (): {
+  (id: string): {
     type: events.APP__STOP_LOADING;
+    payload: {
+      id: string;
+    };
   };
 }
 
-export const stopLoading: StopLoading = () => {
+export const stopLoading: StopLoading = (id: string) => {
   return {
     type: events.APP__STOP_LOADING,
+    payload: {
+      id,
+    },
   };
 };
 

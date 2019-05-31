@@ -1,10 +1,11 @@
 import { ServerResponse } from 'http';
 import { NormalizedIncomingMessage } from '../interfaces';
-import Environment from '../utils/Environment/Environment';
+import ServerEnvironment from '../utils/ServerEnvironment/ServerEnvironment';
 
 export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
+  const env = new ServerEnvironment(req, {});
   res.writeHead(302, {
-    Location: `/${Environment.defaultLocale}`,
+    Location: `/${env.getLocale()}`,
   });
   return res.end();
 };

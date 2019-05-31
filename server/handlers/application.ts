@@ -3,21 +3,22 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import loggerFacade from '../utils/Logger/LoggerFacade';
 import configureStore from '../../client/configureStore';
 import { NormalizedIncomingMessage } from '../interfaces';
-import Environment from '../utils/Environment/Environment';
 import routes from '../../client/containers/Router/routes';
 import DataFetcher from '../utils/DataFetcher/DataFetcher';
+import { ErrorCheckedPromiseResult } from '../utils/helpers';
 import { FileSystemConnector } from '../utils/connectors/interfaces';
+import ServerEnvironment from '../utils/ServerEnvironment/ServerEnvironment';
 import ResponseBodyCreator from '../utils/ResponseBodyCreator/ResponseBodyCreator';
 import translationsConnector
   from '../../data/translations/TranslationsConnector/bindings/withFSConnector';
-import { ErrorCheckedPromiseResult } from '../utils/helpers';
 
 export default async (
   req: NormalizedIncomingMessage,
   res: ServerResponse,
   fsc: FileSystemConnector,
 ) => {
-  const env = new Environment(req.url, routes);
+
+  const env = new ServerEnvironment(req, routes);
   const store = configureStore({}, {});
   const matchedRoute = env.getMatchedRouteWithParams();
 

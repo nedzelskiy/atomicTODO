@@ -15,7 +15,9 @@ import {
   setCurrentRoute,
 } from './containers/App/app.redux.actions';
 import { ApplicationRoute } from './containers/Router/interfaces';
+import ClientEnvironment from './utils/ClientEnvironment/ClientEnvironment';
 import ResponseBodyCreator from '../server/utils/ResponseBodyCreator/ResponseBodyCreator';
+import ApplicationCookie from './utils/ApplicationCookie/ApplicationCookie';
 
 const locale: string = document.documentElement.lang;
 const clientTranslationsForLocale: ClientTranslationsForLocale = (window as any)[locale];
@@ -26,6 +28,7 @@ const store: Store = configureStore((window as any).state, {
   manifest,
   [STORAGE_NAME]: translationsStorage,
 });
+const env = new ClientEnvironment(new ApplicationCookie());
 
 const strict = true;
 
@@ -45,7 +48,15 @@ function render() {
         routes={routes}
         render={(routerProps: RouterProps, route: ApplicationRoute, id: string) => {
           const Component: any = route.getComponent();
-          const { locale } = routerProps.match.params;
+          let { locale } = routerProps.match.params;
+          let componentProps = Object.assign({}, route.componentProps);
+          if (route.path === '/') {
+            locale = env.getLocale();
+            componentProps = Object.assign(componentProps, {
+              to: `/${locale}`,
+            });
+          }
+          env.getCookieConnector().setLocaleCookieIfNew(locale);
           const currentRoute = ResponseBodyCreator.getCurrentRoute({
             id,
             ...route,
@@ -61,6 +72,7 @@ function render() {
           return (
             <App>
               <Component
+                {...componentProps}
                 pageName={route.pageName}
                 templateProps={route.templateProps}
               />

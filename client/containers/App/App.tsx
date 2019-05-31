@@ -42,7 +42,7 @@ export default connect(
   (state: AppReducerState) => {
     return {
       pageError: state.appReducer.pageError,
-      isLoading: state.appReducer.isLoading,
+      isLoading: Object.keys(state.appReducer.loading).length > 0,
     };
   },
   {},

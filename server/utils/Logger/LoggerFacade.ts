@@ -1,6 +1,10 @@
 class LoggerFacade {
-  log(message: string): void {
-    console.log(message);
+  log(message: string | object): void {
+    if (typeof message === 'string') {
+      console.log(message);
+    } else {
+      console.log(JSON.stringify(message, null, 4));
+    }
   }
 }
 

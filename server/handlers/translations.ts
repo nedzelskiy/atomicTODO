@@ -1,6 +1,6 @@
 import { ServerResponse } from 'http';
 import { NormalizedIncomingMessage, ResponseData } from '../interfaces';
-import Environment from '../utils/Environment/Environment';
+import ServerEnvironment from '../utils/ServerEnvironment/ServerEnvironment';
 import { ClientTranslationsForLocale }
   from '../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import withFSConnector
@@ -16,7 +16,7 @@ export default (req: NormalizedIncomingMessage, res: ServerResponse): void => {
     error: null,
   };
   if (translations && Object.keys(translations).length > 0) {
-    res.setHeader('Cache-Control', `max-age=${Environment.maxAgeForStatics}`);
+    res.setHeader('Cache-Control', `max-age=${ServerEnvironment.maxAgeForStatics}`);
     res.statusCode = 200;
     response = {
       success: true,

@@ -1,36 +1,36 @@
 export interface State {
-  isLoading: boolean;
-  pageError: PageError;
-  route: CurrentRoute;
   locale: string;
+  loading: object;
+  route: CurrentRoute;
+  pageError: PageError;
 }
 
 export interface PageError {
-  isError: boolean;
-  message: string;
   code?: number;
+  message: string;
+  isError: boolean;
 }
 
 export interface CurrentRoute {
   id: string;
   url: string;
-  pageName: string;
   params: any;
+  pageName: string;
 }
 
 const state: State = {
-  pageError: {
-    isError: false,
-    message: '',
-  },
-  isLoading: false,
+  locale: '',
+  loading: {},
   route: {
     id: '',
     url: '',
     pageName: '',
     params: {},
   },
-  locale: '',
+  pageError: {
+    isError: false,
+    message: '',
+  },
 };
 
 export default state;

@@ -2,8 +2,9 @@ import appEvents from './app.redux.events';
 import { ResponseData } from '../../../server/interfaces';
 import { STORAGE_NAME } from '../decorators/withTranslator';
 import { CommonAction } from '../../../data/redux.interfaces';
+import { AppReducerState } from '../../../data/redux.reducers';
 import { getTranslations } from '../../../data/translations/http';
-import { takeEvery, getContext, call, put } from 'redux-saga/effects';
+import { takeEvery, getContext, call, put, select } from 'redux-saga/effects';
 import ClientTranslationsDto
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import {
@@ -15,9 +16,14 @@ import {
 } from './app.redux.actions';
 
 function* getLocale(action: CommonAction & GetLocaleAction) {
+  const { locale } = action.payload;
+  const state: AppReducerState = yield select(s => s);
+  const id = `get-locale-${locale}`;
   try {
-    yield put(startLoading());
-    const { locale } = action.payload;
+    if (state.appReducer.loading[id]) {
+      return;
+    }
+    yield put(startLoading(id));
     const response: ResponseData = yield getTranslations(locale);
     if (!response.success) {
       throw response.error;
@@ -25,7 +31,7 @@ function* getLocale(action: CommonAction & GetLocaleAction) {
     const translationsStorage: ClientTranslationsDto = yield getContext(STORAGE_NAME);
     yield call(translationsStorage.setTranslations, locale, response.data);
     yield put(setLocale(locale));
-    yield put(stopLoading());
+    yield put(stopLoading(id));
   } catch (e) {
     const message = e.response && e.response.data && e.response.data.error
       ? e.response.data.error.toString()
@@ -38,7 +44,7 @@ function* getLocale(action: CommonAction & GetLocaleAction) {
       message,
       isError: true,
     }));
-    yield put(stopLoading());
+    yield put(stopLoading(id));
     throw e;
   }
 }

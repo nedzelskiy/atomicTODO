@@ -4,23 +4,23 @@ import { Provider } from 'react-redux';
 import { StaticRouter } from 'react-router-dom';
 import { StaticRouterContext } from 'react-router';
 import Html from '../../../client/components/Html';
-import Environment from '../Environment/Environment';
+import ServerEnvironment from '../ServerEnvironment/ServerEnvironment';
 import App from '../../../client/containers/App/App';
 import TranslationsConnector
   from '../../../data/translations/TranslationsConnector/TranslationsConnector';
 import { ClientTranslationsForLocale }
   from '../../../data/translations/ClientTranslationsDto/ClientTranslationsDto';
 import { TranslateHelper } from '../../../data/translations/trnaslations.interfaces';
-import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
 import { CurrentRoute } from '../../../client/containers/App/app.redux.initial-state';
-import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
 import { ReactRouteWithMatchedParams } from '../../../client/containers/Router/interfaces';
+import ClientTranslator from '../../../data/translations/ClientTranslator/ClientTranslator';
+import { setTranslationsStorage } from '../../../client/containers/decorators/withTranslator';
 import { setCurrentRoute, setLocale } from '../../../client/containers/App/app.redux.actions';
 
 export type ReactRender = (element: React.ReactElement) => string | NodeJS.ReadableStream;
 
 export default class ResponseBodyCreator {
-  private readonly env: Environment;
+  private readonly env: ServerEnvironment;
   private readonly context: StaticRouterContext = {};
   private readonly translatorsConnector: TranslationsConnector;
 
@@ -41,7 +41,7 @@ export default class ResponseBodyCreator {
   }
 
   constructor(
-    env: Environment,
+    env: ServerEnvironment,
     translatorsConnector: TranslationsConnector,
   ) {
     this.env = env;
@@ -77,6 +77,7 @@ export default class ResponseBodyCreator {
         <StaticRouter location={matchedRoute.url} context={this.context}>
           <App>
             <Component
+              {...matchedRoute.componentProps}
               pageName={matchedRoute.pageName}
               templateProps={matchedRoute.templateProps}
             />

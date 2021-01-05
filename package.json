@@ -57,7 +57,7 @@
     "@types/storybook__react": "^4.0.1",
     "@types/webpack": "^4.4.27",
     "autoprefixer": "^9.5.1",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "chalk": "^2.4.2",
     "clone": "^2.1.2",
     "clone-deep": "^4.0.1",

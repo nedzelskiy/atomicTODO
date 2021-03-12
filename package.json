@@ -73,7 +73,7 @@
     "ignore-loader": "^0.1.2",
     "js-cookie": "^2.2.0",
     "loader-utils": "^1.2.3",
-    "madge": "^3.4.4",
+    "madge": "^4.0.1",
     "md5": "^2.2.1",
     "mime-types": "^2.1.22",
     "minimist": "^1.2.0",
